@@ -339,14 +339,21 @@ export default function ServicePage({ title, description, children, breadcrumb, 
                 
                 <div>
                   <Label htmlFor="service" className="block text-sm font-semibold text-foreground mb-2">Service Required</Label>
-                  <Input 
-                    type="text" 
+                  <select 
                     id="service" 
                     name="service" 
+                    required
                     value={formData.service}
                     onChange={(e) => handleFormChange('service', e.target.value)}
-                    className="w-full"
-                  />
+                    className="w-full px-3 py-2 border border-input bg-background text-foreground rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring"
+                  >
+                    <option value="">Select a service</option>
+                    <option value="Site Clear-Outs">Site Clear-Outs</option>
+                    <option value="Waste Removal">Waste Removal</option>
+                    <option value="Ground Preparation">Ground Preparation</option>
+                    <option value="Haulage Support">Haulage Support</option>
+                    <option value="Other">Other</option>
+                  </select>
                 </div>
                 
                 <div>

@@ -60,6 +60,27 @@
   --spacing: 0.25rem;
 }
 
+/* Dropdown styling fixes */
+/* Ensure dropdown appears above other form fields */
+select {
+  position: relative;
+  z-index: 10;
+  background-color: #fff;
+}
+
+/* Dark mode support for dropdown */
+.dark select {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+/* Ensure parent containers don't clip the dropdown */
+.form,
+.form-grid,
+.form-group {
+  overflow: visible !important;
+}
+
 .dark {
   --background: hsl(0, 0%, 0%);
   --foreground: hsl(200, 6.6667%, 91.1765%);
