@@ -24,7 +24,7 @@ import {
   TrendingUp,
   ArrowUpDown
 } from "lucide-react";
-const videoSrc = "/assets/hero/Construction_Site_Sunrise_Aerial_Loop.mp4";
+const videoSrc = "/assets/hero/hero-loop.mp4";
 const logoSrc = "/assets/brand/keane-logo.png";
 const posterSrc = "/assets/hero/poster.jpg";
 
@@ -318,7 +318,7 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-charcoal">
         {/* Background Video */}
         <video 
           ref={videoRef}
