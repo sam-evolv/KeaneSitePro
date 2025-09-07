@@ -343,7 +343,6 @@ export default function Home() {
             >
               <Menu className="w-6 h-6" />
             </Button>
-          </div>
         </div>
         
         {/* Mobile Menu Overlay */}
