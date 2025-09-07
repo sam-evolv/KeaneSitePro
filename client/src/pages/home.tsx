@@ -63,14 +63,20 @@ export default function Home() {
   const { toast } = useToast();
   const isMobile = useIsMobile();
 
-  // Handle scroll for header blur effect
+  // Header scroll behavior: toggle transparency
   useEffect(() => {
-    const handleScroll = () => {
-      setIsHeaderScrolled(window.scrollY > 50);
+    const toggle = () => {
+      const scrolled = window.scrollY > 8;
+      if (scrolled) {
+        document.documentElement.classList.add('is-scrolled');
+      } else {
+        document.documentElement.classList.remove('is-scrolled');
+      }
+      setIsHeaderScrolled(scrolled);
     };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    toggle();
+    window.addEventListener('scroll', toggle, { passive: true });
+    return () => window.removeEventListener('scroll', toggle);
   }, []);
 
   // Premium scroll animations for all sections
@@ -281,7 +287,7 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <header className={`site-header transition-all duration-300 ${isHeaderScrolled ? 'header-blur' : ''}`}>
+      <header className="site-header transition-all duration-300">
         <div className="wrap max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Logo */}
             <div className="brand flex-shrink-0">

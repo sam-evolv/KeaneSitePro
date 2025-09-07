@@ -1,0 +1,76 @@
+1) Clean any prior overrides
+Search your CSS for any rules setting .site-header { background: ... } to solid greys (e.g., #444/#555) and remove them. Also remove any inline style attributes on the header.
+2) CSS — transparent at top, dark on scroll
+Append to public/styles.css (or replace the existing header block):
+:root { --header-h: 64px; --header-bg: rgba(17,17,17,.82); --header-border: rgba(255,255,255,.06); }
+
+.site-header{
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: var(--header-h);
+  display: block;
+  background: transparent;                 /* transparent at top */
+  transition: background .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+
+.site-header .wrap{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 20px;
+}
+
+.brand, .brand img{ display:block; position:static; }
+.brand img{ height: 32px; width:auto; }
+
+.nav a{
+  color: #fff;
+  text-decoration: none;
+  margin-left: 18px;
+  font-weight: 600;
+  opacity: .92;
+}
+.nav a:hover{ opacity: 1; }
+
+/* Scrolled state — dark, blurred bar */
+.is-scrolled .site-header{
+  background: var(--header-bg);
+  backdrop-filter: saturate(140%) blur(8px);
+  box-shadow: 0 6px 18px rgba(0,0,0,.28);
+  border-bottom: 1px solid var(--header-border);
+}
+
+/* Ensure first screen content doesn't sit under header when anchored */
+section, main { scroll-margin-top: var(--header-h); }
+
+/* Mobile menu (optional if you have one) should inherit transparency at top */
+@media (max-width: 900px){
+  .nav a{ margin-left: 14px; }
+}
+3) JS — add/remove the scrolled class
+Insert or update in public/app.js:
+// Header scroll behavior: toggle transparency
+(function(){
+  const root = document.documentElement;
+  const toggle = () => {
+    if (window.scrollY > 8) root.classList.add('is-scrolled');
+    else root.classList.remove('is-scrolled');
+  };
+  toggle();
+  window.addEventListener('scroll', toggle, { passive: true });
+})();
+4) Ensure hero content stays readable
+Keep your hero overlay slightly dark so white nav links are legible when header is transparent:
+.hero__overlay{ 
+  position:absolute; inset:0;
+  background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.55));
+}
+5) Acceptance criteria
+At page load (top): header is transparent, links visible over hero.
+On scroll (>8px): header transitions to dark blurred bar with subtle shadow.
+No unexpected grey solid bar.
+Logo retains correct size and alignment on all viewports.
+If any other rule still forces a solid background, the agent should print the offending CSS selector and remove it.
