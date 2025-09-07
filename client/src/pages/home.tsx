@@ -233,7 +233,7 @@ export default function Home() {
               <img 
                 src={logoSrc} 
                 alt="Keane Site Services" 
-                className="h-10 w-auto"
+                className="h-12 w-auto"
                 data-testid="header-logo"
               />
             </div>
@@ -298,7 +298,7 @@ export default function Home() {
                 <img 
                   src={logoSrc} 
                   alt="Keane Site Services" 
-                  className="h-10 w-auto"
+                  className="h-12 w-auto"
                 />
                 <Button
                   variant="ghost"
@@ -395,7 +395,7 @@ export default function Home() {
           <img 
             src={logoSrc} 
             alt="" 
-            className="h-14 lg:h-16 mx-auto mb-6 drop-shadow-lg"
+            className="h-20 lg:h-24 mx-auto mb-6 drop-shadow-lg"
             style={{ filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.35))' }}
           />
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white mb-6 tracking-tight leading-tight">
