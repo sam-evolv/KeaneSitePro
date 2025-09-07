@@ -280,7 +280,8 @@ export default function Home() {
               <img 
                 src={logoSrc} 
                 alt="Keane Site Services" 
-                className="h-24 w-auto"
+                className="h-24 w-auto header-logo cursor-pointer"
+                onClick={() => scrollToSection('home')}
                 data-testid="header-logo"
               />
             </div>
@@ -345,7 +346,8 @@ export default function Home() {
                 <img 
                   src={logoSrc} 
                   alt="Keane Site Services" 
-                  className="h-24 w-auto"
+                  className="h-24 w-auto header-logo cursor-pointer"
+                  onClick={() => scrollToSection('home')}
                 />
                 <Button
                   variant="ghost"
@@ -442,8 +444,7 @@ export default function Home() {
           <img 
             src={logoSrc} 
             alt="" 
-            className="h-60 lg:h-72 mx-auto mb-6 drop-shadow-lg"
-            style={{ filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.35))' }}
+            className="h-60 lg:h-72 mx-auto mb-6 hero-logo"
           />
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white mb-6 tracking-tight leading-tight">
             Professional Site<br/>
@@ -582,7 +583,7 @@ export default function Home() {
                 ref={aboutLogoRef}
                 src={aboutLogoSrc} 
                 alt="Keane Site Services Logo" 
-                className={`w-80 h-80 transition-all duration-1000 ease-out transform ${
+                className={`w-80 h-80 logo-hover transition-all duration-1000 ease-out transform ${
                   isAboutLogoVisible 
                     ? 'opacity-100 scale-100 translate-y-0' 
                     : 'opacity-0 scale-75 translate-y-8'
