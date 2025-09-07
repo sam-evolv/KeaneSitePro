@@ -39,6 +39,7 @@ export default function Home() {
   const [isHeaderScrolled, setIsHeaderScrolled] = useState(false);
   const [isVideoPlaying, setIsVideoPlaying] = useState(true);
   const [isAboutLogoVisible, setIsAboutLogoVisible] = useState(false);
+  const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set());
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -51,6 +52,9 @@ export default function Home() {
   
   const videoRef = useRef<HTMLVideoElement>(null);
   const aboutLogoRef = useRef<HTMLImageElement>(null);
+  const servicesRef = useRef<HTMLElement>(null);
+  const valuePropsRef = useRef<HTMLElement>(null);
+  const contactRef = useRef<HTMLElement>(null);
   const { toast } = useToast();
   const isMobile = useIsMobile();
 
@@ -64,28 +68,42 @@ export default function Home() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // About logo scroll animation
+  // Premium scroll animations for all sections
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsAboutLogoVisible(true);
-        }
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const sectionId = entry.target.getAttribute('data-section');
+            if (sectionId) {
+              setVisibleSections(prev => new Set([...Array.from(prev), sectionId]));
+            }
+            if (entry.target === aboutLogoRef.current) {
+              setIsAboutLogoVisible(true);
+            }
+          }
+        });
       },
       {
-        threshold: 0.3,
-        rootMargin: '0px 0px -100px 0px'
+        threshold: 0.2,
+        rootMargin: '0px 0px -50px 0px'
       }
     );
 
-    if (aboutLogoRef.current) {
-      observer.observe(aboutLogoRef.current);
-    }
+    // Observe all sections
+    const refs = [aboutLogoRef, servicesRef, valuePropsRef, contactRef];
+    refs.forEach(ref => {
+      if (ref.current) {
+        observer.observe(ref.current);
+      }
+    });
 
     return () => {
-      if (aboutLogoRef.current) {
-        observer.unobserve(aboutLogoRef.current);
-      }
+      refs.forEach(ref => {
+        if (ref.current) {
+          observer.unobserve(ref.current);
+        }
+      });
     };
   }, []);
 
@@ -457,10 +475,14 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-16 lg:py-24 bg-[hsl(210,17%,97%)]">
+      <section ref={servicesRef} id="services" data-section="services" className="py-16 lg:py-24 bg-[hsl(210,17%,97%)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section Header */}
-          <div className="text-center mb-16">
+          <div className={`text-center mb-16 transition-all duration-700 ease-out transform ${
+            visibleSections.has('services') 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-4'
+          }`}>
             <div className="section-divider mx-auto mb-6"></div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6 tracking-tight">
               Our Services
@@ -473,7 +495,16 @@ export default function Home() {
           {/* Services Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {services.map((service, index) => (
-              <div key={index} className="service-card p-8" data-testid={`service-card-${index}`}>
+              <div 
+                key={index} 
+                className={`service-card p-8 transition-all duration-700 ease-out transform ${
+                  visibleSections.has('services') 
+                    ? 'opacity-100 scale-100 translate-y-0' 
+                    : 'opacity-0 scale-95 translate-y-8'
+                }`}
+                style={{ transitionDelay: `${index * 150}ms` }}
+                data-testid={`service-card-${index}`}
+              >
                 <div className="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
                   <service.icon className="w-8 h-8 text-primary" />
                 </div>
@@ -495,13 +526,17 @@ export default function Home() {
       </section>
 
       {/* Why Choose Keane Section */}
-      <section className="py-16 lg:py-24 bg-[hsl(0,0%,10%)] relative overflow-hidden">
+      <section ref={valuePropsRef} data-section="value-props" className="py-16 lg:py-24 bg-[hsl(0,0%,10%)] relative overflow-hidden">
         {/* Subtle gradient background */}
         <div className="absolute inset-0 bg-gradient-to-br from-[hsl(0,0%,10%)] via-[hsl(0,0%,7%)] to-[hsl(0,0%,10%)] opacity-90"></div>
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section Header */}
-          <div className="text-center mb-16">
+          <div className={`text-center mb-16 transition-all duration-700 ease-out transform ${
+            visibleSections.has('value-props') 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-4'
+          }`}>
             <div className="section-divider mx-auto mb-6"></div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 tracking-tight">
               Why Choose Keane
@@ -514,7 +549,16 @@ export default function Home() {
           {/* Value Props Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {valueProps.map((prop, index) => (
-              <div key={index} className="text-center" data-testid={`value-prop-${index}`}>
+              <div 
+                key={index} 
+                className={`text-center transition-all duration-700 ease-out transform ${
+                  visibleSections.has('value-props') 
+                    ? 'opacity-100 scale-100 translate-y-0' 
+                    : 'opacity-0 scale-95 translate-y-8'
+                }`}
+                style={{ transitionDelay: `${index * 200}ms` }}
+                data-testid={`value-prop-${index}`}
+              >
                 <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-primary to-orange-600 rounded-full flex items-center justify-center">
                   <prop.icon className="w-8 h-8 text-white" />
                 </div>
@@ -620,10 +664,14 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-16 lg:py-24 bg-[hsl(210,17%,97%)]">
+      <section ref={contactRef} id="contact" data-section="contact" className="py-16 lg:py-24 bg-[hsl(210,17%,97%)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section Header */}
-          <div className="text-center mb-16">
+          <div className={`text-center mb-16 transition-all duration-700 ease-out transform ${
+            visibleSections.has('contact') 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-4'
+          }`}>
             <div className="section-divider mx-auto mb-6"></div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6 tracking-tight">
               Get In Touch
@@ -635,7 +683,11 @@ export default function Home() {
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
             {/* Contact Information */}
-            <div className="space-y-8">
+            <div className={`space-y-8 transition-all duration-700 ease-out transform ${
+              visibleSections.has('contact') 
+                ? 'opacity-100 translate-x-0' 
+                : 'opacity-0 -translate-x-8'
+            }`}>
               <div>
                 <h3 className="text-2xl font-bold text-foreground mb-6">Contact Information</h3>
                 <div className="space-y-4">
@@ -692,7 +744,12 @@ export default function Home() {
             </div>
             
             {/* Contact Form */}
-            <div className="bg-white p-8 rounded-2xl shadow-lg">
+            <div className={`bg-white p-8 rounded-2xl shadow-lg transition-all duration-700 ease-out transform ${
+              visibleSections.has('contact') 
+                ? 'opacity-100 translate-x-0' 
+                : 'opacity-0 translate-x-8'
+            }`}
+            style={{ transitionDelay: '200ms' }}>
               <h3 className="text-2xl font-bold text-foreground mb-6">Request a Quote</h3>
               
               {/* Netlify Form */}
