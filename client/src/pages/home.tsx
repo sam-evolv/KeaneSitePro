@@ -489,7 +489,7 @@ export default function Home() {
               asChild
               data-testid="button-call-now-hero"
             >
-              <a href="tel:+1-555-KEANE-SS">Call Now</a>
+              <a href="tel:+353876460921">Call Now</a>
             </Button>
           </div>
         </div>
@@ -671,7 +671,7 @@ export default function Home() {
               asChild
               data-testid="button-call-now-cta"
             >
-              <a href="tel:+1-555-KEANE-SS">Call Now</a>
+              <a href="tel:+353876460921">Call Now</a>
             </Button>
             <Button 
               className="bg-transparent border-2 border-white text-white px-8 py-4 text-lg font-semibold hover:bg-white hover:text-primary transition-all duration-300 hover:-translate-y-1 w-full sm:w-auto" 
@@ -718,7 +718,7 @@ export default function Home() {
                     </div>
                     <div>
                       <div className="font-semibold text-foreground">Phone</div>
-                      <a href="tel:+1-555-KEANE-SS" className="text-primary hover:underline">+1 (555) KEANE-SS</a>
+                      <a href="tel:+353876460921" className="text-primary hover:underline">+353 87 646 0921</a>
                     </div>
                   </div>
                   
@@ -738,7 +738,7 @@ export default function Home() {
                     </div>
                     <div>
                       <div className="font-semibold text-foreground">Service Area</div>
-                      <div className="text-muted-foreground">Greater Metro Area</div>
+                      <div className="text-muted-foreground">Ireland</div>
                     </div>
                   </div>
                 </div>
@@ -919,9 +919,9 @@ export default function Home() {
             <div>
               <h4 className="text-white font-semibold mb-4">Contact</h4>
               <div className="space-y-2 text-sm text-gray-400">
-                <div>Phone: +1 (555) KEANE-SS</div>
+                <div>Phone: +353 87 646 0921</div>
                 <div>Email: info@keanesiteservices.com</div>
-                <div>Service Area: Greater Metro Area</div>
+                <div>Service Area: Ireland</div>
               </div>
             </div>
           </div>
