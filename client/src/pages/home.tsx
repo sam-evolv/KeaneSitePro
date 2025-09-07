@@ -278,13 +278,26 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}
-            <div className="flex-shrink-0 relative">
+            <div className="flex-shrink-0 relative h-24" style={{ width: '120px' }}>
+              {/* Original logo */}
               <img 
-                src={isHeaderScrolled ? logoLightSrc : logoSrc} 
+                src={logoSrc} 
                 alt="Keane Site Services" 
-                className="h-24 w-auto header-logo cursor-pointer transition-opacity duration-300"
+                className={`absolute inset-0 h-24 w-auto header-logo cursor-pointer transition-opacity duration-500 ${
+                  isHeaderScrolled ? 'opacity-0' : 'opacity-100'
+                }`}
                 onClick={() => scrollToSection('home')}
                 data-testid="header-logo"
+              />
+              {/* Light logo */}
+              <img 
+                src={logoLightSrc} 
+                alt="Keane Site Services" 
+                className={`absolute inset-0 h-24 w-auto header-logo cursor-pointer transition-opacity duration-500 ${
+                  isHeaderScrolled ? 'opacity-100' : 'opacity-0'
+                }`}
+                onClick={() => scrollToSection('home')}
+                data-testid="header-logo-light"
               />
             </div>
 
@@ -345,12 +358,14 @@ export default function Home() {
           <div className="lg:hidden fixed inset-0 bg-charcoal bg-opacity-95 backdrop-blur-lg z-50">
             <div className="flex flex-col h-full">
               <div className="flex items-center justify-between p-4 border-b border-white/20">
-                <img 
-                  src={logoLightSrc} 
-                  alt="Keane Site Services" 
-                  className="h-24 w-auto header-logo cursor-pointer"
-                  onClick={() => scrollToSection('home')}
-                />
+                <div className="relative h-24" style={{ width: '120px' }}>
+                  <img 
+                    src={logoLightSrc} 
+                    alt="Keane Site Services" 
+                    className="absolute inset-0 h-24 w-auto header-logo cursor-pointer"
+                    onClick={() => scrollToSection('home')}
+                  />
+                </div>
                 <Button
                   variant="ghost"
                   size="icon"
