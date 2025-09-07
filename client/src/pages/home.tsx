@@ -24,9 +24,9 @@ import {
   TrendingUp,
   ArrowUpDown
 } from "lucide-react";
-const videoSrc = "/assets/hero/hero-loop.mp4";
-const logoSrc = "/assets/brand/keane-logo.png";
-const posterSrc = "/assets/hero/poster.jpg";
+const videoSrc = "./assets/hero/hero-loop.mp4";
+const logoSrc = "./assets/brand/keane-logo.png";
+const posterSrc = "./assets/hero/poster.jpg";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -56,13 +56,46 @@ export default function Home() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Handle reduced motion preference
+  // Handle video setup with diagnostics and reduced motion
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion && videoRef.current) {
-      videoRef.current.pause();
-      setIsVideoPlaying(false);
-    }
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Add video event listeners for diagnostics
+    const handleError = () => console.warn('Hero video error:', video.error);
+    const handleStalled = () => console.warn('Hero video stalled');
+    const handleWaiting = () => console.log('Hero video waiting/buffering');
+    const handleLoadedData = () => console.log('Hero video loadeddata OK');
+
+    video.addEventListener('error', handleError);
+    video.addEventListener('stalled', handleStalled);
+    video.addEventListener('waiting', handleWaiting);
+    video.addEventListener('loadeddata', handleLoadedData);
+
+    // Force inline autoplay properties for iOS
+    video.muted = true;
+    video.playsInline = true;
+
+    // Handle reduced motion preference
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const applyReducedMotion = () => {
+      if (prefersReduced.matches) {
+        video.pause();
+        video.removeAttribute('autoplay');
+        setIsVideoPlaying(false);
+      }
+    };
+    
+    applyReducedMotion();
+    prefersReduced.addEventListener('change', applyReducedMotion);
+
+    return () => {
+      video.removeEventListener('error', handleError);
+      video.removeEventListener('stalled', handleStalled);
+      video.removeEventListener('waiting', handleWaiting);
+      video.removeEventListener('loadeddata', handleLoadedData);
+      prefersReduced.removeEventListener('change', applyReducedMotion);
+    };
   }, []);
 
   const toggleVideo = () => {
@@ -322,12 +355,13 @@ export default function Home() {
         {/* Background Video */}
         <video 
           ref={videoRef}
+          id="heroVideo"
           className="hero-video" 
           autoPlay 
           loop 
           muted 
-          playsInline 
-          preload="auto"
+          playsInline
+          preload="metadata"
           poster={posterSrc}
           data-testid="hero-video"
         >
@@ -341,6 +375,7 @@ export default function Home() {
         <Button
           variant="ghost"
           size="icon"
+          id="toggleVideo"
           className="absolute top-24 right-4 z-10 bg-black/50 text-white p-2 rounded-full backdrop-blur-sm hover:bg-black/70"
           onClick={toggleVideo}
           aria-pressed={!isVideoPlaying}
@@ -351,7 +386,7 @@ export default function Home() {
         </Button>
         
         {/* Hero Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative z-[2] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           {/* Logo */}
           <img 
             src={logoSrc} 
