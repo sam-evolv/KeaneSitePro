@@ -1,0 +1,78 @@
+1) Minimal sanity file (guarantees logo + video render)
+Ask the Replit Agent to create a brand-new file at the project root called z_sanity.html with exactly this content and to place the two assets in the same folder (root) to remove all path ambiguity.
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sanity Check</title>
+  <style>
+    :root{--bg:#111;--overlay:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,.65))}
+    html,body{height:100%;margin:0;background:#111;color:#fff;font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+    .wrap{position:relative;height:100%;display:grid;place-items:center;overflow:hidden}
+    video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    .overlay{position:absolute;inset:0;background:var(--overlay)}
+    .content{position:relative;z-index:1;text-align:center}
+    .content img{height:64px;display:block;margin:0 auto 16px}
+    button{margin-top:12px;background:transparent;border:1px solid rgba(255,255,255,.5);color:#fff;padding:8px 12px;border-radius:8px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <video id="v" autoplay loop muted playsinline preload="metadata" poster="./poster.jpg">
+      <source src="./hero.mp4" type="video/mp4">
+    </video>
+    <div class="overlay" aria-hidden="true"></div>
+    <div class="content">
+      <img src="./logo.png" alt="Keane Site Services logo">
+      <h1>It Works</h1>
+      <button id="t">Pause Background</button>
+      <div id="log" style="opacity:.7;margin-top:6px;font-size:12px"></div>
+    </div>
+  </div>
+  <script>
+    const v=document.getElementById('v'), t=document.getElementById('t'), log=document.getElementById('log');
+    ['error','stalled','loadeddata','canplay','waiting'].forEach(e=>v.addEventListener(e,()=>log.textContent='Video event: '+e)));
+    t.onclick=()=>{ if(v.paused){ v.play(); t.textContent='Pause Background'; } else { v.pause(); t.textContent='Play Background'; } };
+  </script>
+</body>
+</html>
+Now instruct the Agent to:
+Copy your assets to project root with these names:
+/logo.png → from your current logo file
+/hero.mp4 → from your transcoded file
+/poster.jpg → a frame from the video
+If you don’t have a clean transcode yet, run:
+ffmpeg -y -i /mnt/data/Construction_Site_Sunrise_Aerial_Loop.mp4 \
+  -vf "scale=1920:-2" -an -c:v libx264 -profile:v high -pix_fmt yuv420p \
+  -movflags +faststart -crf 20 -preset veryfast hero.mp4
+ffmpeg -y -ss 00:00:01 -i hero.mp4 -vframes 1 -q:v 2 poster.jpg
+Open z_sanity.html in the preview.
+If the logo still doesn’t show → it’s a path or file-exists issue.
+If the video doesn’t play but the logo shows → it’s codec/autoplay.
+If both show in z_sanity.html → the problem in your main page is CSS/z-index/paths.
+2) If the sanity file works, patch the real site cleanly
+A. Put assets in a stable place
+Create /assets/brand/logo.png, /assets/hero/hero.mp4, /assets/hero/poster.jpg. Copy the working root files into those exact paths.
+B. Reference with simple relative URLs (no leading slash, no /public):
+<img src="assets/brand/logo.png" alt="Keane Site Services logo" height="32">
+
+<video id="heroVideo" class="hero-video" autoplay loop muted playsinline preload="metadata"
+       poster="assets/hero/poster.jpg">
+  <source src="assets/hero/hero.mp4" type="video/mp4">
+</video>
+C. Kill the top 3 gotchas
+Remove any <base href="..."> from <head>.
+Ensure no CSS sets .hero-video{display:none} or puts a solid background above the video.
+Avoid absolute paths in Replit preview. Use assets/... not /assets/....
+3) If the sanity file FAILS, here’s the decision tree
+Network 404 for logo or mp4 → file not where the HTML thinks it is. Fix filenames (case sensitive) and paths; confirm with ls -la.
+Video error code in the log → transcode again with the FFmpeg line above.
+Autoplay blocked → ensure muted + playsinline are present (they are). If iOS still blocks, click once on the page then call video.play() in console to verify.
+Black screen but events fire → overlay or container covers the video: set .hero__media{z-index:0} and .hero__overlay{z-index:1} and .hero__content{z-index:2}.
+4) One-shot Agent command (you can paste this as is)
+“Create z_sanity.html exactly as provided. Copy the current logo to /logo.png, transcode the provided loop to /hero.mp4 using the FFmpeg command above, and extract /poster.jpg. Open z_sanity.html. If the logo or video fails, print:
+the output of ls -la for the project root,
+the Network status for /logo.png and /hero.mp4,
+the video error code from the console.
+If z_sanity.html works, move the assets into assets/brand/logo.png and assets/hero/{hero.mp4,poster.jpg}, update index.html to those paths, and ensure z-index layering is video(0), overlay(1), content(2). Do not change any other sections.”
