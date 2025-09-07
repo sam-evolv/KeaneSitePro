@@ -278,14 +278,15 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}
-            <div className="flex-shrink-0 relative h-24 w-24">
+            <div className="flex-shrink-0 relative flex items-center justify-center h-24 w-32">
               {/* Original logo */}
               <img 
                 src={logoSrc} 
                 alt="Keane Site Services" 
-                className={`absolute top-0 left-0 h-24 w-24 object-contain header-logo cursor-pointer transition-opacity duration-500 ${
+                className={`absolute h-24 w-auto header-logo cursor-pointer transition-opacity duration-500 ${
                   isHeaderScrolled ? 'opacity-0' : 'opacity-100'
                 }`}
+                style={{ maxWidth: '128px' }}
                 onClick={() => scrollToSection('home')}
                 data-testid="header-logo"
               />
@@ -293,9 +294,10 @@ export default function Home() {
               <img 
                 src={logoLightSrc} 
                 alt="Keane Site Services" 
-                className={`absolute top-0 left-0 h-24 w-24 object-contain header-logo cursor-pointer transition-opacity duration-500 ${
+                className={`absolute h-24 w-auto header-logo cursor-pointer transition-opacity duration-500 ${
                   isHeaderScrolled ? 'opacity-100' : 'opacity-0'
                 }`}
+                style={{ maxWidth: '128px' }}
                 onClick={() => scrollToSection('home')}
                 data-testid="header-logo-light"
               />
@@ -358,11 +360,12 @@ export default function Home() {
           <div className="lg:hidden fixed inset-0 bg-charcoal bg-opacity-95 backdrop-blur-lg z-50">
             <div className="flex flex-col h-full">
               <div className="flex items-center justify-between p-4 border-b border-white/20">
-                <div className="relative h-24 w-24">
+                <div className="relative flex items-center justify-center h-24 w-32">
                   <img 
                     src={logoLightSrc} 
                     alt="Keane Site Services" 
-                    className="absolute top-0 left-0 h-24 w-24 object-contain header-logo cursor-pointer"
+                    className="absolute h-24 w-auto header-logo cursor-pointer"
+                    style={{ maxWidth: '128px' }}
                     onClick={() => scrollToSection('home')}
                   />
                 </div>
