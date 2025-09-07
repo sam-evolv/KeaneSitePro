@@ -1,0 +1,82 @@
+1) Normalize header geometry
+Add a consistent header height and remove any absolute positioning from the logo.
+CSS (append to public/styles.css):
+:root { --header-h: 64px; }
+
+.site-header{
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: var(--header-h);
+  background: rgba(17,17,17,.72);
+  backdrop-filter: saturate(140%) blur(8px);
+}
+
+.site-header .wrap{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 20px;
+}
+
+/* Make sure the logo is not absolutely positioned anywhere */
+.brand, .brand img{
+  display: block;
+  position: static !important;
+}
+.brand img{
+  height: 32px;
+  width: auto;
+}
+
+/* Ensure top sections never sit under the header */
+.svc-hero,
+.hero,
+main,
+section:first-of-type{
+  scroll-margin-top: var(--header-h);
+}
+2) Give the service hero breathing room
+Ensure the service-page hero isn’t tucked under the sticky header.
+CSS (append):
+.svc-hero{
+  padding-top: calc(24px + var(--header-h));
+}
+3) Stop deep-link scrolling to the bottom
+Three common causes: preserved scroll position, autofocus on a lower field, or hashes in links.
+HTML checks
+Ensure service links have no hash:
+<a class="card__more" href="services/waste-removal.html">Learn more</a>
+Remove any autofocus attributes from inputs/textarea on service pages.
+JS (add to public/app.js):
+// Always land at the top on navigation
+document.addEventListener('DOMContentLoaded', () => {
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  // Use instant where supported, fallback to auto
+  try {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  } catch(_) {
+    window.scrollTo(0, 0);
+  }
+});
+
+// Defensive: if a hash slipped into the URL, strip it and reset.
+if (location.hash && !location.hash.startsWith('#top')) {
+  const url = location.href.replace(location.hash, '');
+  history.replaceState(null, '', url);
+  window.scrollTo(0, 0);
+}
+4) Z-index hygiene in the hero
+Make sure layering is correct so nothing floats over breadcrumbs/text unintentionally.
+CSS (append):
+.hero__media, .svc-hero__bg { z-index: 0; }
+.hero__overlay { z-index: 1; }
+.hero__content, .svc-hero__content, .breadcrumb { z-index: 2; position: relative; }
+5) Acceptance criteria (agent must verify)
+Header height is fixed (64px) and the logo never overlaps breadcrumbs or titles.
+Service hero shows fully below the header.
+Clicking any “Learn more” opens the top of the service page, no scroll-down.
+No autofocus on lower fields; no # fragments in service links.
+Breadcrumbs are unobstructed in all viewports.

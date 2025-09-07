@@ -281,32 +281,16 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isHeaderScrolled ? 'header-blur' : ''}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 lg:h-20">
+      <header className={`site-header transition-all duration-300 ${isHeaderScrolled ? 'header-blur' : ''}`}>
+        <div className="wrap max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Logo */}
-            <div className="flex-shrink-0 relative flex items-center justify-center h-24 w-32">
-              {/* Original logo */}
+            <div className="brand flex-shrink-0">
               <img 
-                src={logoSrc} 
+                src={isHeaderScrolled ? logoLightSrc : logoSrc} 
                 alt="Keane Site Services" 
-                className={`absolute h-24 w-auto header-logo cursor-pointer transition-opacity duration-500 ${
-                  isHeaderScrolled ? 'opacity-0' : 'opacity-100'
-                }`}
-                style={{ maxWidth: '128px' }}
+                className="header-logo cursor-pointer transition-all duration-500"
                 onClick={() => scrollToSection('home')}
                 data-testid="header-logo"
-              />
-              {/* Light logo */}
-              <img 
-                src={logoLightSrc} 
-                alt="Keane Site Services" 
-                className={`absolute h-24 w-auto header-logo cursor-pointer transition-opacity duration-500 ${
-                  isHeaderScrolled ? 'opacity-100' : 'opacity-0'
-                }`}
-                style={{ maxWidth: '128px' }}
-                onClick={() => scrollToSection('home')}
-                data-testid="header-logo-light"
               />
             </div>
 

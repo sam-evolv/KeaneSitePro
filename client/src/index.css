@@ -334,3 +334,64 @@ select {
     height: 96px; /* h-24 equivalent */
   }
 }
+
+/* Header geometry normalization */
+:root { 
+  --header-h: 64px; 
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: var(--header-h);
+  background: rgba(17,17,17,.72);
+  backdrop-filter: saturate(140%) blur(8px);
+}
+
+.site-header .wrap {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 20px;
+}
+
+/* Make sure the logo is not absolutely positioned anywhere */
+.brand, .brand img {
+  display: block;
+  position: static !important;
+}
+
+.brand img {
+  height: 32px;
+  width: auto;
+}
+
+/* Ensure top sections never sit under the header */
+.svc-hero,
+.hero,
+main,
+section:first-of-type {
+  scroll-margin-top: var(--header-h);
+}
+
+/* Give the service hero breathing room */
+.svc-hero {
+  padding-top: calc(24px + var(--header-h));
+}
+
+/* Z-index hygiene in the hero */
+.hero__media, .svc-hero__bg { 
+  z-index: 0; 
+}
+
+.hero__overlay { 
+  z-index: 1; 
+}
+
+.hero__content, .svc-hero__content, .breadcrumb { 
+  z-index: 2; 
+  position: relative; 
+}
