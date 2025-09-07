@@ -890,22 +890,9 @@ export default function Home() {
       {/* Footer */}
       <footer className="bg-[hsl(0,0%,10%)] py-12" data-testid="footer">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-            {/* Logo and Info */}
-            <div className="md:col-span-1">
-              <img 
-                src={logoSrc} 
-                alt="Keane Site Services" 
-                className="h-12 w-auto mb-4"
-                data-testid="footer-logo"
-              />
-              <p className="text-gray-400 text-sm leading-relaxed">
-                Professional site clear-outs and groundworks. Delivering reliable results with precision and expertise.
-              </p>
-            </div>
-            
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center mb-8">
             {/* Quick Links */}
-            <div>
+            <div className="text-center md:text-left">
               <h4 className="text-white font-semibold mb-4">Quick Links</h4>
               <ul className="space-y-2">
                 <li><button onClick={() => scrollToSection('home')} className="text-gray-400 hover:text-primary transition-colors text-sm">Home</button></li>
@@ -915,8 +902,18 @@ export default function Home() {
               </ul>
             </div>
             
+            {/* Centered Large Logo */}
+            <div className="flex justify-center">
+              <img 
+                src={logoSrc} 
+                alt="Keane Site Services" 
+                className="h-32 w-auto logo-hover"
+                data-testid="footer-logo"
+              />
+            </div>
+            
             {/* Contact Info */}
-            <div>
+            <div className="text-center md:text-right">
               <h4 className="text-white font-semibold mb-4">Contact</h4>
               <div className="space-y-2 text-sm text-gray-400">
                 <div>Phone: +353 87 646 0921</div>
