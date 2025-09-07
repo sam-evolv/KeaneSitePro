@@ -24,8 +24,9 @@ import {
   TrendingUp,
   ArrowUpDown
 } from "lucide-react";
-import videoSrc from "@assets/Construction_Site_Sunrise_Aerial_Loop_1757249969252.mp4";
-import logoSrc from "@assets/Gemini_Generated_Image_yvcxt9yvcxt9yvcx_1757249974746.png";
+const videoSrc = "/assets/hero/Construction_Site_Sunrise_Aerial_Loop.mp4";
+const logoSrc = "/assets/brand/keane-logo.png";
+const posterSrc = "/assets/hero/poster.jpg";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -195,7 +196,7 @@ export default function Home() {
               <img 
                 src={logoSrc} 
                 alt="Keane Site Services" 
-                className="h-8 w-auto"
+                className="h-10 w-auto"
                 data-testid="header-logo"
               />
             </div>
@@ -327,6 +328,7 @@ export default function Home() {
           muted 
           playsInline 
           preload="metadata"
+          poster={posterSrc}
           data-testid="hero-video"
         >
           <source src={videoSrc} type="video/mp4" />
@@ -341,6 +343,8 @@ export default function Home() {
           size="icon"
           className="absolute top-24 right-4 z-10 bg-black/50 text-white p-2 rounded-full backdrop-blur-sm hover:bg-black/70"
           onClick={toggleVideo}
+          aria-pressed={!isVideoPlaying}
+          aria-label={isVideoPlaying ? "Pause background video" : "Play background video"}
           data-testid="button-video-toggle"
         >
           {isVideoPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
@@ -348,6 +352,13 @@ export default function Home() {
         
         {/* Hero Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          {/* Logo */}
+          <img 
+            src={logoSrc} 
+            alt="" 
+            className="h-14 lg:h-16 mx-auto mb-6 drop-shadow-lg"
+            style={{ filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.35))' }}
+          />
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white mb-6 tracking-tight leading-tight">
             Professional Site<br/>
             <span className="text-primary">Clear-Outs</span> &<br/>
