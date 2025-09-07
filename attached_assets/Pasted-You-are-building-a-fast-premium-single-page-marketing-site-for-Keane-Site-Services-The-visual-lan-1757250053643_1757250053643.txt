@@ -1,0 +1,173 @@
+You are building a fast, premium, single-page marketing site for Keane Site Services. The visual language is “industrial power + premium polish”: metallic greys, deep black, and brand orange. Use a clean, modern type system and restrained motion. The site must feel expensive while staying simple and functional.
+Objectives
+Implement a responsive, accessible, SEO-ready static site (no framework).
+Use a looping hero background video with graceful fallbacks and reduced-motion support.
+Incorporate the provided logo and color system across UI components.
+Ship Netlify-ready with an operational contact form.
+Hit excellent Core Web Vitals on mobile.
+Assets (import these into the project)
+Hero video: /public/assets/hero/Construction_Site_Sunrise_Aerial_Loop.mp4
+[Use the provided file: /mnt/data/Construction_Site_Sunrise_Aerial_Loop.mp4]
+Logo: /public/assets/brand/keane-logo.png
+[Use the provided file: /mnt/data/Gemini_Generated_Image_yvcxt9yvcxt9yvcx.png]
+Generate a square favicon (48x48, 96x96) from the logo and save to /public/favicon.ico.
+Tech stack
+Vanilla HTML/CSS/JS.
+No CSS frameworks. Author clean, componentized CSS.
+Use CSS custom properties for theming.
+Prefer prefers-reduced-motion and prefers-color-scheme.
+Ship a single index.html + /public/styles.css + /public/app.js.
+File structure
+/
+  index.html
+  /public
+    /assets
+      /brand/keane-logo.png
+      /hero/Construction_Site_Sunrise_Aerial_Loop.mp4
+      /images/ (placeholder)
+    app.js
+    styles.css
+    favicon.ico
+    robots.txt
+    sitemap.xml
+Brand system
+Colors
+--orange: #F15A29;
+--black: #111111;
+--charcoal: #1A1A1A;
+--mid-gray: #3C3C3C;
+--light-gray: #F5F6F7;
+--white: #FFFFFF;
+Metallic accent via subtle linear gradient on borders/backgrounds: linear-gradient(180deg,#6A6A6A 0%, #9A9A9A 100%) with low opacity overlays.
+Typography
+Use system font stack with a premium fallback: font-family: 'Inter', 'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+H1/H2 heavy, body regular. Tight letter-spacing for headings.
+Page architecture
+1) Header (sticky)
+Left: small logo (height 28–32px).
+Right: nav items [Home, Services, About, Contact] and a primary CTA “Request a Quote”.
+Sticky, compact, translucent black backdrop on scroll with blur.
+Mobile: hamburger menu, full-height overlay.
+2) Hero (full-viewport video)
+Background: autoplay, loop, muted, playsinline video.
+Add poster placeholder from a single extracted frame.
+Layer a dark gradient overlay for contrast.
+Centered content:
+H1: “Professional Site Clear-Outs & Groundworks”
+Sub: “Fast, compliant, and cost-effective site preparation.”
+CTAs: Request a Quote (primary, orange) and Call Now (outline, white text).
+Accessibility: pause button for background video, hidden for reduced-motion users.
+3) Services (grid)
+2x2 or 3x2 responsive card grid with light metallic accents.
+Initial items (placeholders until list arrives):
+Site Clear-Outs (primary)
+Waste Removal
+Ground Preparation
+Haulage Support
+Each card: icon placeholder, short 2-line description, “Learn more” micro-link.
+4) Why Keane (value props)
+3–4 pillars with minimal iconography:
+Efficiency
+Compliance & Safety
+Professional Equipment
+Trusted Expertise
+Dark section (charcoal) with subtle divider lines and low-key gradient sheen.
+5) About
+Split layout: left image placeholder, right copy:
+“Keane Site Services provides professional site clear-outs and related groundworks. With the right equipment and years of expertise, we deliver reliable results on time, every time.”
+6) CTA band
+Orange bar with metallic accent border.
+Copy: “Get Your Site Cleared by the Experts.”
+Buttons: Call Now | Request a Quote.
+7) Contact (Netlify form)
+Netlify form attributes enabled.
+Fields: name, email, phone, service, message.
+Inline validation and success state.
+Secondary contact block with clickable phone and mailto.
+8) Footer
+Minimal, dark.
+Small logo, company info, quick links, service area note.
+Accessibility & motion
+Respect prefers-reduced-motion: show hero poster image instead of video; disable parallax/scroll animations.
+Minimum color contrast AA.
+Visible focus states.
+Semantic landmarks and headings.
+Performance
+Preload hero video with preload="metadata"; keep size lean.
+Add poster for no-flash loading.
+Lazy-load below-the-fold images.
+Inline critical CSS for above-the-fold if file remains small; else keep in styles.css.
+Set height for the hero container to avoid CLS.
+SEO
+Title: “Keane Site Services | Professional Site Clear-Outs & Groundworks”
+Meta description: “Fast, compliant site clear-outs and groundworks. Professional equipment, trusted expertise, and on-time delivery. Request a quote today.”
+Open Graph and Twitter tags.
+JSON-LD schema: LocalBusiness with Service items.
+Robots + sitemap.
+Build the files
+index.html
+Create a fully formed, accessible HTML5 page with:
+Language, meta viewport, theme-color, OG/Twitter, JSON-LD.
+Sticky header + nav, hero section with video, sections described above, Netlify form.
+Import /public/styles.css and /public/app.js.
+Hero video element requirements:
+<video class="hero-video" autoplay loop muted playsinline preload="metadata" poster="/public/assets/hero/poster.jpg" aria-label="Construction site hero background">
+  <source src="/public/assets/hero/Construction_Site_Sunrise_Aerial_Loop.mp4" type="video/mp4">
+</video>
+Add a visible Pause Background control (button) that toggles playback and updates aria-pressed.
+/public/styles.css
+Author elegant, modern styling:
+CSS variables for theme colors.
+Sticky header with translucent blurred background on scroll.
+Large hero typography, gradient overlay, premium button styles:
+Primary button: orange background, subtle inner shadow, hover elevation, focus ring.
+Secondary button: transparent with 1px metallic border.
+Services grid with subtle metallic borders and soft shadows.
+Dark sections with gentle gradient sheens.
+Mobile-first breakpoints: 360, 768, 1024, 1440.
+Reduced motion: remove transitions/animations.
+/public/app.js
+Header scroll behavior (add class when scrolled).
+Mobile menu open/close.
+Hero video pause/play toggle; if prefers-reduced-motion, pause video and show poster.
+Simple client-side validation for the contact form; graceful Netlify submission handling.
+/public/robots.txt and /public/sitemap.xml
+Robots: allow all, point to sitemap.
+Simple static sitemap referencing root anchors (/#services, /#contact, etc.).
+Copy blocks (load now)
+Hero H1: Professional Site Clear-Outs & Groundworks
+Hero Sub: Fast, compliant, and cost-effective site preparation.
+Services descriptions (1 sentence each):
+Site Clear-Outs: Full site clearance with efficient waste handling and safe, compliant execution.
+Waste Removal: Licensed collection and responsible disposal with documentation on request.
+Ground Preparation: Accurate grading, debris removal, and readiness for next-stage works.
+Haulage Support: Coordinated logistics and plant movement to keep projects on schedule.
+Why Keane blurbs (short):
+Efficiency: Rapid scheduling and tight, well-run operations.
+Compliance & Safety: Fully insured, licensed, and safety-first on every job.
+Professional Equipment: Modern plant maintained to high standards.
+Trusted Expertise: Experienced team delivering reliable outcomes.
+About paragraph: use the copy listed in the About section above.
+CTA band: Get Your Site Cleared by the Experts.
+UI polish details
+Subtle animated gradient line under section headings.
+Buttons gain 2–4px lift on hover with soft shadow.
+Use small metallic gradient on card borders at 10–15 percent opacity.
+Maintain disciplined whitespace and consistent 8px spacing scale.
+Netlify form config
+Add <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+Include hidden input: <input type="hidden" name="form-name" value="contact">
+On success, show inline success message without redirect.
+QA checklist (agent self-verify)
+Mobile nav works, focus is trapped in open state.
+Hero video autoplays muted on desktop and mobile, no sound, loops cleanly.
+prefers-reduced-motion stops video and shows poster.
+All buttons have visible focus styles.
+Lighthouse mobile scores: >90 Performance, >95 Accessibility, >95 SEO, >95 Best Practices.
+No layout shifts during load.
+Contact form successfully posts to Netlify in a test environment.
+Deliverables
+All files created and populated per the structure above.
+Replace placeholder poster.jpg by extracting a mid-motion frame from the hero video.
+Provide a short README.md with quick deploy notes and how to update copy/services.
+Commit and run a local preview server for verification.
