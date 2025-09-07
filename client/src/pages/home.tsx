@@ -27,6 +27,7 @@ import {
 import logoAsset from "../assets/logo.png";
 import logoLightAsset from "../assets/logo-light.png";
 import aboutLogoAsset from "../assets/about-logo.png";
+import footerLogoAsset from "../assets/footer-logo.png";
 import videoAsset from "../assets/hero.mp4";
 import posterAsset from "../assets/poster.jpg";
 
@@ -34,6 +35,7 @@ const videoSrc = videoAsset;
 const logoSrc = logoAsset;
 const logoLightSrc = logoLightAsset;
 const aboutLogoSrc = aboutLogoAsset;
+const footerLogoSrc = footerLogoAsset;
 const posterSrc = posterAsset;
 
 export default function Home() {
@@ -905,9 +907,9 @@ export default function Home() {
             {/* Centered Large Logo */}
             <div className="flex justify-center">
               <img 
-                src={logoSrc} 
+                src={footerLogoSrc} 
                 alt="Keane Site Services" 
-                className="h-32 w-auto logo-hover"
+                className="h-64 w-auto logo-hover"
                 data-testid="footer-logo"
               />
             </div>
