@@ -25,17 +25,20 @@ import {
   ArrowUpDown
 } from "lucide-react";
 import logoAsset from "../assets/logo.png";
+import aboutLogoAsset from "../assets/about-logo.png";
 import videoAsset from "../assets/hero.mp4";
 import posterAsset from "../assets/poster.jpg";
 
 const videoSrc = videoAsset;
 const logoSrc = logoAsset;
+const aboutLogoSrc = aboutLogoAsset;
 const posterSrc = posterAsset;
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isHeaderScrolled, setIsHeaderScrolled] = useState(false);
   const [isVideoPlaying, setIsVideoPlaying] = useState(true);
+  const [isAboutLogoVisible, setIsAboutLogoVisible] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -47,6 +50,7 @@ export default function Home() {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   
   const videoRef = useRef<HTMLVideoElement>(null);
+  const aboutLogoRef = useRef<HTMLImageElement>(null);
   const { toast } = useToast();
   const isMobile = useIsMobile();
 
@@ -58,6 +62,31 @@ export default function Home() {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // About logo scroll animation
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsAboutLogoVisible(true);
+        }
+      },
+      {
+        threshold: 0.3,
+        rootMargin: '0px 0px -100px 0px'
+      }
+    );
+
+    if (aboutLogoRef.current) {
+      observer.observe(aboutLogoRef.current);
+    }
+
+    return () => {
+      if (aboutLogoRef.current) {
+        observer.unobserve(aboutLogoRef.current);
+      }
+    };
   }, []);
 
   // Handle video setup with diagnostics and reduced motion
@@ -503,13 +532,18 @@ export default function Home() {
       <section id="about" className="py-16 lg:py-24 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            {/* Image Side */}
-            <div className="order-2 lg:order-1">
+            {/* Logo Side */}
+            <div className="order-2 lg:order-1 flex items-center justify-center">
               <img 
-                src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" 
-                alt="Professional construction equipment and team at work" 
-                className="rounded-2xl shadow-2xl w-full h-auto"
-                data-testid="about-image"
+                ref={aboutLogoRef}
+                src={aboutLogoSrc} 
+                alt="Keane Site Services Logo" 
+                className={`w-80 h-80 transition-all duration-1000 ease-out transform ${
+                  isAboutLogoVisible 
+                    ? 'opacity-100 scale-100 translate-y-0' 
+                    : 'opacity-0 scale-75 translate-y-8'
+                }`}
+                data-testid="about-logo"
               />
             </div>
             
