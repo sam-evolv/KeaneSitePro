@@ -1,0 +1,55 @@
+You are editing the EvolvAi site. Two defects: the centre logo in the capabilities spider is wrong, and the hero video does not play.
+
+Goals:
+1) Ensure the centre node uses the full EvolvAi wordmark (icon + text).
+2) Ensure the hero background video autoplays on Safari/iOS and does not block hero content.
+
+Steps:
+
+A. Asset audit
+1. Search repo for existing logo assets. Expect something like:
+   /public/assets/brand/evolvai-wordmark.svg (preferred) or .png
+   /public/assets/brand/evolvai-icon.svg
+2. If the wordmark file does not exist, duplicate the best available wordmark from design assets folder, place it at:
+   /public/assets/brand/evolvai-wordmark.svg
+3. Verify the hero video files exist at:
+   /public/assets/hero/hero-video.mp4
+   /public/assets/hero/hero-video.webm
+   /public/assets/hero/hero-poster.jpg
+   If missing, copy the current hero video into mp4 H.264 format and add a small poster image. Ensure case matches exactly.
+
+B. Implement centre logo (wordmark)
+1. In the spider/capabilities component (likely components/Capabilities* or sections/*):
+   - Replace the current centre node content with:
+     <img src="/assets/brand/evolvai-wordmark.svg" alt="EvolvAi" class="core-logo">
+   - Ensure the wrapper keeps the circular node and glow styling.
+2. Add CSS to keep the logo contained, non-rotating, and crisp on mobile.
+
+C. Implement reliable hero video
+1. In the hero/header section, render the video with:
+   <video autoplay muted playsinline loop preload="auto" poster="/assets/hero/hero-poster.jpg" class="hero-video">
+     <source src="/assets/hero/hero-video.mp4" type="video/mp4">
+     <source src="/assets/hero/hero-video.webm" type="video/webm">
+   </video>
+2. Add CSS:
+   .hero-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; pointer-events:none; }
+   Ensure the headline/container has z-index > 1.
+3. Confirm Netlify serves correct MIME types. If needed, add a _headers file under /public with:
+   /*.mp4
+     Content-Type: video/mp4
+   /*.webm
+     Content-Type: video/webm
+4. Test on Safari:
+   - Video should autoplay silently due to muted + playsinline.
+   - If it still pauses, ensure no programmatic play() call is blocked and no overlay intercepts gesture.
+
+D. Paths and case-sensitivity
+- Fix any 404s by aligning import/URL paths to actual file locations. Respect case-sensitivity (Linux servers).
+
+E. QA
+- Run locally. Check Console and Network for 404/TypeError.
+- Verify hero text is interactive, not covered by the video (pointer-events:none on video).
+- Confirm centre logo displays the full wordmark at all breakpoints.
+
+F. Commit
+- Commit message: "Fix centre wordmark in capabilities and stabilise hero video autoplay on Safari/iOS."

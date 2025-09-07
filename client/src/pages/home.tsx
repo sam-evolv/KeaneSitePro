@@ -327,7 +327,7 @@ export default function Home() {
           loop 
           muted 
           playsInline 
-          preload="metadata"
+          preload="auto"
           poster={posterSrc}
           data-testid="hero-video"
         >
