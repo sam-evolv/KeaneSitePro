@@ -37,14 +37,20 @@ export default function ServicePage({ title, description, children, breadcrumb, 
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const { toast } = useToast()
 
-  // Handle scroll for header blur effect
+  // Header scroll behavior: toggle transparency
   useEffect(() => {
-    const handleScroll = () => {
-      setIsHeaderScrolled(window.scrollY > 50)
+    const toggle = () => {
+      const scrolled = window.scrollY > 8
+      if (scrolled) {
+        document.documentElement.classList.add('is-scrolled')
+      } else {
+        document.documentElement.classList.remove('is-scrolled')
+      }
+      setIsHeaderScrolled(scrolled)
     }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    toggle()
+    window.addEventListener('scroll', toggle, { passive: true })
+    return () => window.removeEventListener('scroll', toggle)
   }, [])
 
   // Set page title and meta description
@@ -125,7 +131,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isHeaderScrolled ? 'header-blur' : ''}`}>
+      <header className="site-header fixed top-0 left-0 right-0 z-50 transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}

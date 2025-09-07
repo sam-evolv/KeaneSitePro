@@ -177,11 +177,6 @@ select {
     box-shadow: 0 8px 24px 0 rgba(255, 255, 255, 0.15);
   }
   
-  .header-blur {
-    backdrop-filter: blur(20px);
-    background: rgba(17, 17, 17, 0.9);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
   
   .service-card {
     @apply bg-white border border-gray-200/15 rounded-xl transition-all duration-300;
