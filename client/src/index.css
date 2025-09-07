@@ -343,7 +343,7 @@ select {
   z-index: 1000;
   height: var(--header-h);
   display: block;
-  background: rgba(0, 0, 0, 0.3);          /* semi-transparent dark at top */
+  background: rgba(0, 0, 0, 0.05);         /* very light transparent at top */
   transition: background .25s ease, box-shadow .25s ease, border-color .25s ease;
 }
 
