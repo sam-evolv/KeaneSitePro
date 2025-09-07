@@ -1,0 +1,17 @@
+NOTE: This video file cannot be generated as it's a binary asset. 
+
+The file should be the construction site sunrise aerial loop video provided in the attached assets (Construction_Site_Sunrise_Aerial_Loop_1757249969252.mp4).
+
+To complete the implementation:
+1. Copy the provided video file to this location: public/assets/hero/Construction_Site_Sunrise_Aerial_Loop.mp4
+2. Ensure the video is optimized for web delivery (H.264 codec, reasonable file size)
+3. Consider creating a poster image frame from the video for faster loading
+
+The application is already configured to handle this video file with:
+- Autoplay, loop, muted attributes
+- Reduced motion support
+- Play/pause controls
+- Proper accessibility labeling
+- Fallback handling
+
+All other components are properly implemented and ready to use once this video asset is in place.
