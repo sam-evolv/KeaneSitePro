@@ -1,0 +1,241 @@
+Goal: For each service card’s “Learn more” link, open a full service page with the same header, footer, typography, colors, and CTA patterns as the homepage. Pages must be SEO-ready, fast, and accessible.
+1) Services to create now (placeholders OK)
+Create these pages under /services/:
+site-clear-outs.html [Primary]
+waste-removal.html
+ground-preparation.html
+haulage-support.html
+2) File structure
+/
+  index.html
+  /assets/brand/...
+  /assets/hero/...
+  /assets/images/services/ (placeholders)
+  /services
+    site-clear-outs.html
+    waste-removal.html
+    ground-preparation.html
+    haulage-support.html
+  /public/styles.css
+  /public/app.js
+  sitemap.xml
+3) Link the cards
+In the Services grid on index.html, update the “Learn more” anchors:
+<!-- Example card -->
+<a class="card__more" href="services/site-clear-outs.html">Learn more</a>
+<a class="card__more" href="services/waste-removal.html">Learn more</a>
+<a class="card__more" href="services/ground-preparation.html">Learn more</a>
+<a class="card__more" href="services/haulage-support.html">Learn more</a>
+4) Shared page template (apply to each service page)
+Each service page must:
+Reuse the same header and footer HTML from index.html (logo, sticky nav, CTA).
+Include a compact hero banner (no video) with a dark gradient, the service title, and breadcrumb.
+Use consistent typography and spacing from /public/styles.css.
+Include at least these sections: Overview, What’s Included, Process, Compliance & Safety, CTA.
+Include a Netlify contact/quote form at the bottom (same as homepage contact form).
+Include JSON-LD Service schema.
+Boilerplate HTML (use for each page; change title/content per service)
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Site Clear-Outs | Keane Site Services</title>
+  <meta name="description" content="Professional site clear-outs with fast mobilisation, safe execution, and compliant waste handling.">
+  <link rel="preload" href="../public/styles.css" as="style">
+  <link rel="stylesheet" href="../public/styles.css">
+  <link rel="icon" href="/favicon.ico">
+  <meta name="theme-color" content="#111111">
+  <meta property="og:title" content="Site Clear-Outs | Keane Site Services">
+  <meta property="og:description" content="Professional site clear-outs with fast mobilisation, safe execution, and compliant waste handling.">
+  <meta property="og:type" content="website">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Service",
+    "name":"Site Clear-Outs",
+    "provider":{"@type":"LocalBusiness","name":"Keane Site Services"},
+    "areaServed":"IE",
+    "serviceType":"Site clearance",
+    "description":"Professional site clear-outs with fast mobilisation, safe execution, and compliant waste handling.",
+    "offers":{"@type":"Offer","availability":"https://schema.org/InStock"}
+  }
+  </script>
+</head>
+<body class="theme-dark">
+  <!-- Header: copy exactly from index.html -->
+  <header class="site-header" role="banner">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Keane Site Services">
+        <img src="../assets/brand/logo.png" alt="Keane Site Services logo" height="32">
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="/">Home</a>
+        <a href="/#services">Services</a>
+        <a href="/#about">About</a>
+        <a href="/#contact">Contact</a>
+        <a href="/#contact" class="btn btn--primary">Request a Quote</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Service hero (compact, themed) -->
+  <section class="svc-hero">
+    <div class="svc-hero__bg"></div>
+    <div class="container svc-hero__content">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a><span>/</span><a href="/#services">Services</a><span>/</span><span aria-current="page">Site Clear-Outs</span>
+      </nav>
+      <h1 class="svc-title">Site Clear-Outs</h1>
+      <p class="svc-sub">Fast, compliant site preparation with responsible waste handling.</p>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <main id="main" class="svc-main">
+    <section class="svc-grid container">
+      <article class="svc-copy">
+        <h2>Overview</h2>
+        <p>We deliver end-to-end site clear-outs, mobilising quickly and working safely to prepare your site for next-stage works. Our team handles vegetation, debris, and non-hazardous waste with documentation available on request.</p>
+
+        <h3>What’s Included</h3>
+        <ul class="svc-list">
+          <li>Vegetation and debris removal</li>
+          <li>Segregation and responsible disposal</li>
+          <li>Haulage coordination</li>
+          <li>Final tidy and readiness check</li>
+        </ul>
+
+        <h3>Our Process</h3>
+        <ol class="svc-steps">
+          <li>Assessment and access planning</li>
+          <li>Clear-out and on-site segregation</li>
+          <li>Load-out and licensed disposal</li>
+          <li>Sign-off and handover</li>
+        </ol>
+
+        <h3>Compliance & Safety</h3>
+        <p>Keane Site Services operates with full insurance, method statements and risk assessments, and a safety-first approach on every job.</p>
+      </article>
+
+      <aside class="svc-aside">
+        <div class="svc-card">
+          <h3>Typical Use Cases</h3>
+          <ul class="svc-list">
+            <li>Pre-construction clearance</li>
+            <li>Residential or commercial plots</li>
+            <li>Enabling works</li>
+          </ul>
+        </div>
+
+        <div class="svc-card">
+          <h3>Related Services</h3>
+          <ul class="svc-links">
+            <li><a href="ground-preparation.html">Ground Preparation</a></li>
+            <li><a href="waste-removal.html">Waste Removal</a></li>
+            <li><a href="haulage-support.html">Haulage Support</a></li>
+          </ul>
+        </div>
+      </aside>
+    </section>
+
+    <!-- Inline CTA -->
+    <section class="cta-band cta-band--svc" aria-label="Request a quote">
+      <div class="container cta-band__inner">
+        <div>
+          <h2 class="cta-title">Ready to clear your site?</h2>
+          <p class="cta-sub">Tell us about the scope and timelines — we’ll respond quickly.</p>
+        </div>
+        <div class="cta-actions">
+          <a href="tel:+353XXXXXXXXX" class="btn btn--ghost">Call Now</a>
+          <a href="#contact" class="btn btn--primary">Request a Quote</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact form (Netlify) -->
+    <section id="contact" class="contact container">
+      <h2>Request a Quote</h2>
+      <form name="service-contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="form">
+        <input type="hidden" name="form-name" value="service-contact">
+        <p class="hidden"><label>Don’t fill this out if you're human: <input name="bot-field"></label></p>
+
+        <div class="form-grid">
+          <label>Full Name<input required name="name" type="text" autocomplete="name"></label>
+          <label>Email<input required name="email" type="email" autocomplete="email"></label>
+          <label>Phone<input name="phone" type="tel" autocomplete="tel"></label>
+          <label>Service<input name="service" type="text" value="Site Clear-Outs"></label>
+          <label class="full">Message<textarea name="message" rows="5" placeholder="Tell us about the site, access, timeline…"></textarea></label>
+        </div>
+
+        <button class="btn btn--primary" type="submit">Send Request</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Footer: copy from index -->
+  <footer class="site-footer">
+    <div class="container footer__inner">
+      <p>© Keane Site Services</p>
+      <nav class="footer-nav">
+        <a href="/">Home</a>
+        <a href="/#services">Services</a>
+        <a href="/#about">About</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../public/app.js" defer></script>
+</body>
+</html>
+5) CSS additions (append to /public/styles.css)
+/* Service hero */
+.svc-hero{position:relative;padding:64px 0 44px;background:#111;color:#fff;overflow:hidden}
+.svc-hero__bg{position:absolute;inset:0;background:
+  radial-gradient(60% 60% at 50% 0%, rgba(255,255,255,.06), rgba(0,0,0,0)),
+  linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.65)); z-index:0}
+.svc-hero__content{position:relative;z-index:1}
+.svc-title{margin:8px 0 6px;font-size:clamp(28px,4vw,42px);letter-spacing:.2px}
+.svc-sub{margin:0;color:#C9C9C9}
+
+/* Breadcrumb */
+.breadcrumb{display:flex;gap:8px;align-items:center;font-size:14px;color:#C9C9C9}
+.breadcrumb a{color:#fff;text-decoration:none;opacity:.85}
+.breadcrumb span{opacity:.6}
+
+/* Layout */
+.svc-main{padding:34px 0 60px;background:#121212}
+.svc-grid{display:grid;grid-template-columns: minmax(0,1fr) 320px;gap:24px}
+@media (max-width: 980px){ .svc-grid{grid-template-columns: 1fr; } }
+
+.svc-copy h2{margin:0 0 10px}
+.svc-copy h3{margin:22px 0 8px}
+.svc-list{margin:0 0 8px 18px}
+.svc-steps{margin:0 0 8px 18px}
+.svc-aside .svc-card{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px;margin-bottom:14px;color:#eee}
+.svc-links{list-style:none;padding:0;margin:0}
+.svc-links li{margin:6px 0}
+.svc-links a{text-decoration:none;color:#fff;opacity:.9}
+.svc-links a:hover{opacity:1}
+
+/* CTA band */
+.cta-band--svc{background:#1A1A1A;color:#fff;padding:26px 0;border-block:1px solid rgba(255,255,255,.06)}
+.cta-band__inner{display:flex;justify-content:space-between;align-items:center;gap:18px}
+.cta-title{margin:0 0 4px}
+.cta-sub{margin:0;color:#C9C9C9}
+@media (max-width: 880px){ .cta-band__inner{flex-direction:column;align-items:flex-start} }
+6) Duplicate and tailor
+Duplicate this template for the other services and adjust:
+<title>, <meta name="description">, JSON-LD name/serviceType/description, breadcrumb label, H1 and text blocks.
+For imagery, place any service photos in /assets/images/services/ and use within the page body if needed.
+7) Sitemap & internal links
+Update /sitemap.xml to include each /services/*.html.
+In the homepage Services cards, ensure the href paths are relative (services/...) and work in preview and production.
+8) Acceptance criteria
+Each service page renders with the same header/footer/fonts/colors as the homepage.
+Breadcrumbs, H1, meta title/description, and JSON-LD reflect the service.
+“Learn more” from the grid opens the correct page.
+The Request a Quote button and in-page Netlify form both function.
+Mobile layout readable and performant.

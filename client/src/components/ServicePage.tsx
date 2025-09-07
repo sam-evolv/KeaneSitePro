@@ -1,0 +1,435 @@
+import { useState, useEffect, useRef } from 'react'
+import { Link } from 'wouter'
+import { Menu, X, Phone, Mail, MapPin, ArrowLeft } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { useToast } from '@/hooks/use-toast'
+import logoAsset from '../assets/logo.png'
+import logoLightAsset from '../assets/logo-light.png'
+import footerLogoAsset from '../assets/footer-logo.png'
+
+const logoSrc = logoAsset
+const logoLightSrc = logoLightAsset
+const footerLogoSrc = footerLogoAsset
+
+interface ServicePageProps {
+  title: string
+  description: string
+  children: React.ReactNode
+  breadcrumb?: string
+  jsonLd?: object
+}
+
+export default function ServicePage({ title, description, children, breadcrumb, jsonLd }: ServicePageProps) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isHeaderScrolled, setIsHeaderScrolled] = useState(false)
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    service: title,
+    message: ""
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitSuccess, setSubmitSuccess] = useState(false)
+  const { toast } = useToast()
+
+  // Handle scroll for header blur effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsHeaderScrolled(window.scrollY > 50)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Set page title and meta description
+  useEffect(() => {
+    document.title = `${title} | Keane Site Services`
+    
+    // Update meta description
+    let metaDescription = document.querySelector('meta[name="description"]')
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta')
+      metaDescription.setAttribute('name', 'description')
+      document.head.appendChild(metaDescription)
+    }
+    metaDescription.setAttribute('content', description)
+
+    // Add JSON-LD structured data
+    if (jsonLd) {
+      const script = document.createElement('script')
+      script.type = 'application/ld+json'
+      script.textContent = JSON.stringify(jsonLd)
+      document.head.appendChild(script)
+      
+      return () => {
+        document.head.removeChild(script)
+      }
+    }
+  }, [title, description, jsonLd])
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+    }
+    setIsMenuOpen(false)
+  }
+
+  const handleFormChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+
+    try {
+      const netlifyFormData = new FormData()
+      netlifyFormData.append('form-name', 'service-contact')
+      Object.entries(formData).forEach(([key, value]) => {
+        netlifyFormData.append(key, value)
+      })
+
+      const response = await fetch('/', {
+        method: 'POST',
+        body: netlifyFormData,
+      })
+
+      if (response.ok) {
+        setSubmitSuccess(true)
+        setFormData({ name: "", email: "", phone: "", service: title, message: "" })
+        toast({
+          title: "Message sent!",
+          description: "We'll get back to you soon.",
+        })
+      } else {
+        throw new Error('Form submission failed')
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive",
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isHeaderScrolled ? 'header-blur' : ''}`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16 lg:h-20">
+            {/* Logo */}
+            <div className="flex-shrink-0 relative flex items-center justify-center h-24 w-32">
+              <Link href="/">
+                <img 
+                  src={isHeaderScrolled ? logoLightSrc : logoSrc} 
+                  alt="Keane Site Services" 
+                  className="absolute h-24 w-auto header-logo cursor-pointer transition-opacity duration-500"
+                />
+              </Link>
+            </div>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center space-x-8">
+              <Link href="/" className="text-white hover:text-primary transition-colors duration-200 font-medium">
+                Home
+              </Link>
+              <Link href="/#services" className="text-white hover:text-primary transition-colors duration-200 font-medium">
+                Services
+              </Link>
+              <Link href="/#about" className="text-white hover:text-primary transition-colors duration-200 font-medium">
+                About
+              </Link>
+              <Link href="/#contact" className="text-white hover:text-primary transition-colors duration-200 font-medium">
+                Contact
+              </Link>
+              <Button className="btn-primary px-6 py-2" asChild>
+                <Link href="/#contact">Request a Quote</Link>
+              </Button>
+            </nav>
+
+            {/* Mobile Menu Button */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="lg:hidden text-white p-2"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </Button>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <div className="lg:hidden fixed inset-0 bg-charcoal bg-opacity-95 backdrop-blur-lg z-50">
+            <div className="flex flex-col h-full">
+              <div className="flex items-center justify-between p-4 border-b border-white/20">
+                <Link href="/">
+                  <img 
+                    src={logoLightSrc} 
+                    alt="Keane Site Services" 
+                    className="h-24 w-auto header-logo cursor-pointer"
+                  />
+                </Link>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-white p-2"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <X className="w-6 h-6" />
+                </Button>
+              </div>
+              <nav className="flex-1 flex flex-col justify-center space-y-8 px-4">
+                <Link href="/" className="text-white text-xl font-semibold hover:text-primary transition-colors text-left">
+                  Home
+                </Link>
+                <Link href="/#services" className="text-white text-xl font-semibold hover:text-primary transition-colors text-left">
+                  Services
+                </Link>
+                <Link href="/#about" className="text-white text-xl font-semibold hover:text-primary transition-colors text-left">
+                  About
+                </Link>
+                <Link href="/#contact" className="text-white text-xl font-semibold hover:text-primary transition-colors text-left">
+                  Contact
+                </Link>
+                <div className="pt-8">
+                  <Button className="btn-primary w-full px-6 py-3 text-base" asChild>
+                    <Link href="/#contact">Request a Quote</Link>
+                  </Button>
+                </div>
+              </nav>
+            </div>
+          </div>
+        )}
+      </header>
+
+      {/* Service Hero */}
+      <section className="relative pt-20 pb-16 bg-charcoal text-white overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-charcoal via-dark-charcoal to-charcoal opacity-90"></div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Breadcrumb */}
+          <nav className="flex items-center space-x-2 text-sm text-gray-300 mb-6">
+            <Link href="/" className="hover:text-white transition-colors">Home</Link>
+            <span>/</span>
+            <Link href="/#services" className="hover:text-white transition-colors">Services</Link>
+            <span>/</span>
+            <span className="text-white">{breadcrumb || title}</span>
+          </nav>
+
+          {/* Back Button */}
+          <Link href="/#services" className="inline-flex items-center text-primary hover:text-primary/80 transition-colors mb-6">
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Services
+          </Link>
+
+          {/* Hero Content */}
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 tracking-tight">
+            {title}
+          </h1>
+          <p className="text-xl text-gray-200 max-w-3xl">
+            {description}
+          </p>
+        </div>
+      </section>
+
+      {/* Main Content */}
+      <main className="bg-background">
+        {children}
+        
+        {/* CTA Section */}
+        <section className="py-16 bg-charcoal text-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-6">
+              Ready to Get Started?
+            </h2>
+            <p className="text-xl text-gray-200 mb-10 max-w-2xl mx-auto">
+              Contact us today for a free consultation and quote for your {title.toLowerCase()} needs.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+              <Button className="bg-white text-primary px-8 py-4 text-lg font-semibold hover:bg-gray-100 transition-all duration-300 hover:-translate-y-1 shadow-lg w-full sm:w-auto" asChild>
+                <a href="tel:+353876460921">Call Now</a>
+              </Button>
+              <Button 
+                className="bg-transparent border-2 border-white text-white px-8 py-4 text-lg font-semibold hover:bg-white hover:text-primary transition-all duration-300 hover:-translate-y-1 w-full sm:w-auto"
+                onClick={() => scrollToSection('contact')}
+              >
+                Request a Quote
+              </Button>
+            </div>
+          </div>
+        </section>
+
+        {/* Contact Form Section */}
+        <section id="contact" className="py-16 lg:py-24 bg-[hsl(210,17%,97%)]">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6 tracking-tight">
+                Request a Quote
+              </h2>
+              <p className="text-xl text-muted-foreground">
+                Get in touch for a personalized quote for your {title.toLowerCase()} project.
+              </p>
+            </div>
+            
+            <div className="bg-white p-8 rounded-2xl shadow-lg">
+              <form 
+                name="service-contact" 
+                method="POST" 
+                data-netlify="true" 
+                netlify-honeypot="bot-field" 
+                className="space-y-6" 
+                onSubmit={handleSubmit}
+              >
+                <input type="hidden" name="bot-field" />
+                <input type="hidden" name="form-name" value="service-contact" />
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div>
+                    <Label htmlFor="name" className="block text-sm font-semibold text-foreground mb-2">Full Name *</Label>
+                    <Input 
+                      type="text" 
+                      id="name" 
+                      name="name" 
+                      required 
+                      value={formData.name}
+                      onChange={(e) => handleFormChange('name', e.target.value)}
+                      className="w-full"
+                    />
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="phone" className="block text-sm font-semibold text-foreground mb-2">Phone Number</Label>
+                    <Input 
+                      type="tel" 
+                      id="phone" 
+                      name="phone" 
+                      value={formData.phone}
+                      onChange={(e) => handleFormChange('phone', e.target.value)}
+                      className="w-full"
+                    />
+                  </div>
+                </div>
+                
+                <div>
+                  <Label htmlFor="email" className="block text-sm font-semibold text-foreground mb-2">Email Address *</Label>
+                  <Input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    required 
+                    value={formData.email}
+                    onChange={(e) => handleFormChange('email', e.target.value)}
+                    className="w-full"
+                  />
+                </div>
+                
+                <div>
+                  <Label htmlFor="service" className="block text-sm font-semibold text-foreground mb-2">Service Required</Label>
+                  <Input 
+                    type="text" 
+                    id="service" 
+                    name="service" 
+                    value={formData.service}
+                    onChange={(e) => handleFormChange('service', e.target.value)}
+                    className="w-full"
+                  />
+                </div>
+                
+                <div>
+                  <Label htmlFor="message" className="block text-sm font-semibold text-foreground mb-2">Project Details</Label>
+                  <Textarea 
+                    id="message" 
+                    name="message" 
+                    rows={5} 
+                    placeholder={`Tell us about your ${title.toLowerCase()} requirements, timeline, and site details...`}
+                    value={formData.message}
+                    onChange={(e) => handleFormChange('message', e.target.value)}
+                    className="w-full resize-y"
+                  />
+                </div>
+                
+                <Button 
+                  type="submit" 
+                  className="btn-primary w-full px-6 py-4 text-lg" 
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Sending...' : 'Send Request'}
+                </Button>
+                
+                {submitSuccess && (
+                  <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
+                    <div className="flex items-center">
+                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                      </svg>
+                      Thank you! Your message has been sent successfully. We'll get back to you soon.
+                    </div>
+                  </div>
+                )}
+              </form>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-[hsl(0,0%,10%)] py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center mb-8">
+            {/* Quick Links */}
+            <div className="text-center md:text-left">
+              <h4 className="text-white font-semibold mb-4">Quick Links</h4>
+              <ul className="space-y-2">
+                <li><Link href="/" className="text-gray-400 hover:text-primary transition-colors text-sm">Home</Link></li>
+                <li><Link href="/#services" className="text-gray-400 hover:text-primary transition-colors text-sm">Services</Link></li>
+                <li><Link href="/#about" className="text-gray-400 hover:text-primary transition-colors text-sm">About</Link></li>
+                <li><Link href="/#contact" className="text-gray-400 hover:text-primary transition-colors text-sm">Contact</Link></li>
+              </ul>
+            </div>
+            
+            {/* Centered Large Logo */}
+            <div className="flex justify-center">
+              <Link href="/">
+                <img 
+                  src={footerLogoSrc} 
+                  alt="Keane Site Services" 
+                  className="h-64 w-auto logo-hover"
+                />
+              </Link>
+            </div>
+            
+            {/* Contact Info */}
+            <div className="text-center md:text-right">
+              <h4 className="text-white font-semibold mb-4">Contact</h4>
+              <div className="space-y-2 text-sm text-gray-400">
+                <div>Phone: +353 87 646 0921</div>
+                <div>Email: info@keanesiteservices.com</div>
+                <div>Service Area: Ireland</div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="pt-8 border-t border-gray-700 text-center">
+            <p className="text-gray-400 text-sm">
+              © 2024 Keane Site Services. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  )
+}

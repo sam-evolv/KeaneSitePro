@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -231,22 +232,26 @@ export default function Home() {
     {
       icon: Building,
       title: "Site Clear-Outs",
-      description: "Full site clearance with efficient waste handling and safe, compliant execution."
+      description: "Full site clearance with efficient waste handling and safe, compliant execution.",
+      route: "/services/site-clear-outs"
     },
     {
       icon: Truck,
       title: "Waste Removal", 
-      description: "Licensed collection and responsible disposal with documentation on request."
+      description: "Licensed collection and responsible disposal with documentation on request.",
+      route: "/services/waste-removal"
     },
     {
       icon: TrendingUp,
       title: "Ground Preparation",
-      description: "Accurate grading, debris removal, and readiness for next-stage works."
+      description: "Accurate grading, debris removal, and readiness for next-stage works.",
+      route: "/services/ground-preparation"
     },
     {
       icon: ArrowUpDown,
       title: "Haulage Support",
-      description: "Coordinated logistics and plant movement to keep projects on schedule."
+      description: "Coordinated logistics and plant movement to keep projects on schedule.",
+      route: "/services/haulage-support"
     }
   ];
 
@@ -535,13 +540,13 @@ export default function Home() {
                 <p className="text-muted-foreground mb-6 leading-relaxed">
                   {service.description}
                 </p>
-                <button 
-                  onClick={() => scrollToSection('contact')}
-                  className="text-primary font-semibold hover:text-primary/80 transition-colors"
+                <Link 
+                  href={service.route}
+                  className="text-primary font-semibold hover:text-primary/80 transition-colors inline-block"
                   data-testid={`service-learn-more-${index}`}
                 >
                   Learn more →
-                </button>
+                </Link>
               </div>
             ))}
           </div>
