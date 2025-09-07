@@ -301,4 +301,9 @@
     transform: scale(1.1);
     filter: brightness(1.1) drop-shadow(0 2px 8px rgba(241, 90, 41, 0.5));
   }
+
+  /* Smooth logo switching */
+  .logo-transition {
+    transition: opacity 0.3s ease-in-out;
+  }
 }

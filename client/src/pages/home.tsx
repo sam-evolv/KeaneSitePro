@@ -25,12 +25,14 @@ import {
   ArrowUpDown
 } from "lucide-react";
 import logoAsset from "../assets/logo.png";
+import logoLightAsset from "../assets/logo-light.png";
 import aboutLogoAsset from "../assets/about-logo.png";
 import videoAsset from "../assets/hero.mp4";
 import posterAsset from "../assets/poster.jpg";
 
 const videoSrc = videoAsset;
 const logoSrc = logoAsset;
+const logoLightSrc = logoLightAsset;
 const aboutLogoSrc = aboutLogoAsset;
 const posterSrc = posterAsset;
 
@@ -276,11 +278,11 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}
-            <div className="flex-shrink-0">
+            <div className="flex-shrink-0 relative">
               <img 
-                src={logoSrc} 
+                src={isHeaderScrolled ? logoLightSrc : logoSrc} 
                 alt="Keane Site Services" 
-                className="h-24 w-auto header-logo cursor-pointer"
+                className="h-24 w-auto header-logo cursor-pointer transition-opacity duration-300"
                 onClick={() => scrollToSection('home')}
                 data-testid="header-logo"
               />
@@ -344,7 +346,7 @@ export default function Home() {
             <div className="flex flex-col h-full">
               <div className="flex items-center justify-between p-4 border-b border-white/20">
                 <img 
-                  src={logoSrc} 
+                  src={logoLightSrc} 
                   alt="Keane Site Services" 
                   className="h-24 w-auto header-logo cursor-pointer"
                   onClick={() => scrollToSection('home')}
