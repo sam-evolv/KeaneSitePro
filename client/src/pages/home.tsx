@@ -631,22 +631,6 @@ export default function Home() {
                   From small residential clearances to large commercial developments, our experienced team and modern equipment fleet ensure your site is prepared to the highest professional standards.
                 </p>
               </div>
-              
-              {/* Stats */}
-              <div className="grid grid-cols-3 gap-6 mt-10 pt-8 border-t border-border">
-                <div className="text-center" data-testid="stat-experience">
-                  <div className="text-2xl lg:text-3xl font-bold text-primary">15+</div>
-                  <div className="text-sm text-muted-foreground">Years Experience</div>
-                </div>
-                <div className="text-center" data-testid="stat-projects">
-                  <div className="text-2xl lg:text-3xl font-bold text-primary">500+</div>
-                  <div className="text-sm text-muted-foreground">Projects Completed</div>
-                </div>
-                <div className="text-center" data-testid="stat-satisfaction">
-                  <div className="text-2xl lg:text-3xl font-bold text-primary">100%</div>
-                  <div className="text-sm text-muted-foreground">Client Satisfaction</div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
