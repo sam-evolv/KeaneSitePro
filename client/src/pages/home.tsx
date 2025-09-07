@@ -24,9 +24,13 @@ import {
   TrendingUp,
   ArrowUpDown
 } from "lucide-react";
-const videoSrc = "assets/hero/hero.mp4";
-const logoSrc = "assets/brand/logo.png";
-const posterSrc = "assets/hero/poster.jpg";
+import logoAsset from "../assets/logo.png";
+import videoAsset from "../assets/hero.mp4";
+import posterAsset from "../assets/poster.jpg";
+
+const videoSrc = videoAsset;
+const logoSrc = logoAsset;
+const posterSrc = posterAsset;
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
