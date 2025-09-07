@@ -42,6 +42,7 @@ const posterSrc = posterAsset;
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isHeaderScrolled, setIsHeaderScrolled] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
   const [isVideoPlaying, setIsVideoPlaying] = useState(true);
   const [isAboutLogoVisible, setIsAboutLogoVisible] = useState(false);
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set());
@@ -63,20 +64,22 @@ export default function Home() {
   const { toast } = useToast();
   const isMobile = useIsMobile();
 
-  // Header scroll behavior: toggle transparency
+  // Toggle "scrolled" class on header
   useEffect(() => {
-    const toggle = () => {
-      const scrolled = window.scrollY > 8;
-      if (scrolled) {
-        document.documentElement.classList.add('is-scrolled');
-      } else {
-        document.documentElement.classList.remove('is-scrolled');
+    const handleScroll = () => {
+      const scrolled = window.scrollY > 10;
+      if (headerRef.current) {
+        if (scrolled) {
+          headerRef.current.classList.add('scrolled');
+        } else {
+          headerRef.current.classList.remove('scrolled');
+        }
       }
       setIsHeaderScrolled(scrolled);
     };
-    toggle();
-    window.addEventListener('scroll', toggle, { passive: true });
-    return () => window.removeEventListener('scroll', toggle);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Premium scroll animations for all sections
@@ -287,7 +290,7 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <header className="site-header transition-all duration-300">
+      <header ref={headerRef} className="site-header">
         <div className="wrap max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Logo */}
             <div className="brand flex-shrink-0">

@@ -26,6 +26,7 @@ interface ServicePageProps {
 export default function ServicePage({ title, description, children, breadcrumb, jsonLd }: ServicePageProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isHeaderScrolled, setIsHeaderScrolled] = useState(false)
+  const headerRef = useRef<HTMLElement>(null)
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -37,20 +38,22 @@ export default function ServicePage({ title, description, children, breadcrumb, 
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const { toast } = useToast()
 
-  // Header scroll behavior: toggle transparency
+  // Toggle "scrolled" class on header
   useEffect(() => {
-    const toggle = () => {
-      const scrolled = window.scrollY > 8
-      if (scrolled) {
-        document.documentElement.classList.add('is-scrolled')
-      } else {
-        document.documentElement.classList.remove('is-scrolled')
+    const handleScroll = () => {
+      const scrolled = window.scrollY > 10
+      if (headerRef.current) {
+        if (scrolled) {
+          headerRef.current.classList.add('scrolled')
+        } else {
+          headerRef.current.classList.remove('scrolled')
+        }
       }
       setIsHeaderScrolled(scrolled)
     }
-    toggle()
-    window.addEventListener('scroll', toggle, { passive: true })
-    return () => window.removeEventListener('scroll', toggle)
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   // Set page title and meta description
@@ -131,7 +134,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="site-header fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+      <header ref={headerRef} className="site-header">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}
