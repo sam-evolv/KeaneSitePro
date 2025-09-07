@@ -261,7 +261,7 @@ export default function Home() {
                 <img 
                   src={logoSrc} 
                   alt="Keane Site Services" 
-                  className="h-8 w-auto"
+                  className="h-10 w-auto"
                 />
                 <Button
                   variant="ghost"
