@@ -412,7 +412,7 @@ export default function Home() {
                 </button>
                 <div className="pt-8">
                   <Button 
-                    className="btn-primary w-full px-6 py-3 text-base" 
+                    className="btn btn--primary w-full" 
                     onClick={() => scrollToSection('contact')}
                     data-testid="button-request-quote-mobile"
                   >
@@ -482,14 +482,14 @@ export default function Home() {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
             <Button 
-              className="btn-primary px-8 py-4 text-lg w-full sm:w-auto" 
+              className="btn btn--primary" 
               onClick={() => scrollToSection('contact')}
               data-testid="button-request-quote-hero"
             >
               Request a Quote
             </Button>
             <Button 
-              className="btn-secondary px-8 py-4 text-lg w-full sm:w-auto" 
+              className="btn btn--ghost" 
               asChild
               data-testid="button-call-now-hero"
             >
