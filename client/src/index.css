@@ -462,17 +462,7 @@ html, body {
   background: #000;              /* while buffering */
 }
 
-/* 4) Header must not draw a line when transparent */
-.site-header {
-  border: 0 !important;
-  box-shadow: none !important;
-  background: transparent;
-}
-.site-header.scrolled {
-  background: rgba(0,0,0,.85);
-  backdrop-filter: saturate(140%) blur(8px);
-  border-bottom: 1px solid rgba(255,255,255,.08);
-}
+/* Header scroll transition - remove conflicting rules */
 
 /* 5) Ensure hero/sections don't add their own borders */
 .hero, .hero__media, .hero__overlay {
