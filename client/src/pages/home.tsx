@@ -289,6 +289,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
+      {/* Skip Link Accessibility */}
+      <a className="skip-link" href="#main">Skip to content</a>
+      
       {/* Header */}
       <header ref={headerRef} className="site-header">
         <div className="wrap max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -334,7 +337,7 @@ export default function Home() {
                 Contact
               </button>
               <Button 
-                className="btn-primary px-6 py-2 text-sm" 
+                className="btn btn--primary" 
                 onClick={() => scrollToSection('contact')}
                 data-testid="button-request-quote-header"
               >
@@ -423,25 +426,27 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-charcoal">
-        {/* Background Video */}
-        <video 
-          ref={videoRef}
-          id="heroVideo"
-          className="hero-video" 
-          autoPlay 
-          loop 
-          muted 
-          playsInline
-          preload="metadata"
-          poster={posterSrc}
-          data-testid="hero-video"
-        >
-          <source src={videoSrc} type="video/mp4" />
-        </video>
+      <section id="main" className="hero">
+        {/* Video Media */}
+        <div className="hero__media">
+          <video 
+            ref={videoRef}
+            id="heroVideo"
+            className="hero-video" 
+            autoPlay 
+            loop 
+            muted 
+            playsInline
+            preload="metadata"
+            poster={posterSrc}
+            data-testid="hero-video"
+          >
+            <source src={videoSrc} type="video/mp4" />
+          </video>
+        </div>
         
-        {/* Overlay */}
-        <div className="hero-overlay"></div>
+        {/* Hero Overlay */}
+        <div className="hero__overlay"></div>
         
         {/* Video Controls */}
         <Button
@@ -458,7 +463,7 @@ export default function Home() {
         </Button>
         
         {/* Hero Content */}
-        <div className="relative z-[2] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="hero__content fade-in">
           {/* Logo */}
           <img 
             src={logoSrc} 
