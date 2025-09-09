@@ -146,6 +146,10 @@ select {
     box-shadow: 0 0 0 3px rgba(241,90,41,.45);
   }
   
+  .btn--pill {
+    border-radius: var(--radius-pill);
+  }
+  
   /* Enterprise Card System */
   .card, .svc-card, .strength {
     border: var(--border-1); 

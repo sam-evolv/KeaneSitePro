@@ -337,7 +337,7 @@ export default function Home() {
                 Contact
               </button>
               <Button 
-                className="btn btn--primary" 
+                className="btn btn--primary btn--pill" 
                 onClick={() => scrollToSection('contact')}
                 data-testid="button-request-quote-header"
               >
@@ -412,7 +412,7 @@ export default function Home() {
                 </button>
                 <div className="pt-8">
                   <Button 
-                    className="btn btn--primary w-full" 
+                    className="btn btn--primary btn--pill w-full" 
                     onClick={() => scrollToSection('contact')}
                     data-testid="button-request-quote-mobile"
                   >
@@ -482,14 +482,14 @@ export default function Home() {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
             <Button 
-              className="btn btn--primary" 
+              className="btn btn--primary btn--pill" 
               onClick={() => scrollToSection('contact')}
               data-testid="button-request-quote-hero"
             >
               Request a Quote
             </Button>
             <Button 
-              className="btn btn--ghost" 
+              className="btn btn--ghost btn--pill" 
               asChild
               data-testid="button-call-now-hero"
             >
