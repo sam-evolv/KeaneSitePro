@@ -224,33 +224,28 @@ export default function ServicePage({ title, description, children, breadcrumb, 
         )}
       </header>
 
-      {/* Service Hero */}
-      <section className="relative pt-20 pb-16 bg-charcoal text-white overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-charcoal via-dark-charcoal to-charcoal opacity-90"></div>
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Breadcrumb */}
-          <nav className="flex items-center space-x-2 text-sm text-gray-300 mb-6">
-            <Link href="/" className="hover:text-white transition-colors">Home</Link>
-            <span>/</span>
-            <Link href="/#services" className="hover:text-white transition-colors">Services</Link>
-            <span>/</span>
-            <span className="text-white">{breadcrumb || title}</span>
+      {/* Service Hero (polished) */}
+      <section className="svc-hero svc-hero--compact" aria-labelledby="svc-title">
+        <div className="container">
+          <nav className="svc-breadcrumb" aria-label="Breadcrumb">
+            <Link href="/">Home</Link><span aria-hidden="true">/</span>
+            <Link href="/#services">Services</Link><span aria-hidden="true">/</span>
+            <span className="current">{breadcrumb || title}</span>
           </nav>
 
-          {/* Back Button */}
-          <Link href="/#services" className="inline-flex items-center text-primary hover:text-primary/80 transition-colors mb-6">
-            <ArrowLeft className="w-4 h-4 mr-2" />
+          <Link className="svc-back" href="/#services" aria-label="Back to services">
+            <span className="svc-back__icon" aria-hidden="true"></span>
             Back to Services
           </Link>
 
-          {/* Hero Content */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 tracking-tight">
-            {title}
-          </h1>
-          <p className="text-xl text-gray-200 max-w-3xl">
-            {description}
-          </p>
+          <header className="svc-headline">
+            <h1 id="svc-title" className="svc-title">{title}</h1>
+            <p className="svc-sub">
+              {description}
+            </p>
+          </header>
+
+          <div className="svc-divider" aria-hidden="true"></div>
         </div>
       </section>
 

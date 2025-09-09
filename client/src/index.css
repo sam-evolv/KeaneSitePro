@@ -657,6 +657,115 @@ a.link-underline:hover::after {
   z-index: 1100;
 }
 
+/* Service Page Premium Styles */
+.svc-hero { 
+  background: #111; 
+  color: #fff; 
+}
+
+.svc-hero--compact { 
+  padding: calc(var(--header-h, 64px) + 28px) 0 28px; 
+}
+
+.svc-hero .container { 
+  max-width: 1100px; 
+  margin: 0 auto; 
+  padding: 0 20px; 
+}
+
+/* Breadcrumb */
+.svc-breadcrumb { 
+  display: flex; 
+  gap: 8px; 
+  align-items: center; 
+  color: #C9C9C9; 
+  font-size: 14px; 
+  margin: 0 0 10px; 
+}
+
+.svc-breadcrumb a { 
+  color: #fff; 
+  text-decoration: none; 
+  opacity: .9; 
+  transition: opacity var(--transition); 
+}
+
+.svc-breadcrumb a:hover { 
+  opacity: 1; 
+  text-decoration: underline; 
+}
+
+.svc-breadcrumb .current { 
+  color: #fff; 
+  opacity: .85; 
+}
+
+/* Back link */
+.svc-back { 
+  display: inline-flex; 
+  align-items: center; 
+  gap: 8px; 
+  margin: 6px 0 14px;
+  color: var(--orange); 
+  text-decoration: none; 
+  font-weight: 700; 
+}
+
+.svc-back:hover .svc-back__icon { 
+  transform: translateX(-2px); 
+}
+
+.svc-back__icon { 
+  width: 18px; 
+  height: 18px; 
+  flex: 0 0 18px; 
+  border-left: 2px solid var(--orange);
+  border-bottom: 2px solid var(--orange); 
+  transform: rotate(45deg); 
+  transition: transform var(--transition); 
+}
+
+/* Headline block */
+.svc-headline { 
+  max-width: 860px; 
+}
+
+.svc-title { 
+  margin: .25rem 0 .35rem; 
+  font-size: clamp(32px, 5vw, 56px); 
+  line-height: 1.06; 
+  letter-spacing: .2px; 
+}
+
+.svc-sub { 
+  margin: 0; 
+  color: #D0D0D0; 
+  font-size: clamp(16px, 1.8vw, 20px); 
+}
+
+/* Divider */
+.svc-divider { 
+  height: 1px; 
+  margin: 22px 0 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.10), transparent); 
+}
+
+/* Respect sticky header when navigating within page */
+.svc-hero, .svc-hero * { 
+  scroll-margin-top: var(--header-h, 64px); 
+}
+
+/* Small screens */
+@media (max-width: 720px) {
+  .svc-breadcrumb { 
+    font-size: 13px; 
+  }
+  
+  .svc-back { 
+    margin: 4px 0 12px; 
+  }
+}
+
 /* 5) Ensure hero/sections don't add their own borders */
 .hero, .hero__media, .hero__overlay {
   border: 0 !important;
