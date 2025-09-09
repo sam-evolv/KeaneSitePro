@@ -27,7 +27,7 @@ export default function HaulageSupport() {
   return (
     <ServicePage
       title="Haulage Support"
-      description="Coordinated logistics and plant movement to keep construction projects on schedule and within budget."
+      description="Coordinated logistics and plant movement to keep projects on schedule."
       breadcrumb="Haulage Support"
       jsonLd={jsonLd}
     >

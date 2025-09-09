@@ -27,7 +27,7 @@ export default function GroundPreparation() {
   return (
     <ServicePage
       title="Ground Preparation"
-      description="Accurate grading, debris removal, and site readiness for next-stage construction works."
+      description="Accurate grading, debris removal, and readiness for next-stage works."
       breadcrumb="Ground Preparation"
       jsonLd={jsonLd}
     >

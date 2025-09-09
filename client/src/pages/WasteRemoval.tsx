@@ -27,7 +27,7 @@ export default function WasteRemoval() {
   return (
     <ServicePage
       title="Waste Removal"
-      description="Licensed collection and responsible disposal with full documentation and compliance certification."
+      description="Licensed collection and responsible disposal with documentation on request."
       breadcrumb="Waste Removal"
       jsonLd={jsonLd}
     >
