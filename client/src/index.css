@@ -450,17 +450,7 @@ select {
   padding: 0 20px;
 }
 
-/* Make sure the logo is not absolutely positioned anywhere */
-.brand, .brand img {
-  display: block;
-  position: static !important;
-}
-
-.brand img {
-  /* Height controlled by Tailwind classes (h-60) */
-  width: auto;
-  display: block;
-}
+/* Legacy logo styles - removed to allow new cross-fade positioning */
 
 .nav a {
   color: #fff; 
