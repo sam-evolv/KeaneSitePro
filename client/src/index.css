@@ -131,7 +131,7 @@ select {
   }
   
   .btn--primary:hover {
-    transform: translateY(-1px); 
+    transform: translateY(-2px) scale(1.02); 
     box-shadow: var(--shadow-2);
   }
   
@@ -141,13 +141,21 @@ select {
     border-color: rgba(255,255,255,.5);
   }
   
+  .btn--ghost:hover {
+    transform: translateY(-2px) scale(1.02);
+    background: rgba(255,255,255,.1);
+    border-color: rgba(255,255,255,.8);
+    box-shadow: 0 8px 24px rgba(0,0,0,.3);
+  }
+  
   .btn:focus-visible {
     outline: 0; 
     box-shadow: 0 0 0 3px rgba(241,90,41,.45);
   }
   
   .btn--pill {
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-pill) !important;
+    padding: .8rem 2rem;
   }
   
   /* Enterprise Card System */
@@ -201,26 +209,7 @@ select {
     border: 1px solid transparent;
   }
   
-  .btn-primary {
-    @apply bg-primary text-primary-foreground font-bold rounded-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-    background: linear-gradient(135deg, var(--orange) 0%, hsl(14, 86%, 50%) 100%);
-  }
-  
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 32px 0 rgba(241, 90, 41, 0.4), 0 6px 16px 0 rgba(0, 0, 0, 0.2);
-  }
-  
-  .btn-secondary {
-    @apply bg-transparent text-white font-bold rounded-xl border-2 border-white/40 backdrop-blur-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2;
-  }
-  
-  .btn-secondary:hover {
-    @apply border-white/70 bg-white/15;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px 0 rgba(255, 255, 255, 0.15);
-  }
+  /* Legacy button styles removed to prevent conflicts with new .btn system */
   
   
   .service-card {
@@ -345,26 +334,7 @@ select {
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* Premium glow effects */
-  .btn-primary {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .btn-primary::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s;
-  }
-
-  .btn-primary:hover::before {
-    left: 100%;
-  }
+  /* Premium glow effects - now applied to .btn--primary through the existing btn system */
 
   /* Logo animations */
   .hero-logo {

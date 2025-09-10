@@ -655,14 +655,14 @@ export default function Home() {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
             <Button 
-              className="bg-white text-primary px-8 py-4 text-lg font-semibold hover:bg-gray-100 transition-all duration-300 hover:-translate-y-1 shadow-lg w-full sm:w-auto" 
+              className="btn btn--ghost btn--pill w-full sm:w-auto" 
               asChild
               data-testid="button-call-now-cta"
             >
               <a href="tel:+353876460921">Call Now</a>
             </Button>
             <Button 
-              className="bg-transparent border-2 border-white text-white px-8 py-4 text-lg font-semibold hover:bg-white hover:text-primary transition-all duration-300 hover:-translate-y-1 w-full sm:w-auto" 
+              className="btn btn--primary btn--pill w-full sm:w-auto" 
               onClick={() => scrollToSection('contact')}
               data-testid="button-request-quote-cta"
             >
@@ -851,7 +851,7 @@ export default function Home() {
                 {/* Submit Button */}
                 <Button 
                   type="submit" 
-                  className="btn-primary w-full px-6 py-4 text-lg" 
+                  className="btn btn--primary btn--pill w-full" 
                   disabled={isSubmitting}
                   data-testid="button-submit-form"
                 >

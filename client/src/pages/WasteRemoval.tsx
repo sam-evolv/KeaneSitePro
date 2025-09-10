@@ -161,9 +161,9 @@ export default function WasteRemoval() {
                   <p className="mb-4">Get a personalized quote for your waste removal needs.</p>
                   <a 
                     href="#contact" 
-                    className="inline-block bg-white text-primary px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+                    className="btn btn--ghost btn--pill"
                   >
-                    Request Quote
+                    Request a Quote
                   </a>
                 </div>
               </div>

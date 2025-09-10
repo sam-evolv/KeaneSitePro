@@ -162,7 +162,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
               <Link href="/#contact" className="text-white hover:text-primary transition-colors duration-200 font-medium">
                 Contact
               </Link>
-              <Button className="btn-primary px-6 py-2" asChild>
+              <Button className="btn btn--primary btn--pill" asChild>
                 <Link href="/#contact">Request a Quote</Link>
               </Button>
             </nav>
@@ -214,7 +214,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
                   Contact
                 </Link>
                 <div className="pt-8">
-                  <Button className="btn-primary w-full px-6 py-3 text-base" asChild>
+                  <Button className="btn btn--primary btn--pill w-full" asChild>
                     <Link href="/#contact">Request a Quote</Link>
                   </Button>
                 </div>
@@ -264,11 +264,11 @@ export default function ServicePage({ title, description, children, breadcrumb, 
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
-              <Button className="bg-white text-primary px-8 py-4 text-lg font-semibold hover:bg-gray-100 transition-all duration-300 hover:-translate-y-1 shadow-lg w-full sm:w-auto" asChild>
+              <Button className="btn btn--ghost btn--pill" asChild>
                 <a href="tel:+353876460921">Call Now</a>
               </Button>
               <Button 
-                className="bg-transparent border-2 border-white text-white px-8 py-4 text-lg font-semibold hover:bg-white hover:text-primary transition-all duration-300 hover:-translate-y-1 w-full sm:w-auto"
+                className="btn btn--primary btn--pill"
                 onClick={() => scrollToSection('contact')}
               >
                 Request a Quote
@@ -375,7 +375,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
                 
                 <Button 
                   type="submit" 
-                  className="btn-primary w-full px-6 py-4 text-lg" 
+                  className="btn btn--primary btn--pill w-full" 
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? 'Sending...' : 'Send Request'}
