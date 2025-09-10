@@ -1,0 +1,40 @@
+On all /services/*.html pages, remove the stray logo that’s rendering inside the service hero (breadcrumb/header band). The logo must appear only in the site toolbar (.site-header .brand). Do not change layout, spacing, copy, routes, or styles elsewhere.
+Guardrails
+Do not modify global structure, hero video, forms, or non-service pages.
+Only edit service pages’ hero markup if they contain an inline logo.
+Do not change the existing toolbar/brand markup—just ensure it’s present and visible.
+Files to inspect
+services/site-clear-outs.html
+services/waste-removal.html
+services/ground-preparation.html
+services/haulage-support.html
+1) Remove inline hero-logo from service pages
+In each file, locate the service hero section (<section class="svc-hero ...">...).
+Inside that section (often within .svc-breadcrumb container or near it), delete any <img> tag that displays the logo.
+Examples to delete if present:
+<img src="../assets/brand/logo*.png" ...>
+or
+<img class="svc-logo" ...>
+Do not remove breadcrumb links, back link, titles, or subcopy—only the stray <img> for the logo.
+2) Ensure toolbar logo is present (no changes if already correct)
+Check the shared header markup (imported on service pages) contains the toolbar brand block, e.g.:
+<header class="site-header" role="banner">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="Keane Site Services">
+      <img class="logo logo--primary"  src="../assets/brand/logo-primary.png"  alt="Keane Site Services" width="132" height="32">
+      <img class="logo logo--scrolled" src="../assets/brand/logo-scrolled.png" alt="" aria-hidden="true" width="132" height="32">
+    </a>
+    <!-- nav … -->
+  </div>
+</header>
+If the toolbar brand block already exists, do not change it.
+3) CSS sanity (no visual regressions)
+Do not alter global CSS.
+If a page-specific style targets a .svc-logo selector, it’s now unused—leave it; no harm.
+4) Acceptance criteria (must pass)
+On all service pages, the logo appears only in the toolbar (top navigation).
+No logo is rendered inside the service hero/breadcrumb band.
+Breadcrumb, back link, H1/subcopy remain unchanged.
+No layout shift or spacing change introduced.
+No console errors; links and header scroll behavior unchanged.
+Make only the changes above. Do not modify any other component or behavior.
