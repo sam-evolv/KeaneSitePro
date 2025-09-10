@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { useToast } from '@/hooks/use-toast'
+import { useHeaderScrolled } from '@/hooks/use-header-scrolled'
 import logoAsset from '../assets/logo.png'
 import logoLightAsset from '../assets/logo-light.png'
 import footerLogoAsset from '../assets/footer-logo.png'
@@ -25,8 +26,8 @@ interface ServicePageProps {
 
 export default function ServicePage({ title, description, children, breadcrumb, jsonLd }: ServicePageProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isHeaderScrolled, setIsHeaderScrolled] = useState(false)
   const headerRef = useRef<HTMLElement>(null)
+  const sentinelRef = useHeaderScrolled()
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -38,43 +39,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const { toast } = useToast()
 
-  // Toggle "scrolled" class on html element for header cross-fade
-  useEffect(() => {
-    const root = document.documentElement;
-    let ticking = false;
-    
-    const handleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          const scrolled = window.scrollY > 8;
-          const hasScrolledClass = root.classList.contains('scrolled');
-          
-          if (scrolled && !hasScrolledClass) {
-            root.classList.add('scrolled');
-            setIsHeaderScrolled(true);
-          } else if (!scrolled && hasScrolledClass) {
-            root.classList.remove('scrolled');
-            setIsHeaderScrolled(false);
-          }
-          
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-    
-    // Initial call to set correct state
-    handleScroll();
-    
-    // Add scroll listener
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    
-    // Cleanup function to ensure proper removal
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      // Note: Don't remove scrolled class on service pages as user might navigate back to home
-    };
-  }, []);
+  // Header scroll detection is now handled by useHeaderScrolled hook
 
   // Set page title and meta description
   useEffect(() => {
@@ -255,6 +220,9 @@ export default function ServicePage({ title, description, children, breadcrumb, 
           </div>
         )}
       </header>
+
+      {/* Scroll detection sentinel - positioned just below header */}
+      <div ref={sentinelRef} className="h-px mt-16 w-full pointer-events-none" aria-hidden="true" />
 
       {/* Service Hero (polished) */}
       <section className="svc-hero svc-hero--compact" aria-labelledby="svc-title">

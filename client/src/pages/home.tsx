@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useHeaderScrolled } from "@/hooks/use-header-scrolled";
 import { 
   Menu, 
   X, 
@@ -41,8 +42,8 @@ const posterSrc = posterAsset;
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isHeaderScrolled, setIsHeaderScrolled] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
+  const sentinelRef = useHeaderScrolled();
   const [isVideoPlaying, setIsVideoPlaying] = useState(true);
   const [isAboutLogoVisible, setIsAboutLogoVisible] = useState(false);
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set());
@@ -64,44 +65,7 @@ export default function Home() {
   const { toast } = useToast();
   const isMobile = useIsMobile();
 
-  // Toggle "scrolled" class on html element for header cross-fade
-  useEffect(() => {
-    const root = document.documentElement;
-    let ticking = false;
-    
-    const handleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          const scrolled = window.scrollY > 8;
-          const hasScrolledClass = root.classList.contains('scrolled');
-          
-          if (scrolled && !hasScrolledClass) {
-            root.classList.add('scrolled');
-            setIsHeaderScrolled(true);
-          } else if (!scrolled && hasScrolledClass) {
-            root.classList.remove('scrolled');
-            setIsHeaderScrolled(false);
-          }
-          
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-    
-    // Initial call to set correct state
-    handleScroll();
-    
-    // Add scroll listener
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    
-    // Cleanup function to ensure proper removal
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      // Ensure we clean up the class when component unmounts
-      root.classList.remove('scrolled');
-    };
-  }, []);
+  // Header scroll detection is now handled by useHeaderScrolled hook
 
   // Premium scroll animations for all sections
   useEffect(() => {
@@ -457,6 +421,9 @@ export default function Home() {
           </div>
         )}
       </header>
+
+      {/* Scroll detection sentinel - positioned just below header */}
+      <div ref={sentinelRef} className="h-px mt-16 w-full pointer-events-none" aria-hidden="true" />
 
       {/* Hero Section */}
       <section id="main" className="hero">
