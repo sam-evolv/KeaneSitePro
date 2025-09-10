@@ -64,22 +64,43 @@ export default function Home() {
   const { toast } = useToast();
   const isMobile = useIsMobile();
 
-  // Toggle "scrolled" class on header
+  // Toggle "scrolled" class on html element for header cross-fade
   useEffect(() => {
+    const root = document.documentElement;
+    let ticking = false;
+    
     const handleScroll = () => {
-      const scrolled = window.scrollY > 10;
-      if (headerRef.current) {
-        if (scrolled) {
-          headerRef.current.classList.add('scrolled');
-        } else {
-          headerRef.current.classList.remove('scrolled');
-        }
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrolled = window.scrollY > 8;
+          const hasScrolledClass = root.classList.contains('scrolled');
+          
+          if (scrolled && !hasScrolledClass) {
+            root.classList.add('scrolled');
+            setIsHeaderScrolled(true);
+          } else if (!scrolled && hasScrolledClass) {
+            root.classList.remove('scrolled');
+            setIsHeaderScrolled(false);
+          }
+          
+          ticking = false;
+        });
+        ticking = true;
       }
-      setIsHeaderScrolled(scrolled);
     };
+    
+    // Initial call to set correct state
     handleScroll();
+    
+    // Add scroll listener
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    
+    // Cleanup function to ensure proper removal
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      // Ensure we clean up the class when component unmounts
+      root.classList.remove('scrolled');
+    };
   }, []);
 
   // Premium scroll animations for all sections
@@ -296,15 +317,27 @@ export default function Home() {
       <header ref={headerRef} className="site-header">
         <div className="wrap max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Logo */}
-            <div className="brand flex-shrink-0">
-              <img 
-                src={isHeaderScrolled ? logoLightSrc : logoSrc} 
-                alt="Keane Site Services" 
-                className="h-24 w-auto header-logo cursor-pointer transition-all duration-500"
-                onClick={() => scrollToSection('home')}
-                data-testid="header-logo"
+            <a className="brand" href="#" onClick={(e) => { e.preventDefault(); scrollToSection('home'); }} aria-label="Keane Site Services">
+              {/* Primary logo (visible at top / transparent header) */}
+              <img
+                className="logo logo--primary"
+                src={logoSrc}
+                alt="Keane Site Services"
+                width="132" height="96"
+                decoding="async" 
+                fetchPriority="high"
               />
-            </div>
+              
+              {/* Scrolled logo (visible when header turns black) */}
+              <img
+                className="logo logo--scrolled"
+                src={logoLightSrc}
+                alt="" 
+                aria-hidden="true"
+                width="132" height="96"
+                decoding="async"
+              />
+            </a>
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-8">

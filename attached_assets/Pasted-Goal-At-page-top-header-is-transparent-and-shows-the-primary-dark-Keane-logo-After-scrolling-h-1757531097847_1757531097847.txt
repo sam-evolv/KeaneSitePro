@@ -1,0 +1,91 @@
+Goal:
+At page top: header is transparent and shows the primary (dark) Keane logo.
+After scrolling: header becomes black and cross-fades to the scrolled (light) logo you provided.
+Scrolling back to top reverses both. Positions do not shift. No other parts of the site are changed.
+Guardrails
+Do not change layout, sections, copy, routes, or any other styles/scripts.
+Only update the header logo markup, add minimal CSS, and a small JS listener.
+Respect reduced motion.
+1) Assets
+Save the existing dark/primary header logo as: assets/brand/logo-primary.png (use your current header logo file).
+Save the new attached “light” logo (the one in the last message) as: assets/brand/logo-scrolled.png (PNG with transparency, same visual footprint if possible).
+If the current logo file has a different name/path, just copy it to the path above so both files are together.
+2) HTML — stack two logos in the same anchor (no layout change)
+In the header, replace the logo image inside the .brand link with this block (everything else in the header stays the same):
+<a class="brand" href="/" aria-label="Keane Site Services">
+  <!-- Primary logo (visible at top / transparent header) -->
+  <img
+    class="logo logo--primary"
+    src="assets/brand/logo-primary.png"
+    alt="Keane Site Services"
+    width="132" height="32"
+    decoding="async" fetchpriority="high"
+  />
+
+  <!-- Scrolled logo (visible when header turns black) -->
+  <img
+    class="logo logo--scrolled"
+    src="assets/brand/logo-scrolled.png"
+    alt="" aria-hidden="true"
+    width="132" height="32"
+    decoding="async"
+  />
+</a>
+Keep the same width/height for both images to eliminate any layout shift. If your header uses a different height, match it.
+3) CSS — transparent at top, black on scroll, cross-fade logos
+Append to your main stylesheet (do not remove existing rules):
+/* Header background states */
+.site-header {
+  background: transparent;
+  transition: background .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.scrolled .site-header {
+  background: rgba(0,0,0,.90);
+  backdrop-filter: saturate(140%) blur(8px);
+  box-shadow: 0 6px 18px rgba(0,0,0,.28);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+/* Logo stacking: identical position, smooth cross-fade */
+.brand { position: relative; display: block; height: 32px; }
+.brand .logo {
+  position: absolute; inset: 0;
+  height: 32px; width: auto; object-fit: contain;
+  display: block;
+  transition: opacity .25s ease;
+}
+.logo--primary  { opacity: 1; }
+.logo--scrolled { opacity: 0; }
+
+/* Swap on scroll */
+.scrolled .logo--primary  { opacity: 0; }
+.scrolled .logo--scrolled { opacity: 1; }
+
+/* Reduced motion: no fades, just swap */
+@media (prefers-reduced-motion: reduce) {
+  .brand .logo { transition: none; }
+}
+If your header logo is taller/shorter, adjust both the .brand height and .logo height consistently (e.g., 28px or 36px) so the two logos occupy exactly the same coordinates.
+4) JS — add/remove the “scrolled” class (lightweight, safe)
+Append to public/app.js (or your main JS file). If you already have a scroll handler, reuse it and just ensure it toggles the scrolled class on <html>.
+// Header scroll toggle: adds 'scrolled' to <html> when past top
+(function(){
+  const root = document.documentElement;
+  const header = document.querySelector('.site-header');
+  if(!header) return;
+
+  const apply = () => {
+    if (window.scrollY > 8) root.classList.add('scrolled');
+    else root.classList.remove('scrolled');
+  };
+
+  apply();
+  window.addEventListener('scroll', apply, { passive: true });
+})();
+5) Acceptance criteria (must pass)
+At page top: header is transparent; only logo-primary is visible.
+After scrolling > 8px: header becomes black; logo-scrolled cross-fades in; positions are identical (no jump).
+Scrolling back to top reverses both transitions smoothly.
+No layout shift, no console errors, no changes elsewhere on the site.
+With prefers-reduced-motion: reduce, swaps occur without animation.
+Only make the changes above. Do not alter any other components, spacing, or behavior.

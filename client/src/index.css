@@ -393,7 +393,7 @@ select {
 /* Enterprise Header Polish */
 .site-header {
   background: transparent; 
-  transition: background .25s ease, box-shadow .25s ease;
+  transition: background .25s ease, box-shadow .25s ease, border-color .25s ease;
   position: fixed;
   top: 0;
   left: 0;
@@ -404,11 +404,42 @@ select {
   align-items: center;
 }
 
-.site-header.scrolled {
-  background: rgba(0,0,0,.85); 
-  backdrop-filter: saturate(140%) blur(8px); 
-  box-shadow: var(--shadow-1); 
-  border-bottom: var(--border-1);
+.scrolled .site-header {
+  background: rgba(0,0,0,.90);
+  backdrop-filter: saturate(140%) blur(8px);
+  box-shadow: 0 6px 18px rgba(0,0,0,.28);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+/* Logo stacking: identical position, smooth cross-fade */
+.brand { 
+  position: relative; 
+  display: block; 
+  height: 96px; 
+  width: 132px;
+  text-decoration: none;
+}
+
+.brand .logo {
+  position: absolute; 
+  inset: 0;
+  height: 96px; 
+  width: auto; 
+  object-fit: contain;
+  display: block;
+  transition: opacity .25s ease;
+}
+
+.logo--primary  { opacity: 1; }
+.logo--scrolled { opacity: 0; }
+
+/* Swap on scroll */
+.scrolled .logo--primary  { opacity: 0; }
+.scrolled .logo--scrolled { opacity: 1; }
+
+/* Reduced motion: no fades, just swap */
+@media (prefers-reduced-motion: reduce) {
+  .brand .logo { transition: none; }
 }
 
 .site-header .wrap {

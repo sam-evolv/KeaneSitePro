@@ -38,23 +38,43 @@ export default function ServicePage({ title, description, children, breadcrumb, 
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const { toast } = useToast()
 
-  // Toggle "scrolled" class on header
+  // Toggle "scrolled" class on html element for header cross-fade
   useEffect(() => {
+    const root = document.documentElement;
+    let ticking = false;
+    
     const handleScroll = () => {
-      const scrolled = window.scrollY > 10
-      if (headerRef.current) {
-        if (scrolled) {
-          headerRef.current.classList.add('scrolled')
-        } else {
-          headerRef.current.classList.remove('scrolled')
-        }
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrolled = window.scrollY > 8;
+          const hasScrolledClass = root.classList.contains('scrolled');
+          
+          if (scrolled && !hasScrolledClass) {
+            root.classList.add('scrolled');
+            setIsHeaderScrolled(true);
+          } else if (!scrolled && hasScrolledClass) {
+            root.classList.remove('scrolled');
+            setIsHeaderScrolled(false);
+          }
+          
+          ticking = false;
+        });
+        ticking = true;
       }
-      setIsHeaderScrolled(scrolled)
-    }
-    handleScroll()
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    };
+    
+    // Initial call to set correct state
+    handleScroll();
+    
+    // Add scroll listener
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Cleanup function to ensure proper removal
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      // Note: Don't remove scrolled class on service pages as user might navigate back to home
+    };
+  }, []);
 
   // Set page title and meta description
   useEffect(() => {
@@ -138,15 +158,27 @@ export default function ServicePage({ title, description, children, breadcrumb, 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20 lg:h-24">
             {/* Logo */}
-            <div className="flex-shrink-0 relative flex items-center justify-center h-32 w-32">
-              <Link href="/">
-                <img 
-                  src={isHeaderScrolled ? logoLightSrc : logoSrc} 
-                  alt="Keane Site Services" 
-                  className="absolute h-24 w-auto header-logo cursor-pointer transition-opacity duration-500"
-                />
-              </Link>
-            </div>
+            <Link href="/" className="brand" aria-label="Keane Site Services">
+              {/* Primary logo (visible at top / transparent header) */}
+              <img
+                className="logo logo--primary"
+                src={logoSrc}
+                alt="Keane Site Services"
+                width="132" height="96"
+                decoding="async" 
+                fetchPriority="high"
+              />
+              
+              {/* Scrolled logo (visible when header turns black) */}
+              <img
+                className="logo logo--scrolled"
+                src={logoLightSrc}
+                alt="" 
+                aria-hidden="true"
+                width="132" height="96"
+                decoding="async"
+              />
+            </Link>
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-8">
