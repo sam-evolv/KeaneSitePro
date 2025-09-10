@@ -143,7 +143,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
                 <img 
                   src={isHeaderScrolled ? logoLightSrc : logoSrc} 
                   alt="Keane Site Services" 
-                  className="absolute h-24 w-auto header-logo cursor-pointer transition-opacity duration-500"
+                  className="absolute h-48 w-auto header-logo cursor-pointer transition-opacity duration-500"
                 />
               </Link>
             </div>
@@ -188,7 +188,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
                   <img 
                     src={logoLightSrc} 
                     alt="Keane Site Services" 
-                    className="h-24 w-auto header-logo cursor-pointer"
+                    className="h-48 w-auto header-logo cursor-pointer"
                   />
                 </Link>
                 <Button

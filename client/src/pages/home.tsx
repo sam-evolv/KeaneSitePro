@@ -300,7 +300,7 @@ export default function Home() {
               <img 
                 src={isHeaderScrolled ? logoLightSrc : logoSrc} 
                 alt="Keane Site Services" 
-                className="header-logo cursor-pointer transition-all duration-500"
+                className="h-48 w-auto header-logo cursor-pointer transition-all duration-500"
                 onClick={() => scrollToSection('home')}
                 data-testid="header-logo"
               />
@@ -366,8 +366,8 @@ export default function Home() {
                   <img 
                     src={logoLightSrc} 
                     alt="Keane Site Services" 
-                    className="absolute h-24 w-auto header-logo cursor-pointer"
-                    style={{ maxWidth: '128px' }}
+                    className="absolute h-48 w-auto header-logo cursor-pointer"
+                    style={{ maxWidth: '256px' }}
                     onClick={() => scrollToSection('home')}
                   />
                 </div>
