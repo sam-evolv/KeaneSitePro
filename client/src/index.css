@@ -378,8 +378,8 @@ select {
 
   /* Prevent layout shift during logo transitions */
   .logo-container {
-    width: 240px; /* h-60 equivalent */
-    height: 240px; /* h-60 equivalent */
+    width: 120px; /* h-30 equivalent */
+    height: 120px; /* h-30 equivalent */
   }
 }
 

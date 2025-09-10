@@ -138,12 +138,12 @@ export default function ServicePage({ title, description, children, breadcrumb, 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20 lg:h-24">
             {/* Logo */}
-            <div className="flex-shrink-0 relative flex items-center justify-center h-64 w-64">
+            <div className="flex-shrink-0 relative flex items-center justify-center h-32 w-32">
               <Link href="/">
                 <img 
                   src={isHeaderScrolled ? logoLightSrc : logoSrc} 
                   alt="Keane Site Services" 
-                  className="absolute h-60 w-auto header-logo cursor-pointer transition-opacity duration-500"
+                  className="absolute h-30 w-auto header-logo cursor-pointer transition-opacity duration-500"
                 />
               </Link>
             </div>
@@ -188,7 +188,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
                   <img 
                     src={logoLightSrc} 
                     alt="Keane Site Services" 
-                    className="h-60 w-auto header-logo cursor-pointer"
+                    className="h-30 w-auto header-logo cursor-pointer"
                   />
                 </Link>
                 <Button
