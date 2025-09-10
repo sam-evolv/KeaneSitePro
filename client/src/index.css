@@ -385,7 +385,7 @@ select {
 
 /* Header geometry normalization and transparent scroll effect */
 :root {
-  --header-h: 64px;
+  --header-h: 80px;
   --header-bg: rgba(0, 0, 0, 0.85); /* dark background when scrolled */
   --header-border: rgba(255, 255, 255, 0.08);
 }
@@ -426,7 +426,7 @@ select {
 }
 
 .brand img {
-  height: 48px;
+  /* Height controlled by Tailwind classes (h-60) */
   width: auto;
   display: block;
 }

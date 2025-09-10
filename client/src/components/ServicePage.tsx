@@ -136,9 +136,9 @@ export default function ServicePage({ title, description, children, breadcrumb, 
       {/* Header */}
       <header ref={headerRef} className="site-header">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 lg:h-20">
+          <div className="flex items-center justify-between h-20 lg:h-24">
             {/* Logo */}
-            <div className="flex-shrink-0 relative flex items-center justify-center h-24 w-32">
+            <div className="flex-shrink-0 relative flex items-center justify-center h-64 w-64">
               <Link href="/">
                 <img 
                   src={isHeaderScrolled ? logoLightSrc : logoSrc} 
