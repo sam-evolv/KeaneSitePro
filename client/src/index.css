@@ -546,15 +546,9 @@ footer button {
   pointer-events: auto !important;
 }
 
-/* Value props hover effects - simple and elegant */
+/* Value props hover effects - lift with orange outline */
 .group:hover {
-  background: rgba(241,90,41,0.08);
-  box-shadow: 0 8px 32px rgba(241,90,41,0.15);
-}
-
-.group:hover h3 {
-  color: hsl(var(--primary));
-  transition: color 0.3s ease;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
 }
 
 /* If a top border/line comes from the first section, disable it on services hero */
