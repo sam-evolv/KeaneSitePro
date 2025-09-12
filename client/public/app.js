@@ -1,7 +1,15 @@
-// Force scroll to top immediately - before React even loads
-document.documentElement.scrollTop = 0;
-document.body.scrollTop = 0;
-window.scrollTo(0, 0);
+// Force scroll to top as soon as DOM is available
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    window.scrollTo(0, 0);
+  });
+} else {
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+  window.scrollTo(0, 0);
+}
 
 // Wait for React to mount before initializing  
 window.addEventListener('load', function() {
