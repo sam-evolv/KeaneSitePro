@@ -284,8 +284,8 @@ export default function Home() {
         <div className="wrap">
           {/* Logo */}
           <a className="brand" href="/" aria-label="Keane Site Services">
-            <img className="logo logo--primary" src={logoSrc} alt="Keane Site Services" width="330" height="80" decoding="async" fetchPriority="high" />
-            <img className="logo logo--scrolled" src={logoLightSrc} alt="" aria-hidden="true" width="330" height="80" decoding="async" />
+            <img className="logo logo--primary" src={logoSrc} alt="Keane Site Services" width="439" height="106" decoding="async" fetchpriority="high" />
+            <img className="logo logo--scrolled" src={logoLightSrc} alt="" aria-hidden="true" width="439" height="106" decoding="async" />
           </a>
 
           {/* Desktop Navigation */}
@@ -407,10 +407,11 @@ export default function Home() {
         )}
       </header>
 
-      {/* Scroll detection sentinel - absolutely positioned to avoid layout gaps */}
+      {/* Scroll detection sentinel - positioned to trigger when header should turn black */}
       <div 
         ref={sentinelRef} 
-        className="absolute -top-px left-0 w-px h-px opacity-0 pointer-events-none" 
+        className="h-2 w-full pointer-events-none opacity-0"
+        style={{ marginTop: '64px' }}
         aria-hidden="true"
       />
 

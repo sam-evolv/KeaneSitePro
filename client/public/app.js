@@ -1,27 +1,6 @@
-// Wait for React to mount before initializing
+// Wait for React to mount before initializing  
 window.addEventListener('load', function() {
-  const root = document.documentElement;
-
-  // 1) Header state: transparent → black - requery each time
-  const applyScroll = () => {
-    const header = document.querySelector('.site-header');
-    if (!header) {
-      console.log('Header not found');
-      return;
-    }
-    console.log('Scroll Y:', window.scrollY);
-    if (window.scrollY > 8) {
-      root.classList.add('scrolled');
-      console.log('Added scrolled class');
-    } else {
-      root.classList.remove('scrolled');
-      console.log('Removed scrolled class');
-    }
-  };
-  applyScroll();
-  window.addEventListener('scroll', applyScroll, { passive: true });
-
-  // 2) Always land at top on page load/navigation
+  // 1) Always land at top on page load/navigation
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   window.addEventListener('pageshow', () => { window.scrollTo(0,0); });
 

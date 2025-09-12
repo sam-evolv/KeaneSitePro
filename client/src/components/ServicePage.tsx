@@ -123,8 +123,8 @@ export default function ServicePage({ title, description, children, breadcrumb, 
         <div className="wrap">
           {/* Logo */}
           <Link href="/" className="brand" aria-label="Keane Site Services">
-            <img className="logo logo--primary" src={logoSrc} alt="Keane Site Services" width="330" height="80" decoding="async" fetchPriority="high" />
-            <img className="logo logo--scrolled" src={logoLightSrc} alt="" aria-hidden="true" width="330" height="80" decoding="async" />
+            <img className="logo logo--primary" src={logoSrc} alt="Keane Site Services" width="439" height="106" decoding="async" fetchpriority="high" />
+            <img className="logo logo--scrolled" src={logoLightSrc} alt="" aria-hidden="true" width="439" height="106" decoding="async" />
           </Link>
 
           {/* Desktop Navigation */}
@@ -202,8 +202,13 @@ export default function ServicePage({ title, description, children, breadcrumb, 
         )}
       </header>
 
-      {/* Scroll detection sentinel - absolutely positioned to avoid layout gaps */}
-      <div ref={sentinelRef} className="absolute -top-px left-0 w-px h-px opacity-0 pointer-events-none" aria-hidden="true" />
+      {/* Scroll detection sentinel - positioned to trigger when header should turn black */}
+      <div 
+        ref={sentinelRef} 
+        className="h-2 w-full pointer-events-none opacity-0"
+        style={{ marginTop: '64px' }}
+        aria-hidden="true"
+      />
 
       {/* Service Hero (polished) */}
       <section className="svc-hero svc-hero--compact" aria-labelledby="svc-title">
