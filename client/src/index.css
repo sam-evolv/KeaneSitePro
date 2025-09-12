@@ -698,14 +698,6 @@ a.link-underline:hover::after {
   padding-left: 0 !important;
 }
 
-/* DEBUG borders temporarily */
-.svc-hero .container {
-  border: 2px solid red !important; /* DEBUG: remove after fixing */
-}
-
-section:not(.svc-hero) .container {
-  border: 2px solid blue !important; /* DEBUG: remove after fixing */
-}
 
 /* Force all hero text elements to have zero left margin/padding */
 .svc-hero .svc-breadcrumb,
