@@ -226,7 +226,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
 
       {/* Service Hero (polished) */}
       <section className="svc-hero svc-hero--compact" aria-labelledby="svc-title">
-        <div className="hero-container">
+        <div className="container">
           <nav className="svc-breadcrumb" aria-label="Breadcrumb">
             <Link href="/">Home</Link><span aria-hidden="true">/</span>
             <Link href="/#services">Services</Link><span aria-hidden="true">/</span>
