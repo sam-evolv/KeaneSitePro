@@ -1,34 +1,48 @@
-import { Switch, Route } from "wouter";
-import { queryClient } from "./lib/queryClient";
-import { QueryClientProvider } from "@tanstack/react-query";
+import { Router, Route, Switch } from "wouter";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
-import { TooltipProvider } from "@/components/ui/tooltip";
+
+// Import all pages
 import Home from "@/pages/home";
 import SiteClearOuts from "@/pages/SiteClearOuts";
 import WasteRemoval from "@/pages/WasteRemoval";
 import GroundPreparation from "@/pages/GroundPreparation";
 import HaulageSupport from "@/pages/HaulageSupport";
+import NotFound from "@/pages/not-found";
 
-function Router() {
-  return (
-    <Switch>
-      <Route path="/" component={Home} />
-      <Route path="/#:section" component={Home} />
-      <Route path="/services/site-clear-outs" component={SiteClearOuts} />
-      <Route path="/services/waste-removal" component={WasteRemoval} />
-      <Route path="/services/ground-preparation" component={GroundPreparation} />
-      <Route path="/services/haulage-support" component={HaulageSupport} />
-    </Switch>
-  );
-}
+// Create React Query client
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      retry: 1,
+    },
+  },
+});
+
+console.log('📱 Full App component is mounting...');
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Router />
-      </TooltipProvider>
+      <Router>
+        <Switch>
+          {/* Home page */}
+          <Route path="/" component={Home} />
+          
+          {/* Service pages */}
+          <Route path="/services/site-clear-outs" component={SiteClearOuts} />
+          <Route path="/services/waste-removal" component={WasteRemoval} />
+          <Route path="/services/ground-preparation" component={GroundPreparation} />
+          <Route path="/services/haulage-support" component={HaulageSupport} />
+          
+          {/* 404 page */}
+          <Route component={NotFound} />
+        </Switch>
+      </Router>
+      
+      {/* Toast notifications */}
+      <Toaster />
     </QueryClientProvider>
   );
 }

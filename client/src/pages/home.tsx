@@ -41,11 +41,14 @@ const footerLogoSrc = footerLogoAsset;
 const posterSrc = posterAsset;
 
 export default function Home() {
+  console.log('🏠 Home component is mounting...');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const sentinelRef = useHeaderScrolled();
   const [isVideoPlaying, setIsVideoPlaying] = useState(true);
   const [isAboutLogoVisible, setIsAboutLogoVisible] = useState(false);
+  const [debugScrollY, setDebugScrollY] = useState(0);
+  const [debugHasScrolled, setDebugHasScrolled] = useState(false);
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set());
   const [formData, setFormData] = useState({
     name: "",
@@ -66,6 +69,31 @@ export default function Home() {
   const isMobile = useIsMobile();
 
   // Header scroll detection is now handled by useHeaderScrolled hook
+  
+  // Debug scroll state tracking
+  useEffect(() => {
+    if (!import.meta.env.DEV) return;
+    
+    const updateDebugState = () => {
+      setDebugScrollY(window.scrollY);
+      setDebugHasScrolled(document.documentElement.classList.contains('scrolled'));
+    };
+    
+    updateDebugState();
+    window.addEventListener('scroll', updateDebugState, { passive: true });
+    
+    // Also watch for class changes on documentElement
+    const observer = new MutationObserver(updateDebugState);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+    
+    return () => {
+      window.removeEventListener('scroll', updateDebugState);
+      observer.disconnect();
+    };
+  }, []);
 
   // Premium scroll animations for all sections
   useEffect(() => {
@@ -423,7 +451,49 @@ export default function Home() {
       </header>
 
       {/* Scroll detection sentinel - positioned at page top for immediate scroll detection */}
-      <div ref={sentinelRef} className="h-px w-full pointer-events-none" aria-hidden="true" />
+      <div 
+        ref={sentinelRef} 
+        className="h-px w-full pointer-events-none" 
+        aria-hidden="true"
+        style={{ 
+          backgroundColor: import.meta.env.DEV ? 'red' : 'transparent',
+          height: import.meta.env.DEV ? '2px' : '1px'
+        }}
+      />
+      
+      {/* Debug Controls - only in development */}
+      {import.meta.env.DEV && (
+        <div 
+          className="fixed top-20 right-4 z-[9999] bg-black text-white p-4 rounded-lg space-y-2 text-sm"
+          style={{ fontFamily: 'monospace' }}
+        >
+          <div className="font-bold">Header Debug</div>
+          <button 
+            className="block w-full text-left p-1 bg-green-600 hover:bg-green-700 rounded"
+            onClick={() => {
+              document.documentElement.classList.add('scrolled');
+              console.log('🔧 MANUAL: Added scrolled class');
+            }}
+          >
+            Force Scrolled
+          </button>
+          <button 
+            className="block w-full text-left p-1 bg-red-600 hover:bg-red-700 rounded"
+            onClick={() => {
+              document.documentElement.classList.remove('scrolled');
+              console.log('🔧 MANUAL: Removed scrolled class');
+            }}
+          >
+            Force Transparent
+          </button>
+          <div className="text-xs opacity-70">
+            ScrollY: {typeof window !== 'undefined' ? window.scrollY : 0}
+          </div>
+          <div className="text-xs opacity-70">
+            Has Scrolled: {typeof document !== 'undefined' ? String(document.documentElement.classList.contains('scrolled')) : 'unknown'}
+          </div>
+        </div>
+      )}
 
       {/* Hero Section */}
       <section id="main" className="hero">
