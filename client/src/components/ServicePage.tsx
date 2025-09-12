@@ -202,11 +202,10 @@ export default function ServicePage({ title, description, children, breadcrumb, 
         )}
       </header>
 
-      {/* Scroll detection sentinel - positioned to trigger when header should turn black */}
+      {/* Scroll detection sentinel - positioned at top to start transparent */}
       <div 
         ref={sentinelRef} 
         className="h-2 w-full pointer-events-none opacity-0"
-        style={{ marginTop: '64px' }}
         aria-hidden="true"
       />
 
