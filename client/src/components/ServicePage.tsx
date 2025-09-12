@@ -120,7 +120,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header ref={headerRef} className="site-header">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container">
           <div className="flex items-center justify-between h-20 lg:h-24">
             {/* Logo */}
             <Link href="/" className="brand" aria-label="Keane Site Services">
@@ -255,7 +255,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
         
         {/* CTA Section */}
         <section className="py-16 bg-charcoal text-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="container text-center">
             <h2 className="text-3xl sm:text-4xl font-bold mb-6">
               Ready to Get Started?
             </h2>
@@ -279,7 +279,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
 
         {/* Contact Form Section */}
         <section id="contact" className="py-16 lg:py-24 bg-[hsl(210,17%,97%)]">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="container" style={{maxWidth: '800px'}}>
             <div className="text-center mb-16">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6 tracking-tight">
                 Request a Quote
@@ -399,7 +399,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
 
       {/* Footer */}
       <footer className="bg-[hsl(0,0%,10%)] py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center mb-8">
             {/* Quick Links */}
             <div className="text-center md:text-left">

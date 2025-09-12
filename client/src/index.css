@@ -18,6 +18,11 @@
   --border-1: 1px solid rgba(255,255,255,.08);
   --transition: .22s cubic-bezier(.2,.8,.2,1);
   
+  /* Global Layout Tokens */
+  --container-w: 1100px;     /* must match Home */
+  --gutter: 20px;
+  --header-h: 64px;
+  
   /* Legacy Compatibility */
   --background: hsl(0, 0%, 100%);
   --foreground: hsl(0, 0%, 7%);
@@ -36,7 +41,6 @@
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   
   /* Header variables */
-  --header-h: 64px;
   --header-bg: rgba(0, 0, 0, 0.85);
   --header-border: rgba(255, 255, 255, 0.08);
 }
@@ -113,7 +117,18 @@ select {
   h1 { line-height: 1.06; letter-spacing: .1px; }
   h2 { line-height: 1.12; }
   section { padding-block: clamp(44px, 6vw, 72px); }
-  .container { max-width: 1100px; margin-inline: auto; padding-inline: 20px; }
+  
+  /* Unified container used by both hero and body */
+  .container { 
+    max-width: var(--container-w); 
+    margin-inline: auto; 
+    padding-inline: var(--gutter); 
+  }
+  
+  /* Ensure content respects fixed header */
+  .hero, .svc-hero, main, section:first-of-type { 
+    scroll-margin-top: var(--header-h); 
+  }
 }
 
 @layer components {
@@ -438,12 +453,13 @@ select {
   will-change: opacity;
 }
 
-.logo--primary  { opacity: 1; }
-.logo--scrolled { opacity: 0; }
+/* Default logo visibility - higher specificity */
+.brand .logo--primary  { opacity: 1 !important; }
+.brand .logo--scrolled { opacity: 0 !important; }
 
-/* Swap on scroll */
-.scrolled .logo--primary  { opacity: 0; }
-.scrolled .logo--scrolled { opacity: 1; }
+/* Swap on scroll - even higher specificity to ensure override */
+.scrolled .brand .logo--primary  { opacity: 0 !important; }
+.scrolled .brand .logo--scrolled { opacity: 1 !important; }
 
 /* Reduced motion: no fades, just swap */
 @media (prefers-reduced-motion: reduce) {
@@ -663,13 +679,41 @@ a.link-underline:hover::after {
 }
 
 .svc-hero--compact { 
-  padding: calc(var(--header-h, 64px) + 28px) 0 28px; 
+  padding: calc(var(--header-h) + 28px) 0 28px; 
 }
 
-.svc-hero .container { 
-  max-width: 1100px; 
-  margin: 0 auto; 
-  padding: 0 20px; 
+.svc-hero .container {
+  /* align left edge to body */
+  max-width: var(--container-w);
+  padding-inline: var(--gutter);
+  margin-inline: auto;
+}
+
+/* Zero out any stray offsets so hero text aligns with body text */
+.svc-breadcrumb,
+.svc-back,
+.svc-headline,
+.svc-divider { 
+  margin-left: 0 !important; 
+}
+
+/* Body container */
+.svc-main .container { 
+  max-width: var(--container-w); 
+  padding-inline: var(--gutter); 
+}
+
+/* Optional: keep right rail/cards aligned to the same grid */
+.svc-grid.container { 
+  display: grid; 
+  grid-template-columns: minmax(0,1fr) 320px; 
+  gap: 24px; 
+}
+
+@media (max-width: 980px) { 
+  .svc-grid.container { 
+    grid-template-columns: 1fr; 
+  } 
 }
 
 /* Breadcrumb */

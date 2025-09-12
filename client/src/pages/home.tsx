@@ -47,8 +47,6 @@ export default function Home() {
   const sentinelRef = useHeaderScrolled();
   const [isVideoPlaying, setIsVideoPlaying] = useState(true);
   const [isAboutLogoVisible, setIsAboutLogoVisible] = useState(false);
-  const [debugScrollY, setDebugScrollY] = useState(0);
-  const [debugHasScrolled, setDebugHasScrolled] = useState(false);
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set());
   const [formData, setFormData] = useState({
     name: "",
@@ -70,30 +68,6 @@ export default function Home() {
 
   // Header scroll detection is now handled by useHeaderScrolled hook
   
-  // Debug scroll state tracking
-  useEffect(() => {
-    if (!import.meta.env.DEV) return;
-    
-    const updateDebugState = () => {
-      setDebugScrollY(window.scrollY);
-      setDebugHasScrolled(document.documentElement.classList.contains('scrolled'));
-    };
-    
-    updateDebugState();
-    window.addEventListener('scroll', updateDebugState, { passive: true });
-    
-    // Also watch for class changes on documentElement
-    const observer = new MutationObserver(updateDebugState);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['class']
-    });
-    
-    return () => {
-      window.removeEventListener('scroll', updateDebugState);
-      observer.disconnect();
-    };
-  }, []);
 
   // Premium scroll animations for all sections
   useEffect(() => {
@@ -307,7 +281,7 @@ export default function Home() {
       
       {/* Header */}
       <header ref={headerRef} className="site-header">
-        <div className="wrap max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container">
             {/* Logo */}
             <a className="brand" href="#" onClick={(e) => { e.preventDefault(); scrollToSection('home'); }} aria-label="Keane Site Services">
               {/* Primary logo (visible at top / transparent header) */}
@@ -450,50 +424,12 @@ export default function Home() {
         )}
       </header>
 
-      {/* Scroll detection sentinel - positioned at page top for immediate scroll detection */}
+      {/* Scroll detection sentinel - positioned at page top for scroll detection */}
       <div 
         ref={sentinelRef} 
-        className="h-px w-full pointer-events-none" 
+        className="h-2 w-full pointer-events-none" 
         aria-hidden="true"
-        style={{ 
-          backgroundColor: import.meta.env.DEV ? 'red' : 'transparent',
-          height: import.meta.env.DEV ? '2px' : '1px'
-        }}
       />
-      
-      {/* Debug Controls - only in development */}
-      {import.meta.env.DEV && (
-        <div 
-          className="fixed top-20 right-4 z-[9999] bg-black text-white p-4 rounded-lg space-y-2 text-sm"
-          style={{ fontFamily: 'monospace' }}
-        >
-          <div className="font-bold">Header Debug</div>
-          <button 
-            className="block w-full text-left p-1 bg-green-600 hover:bg-green-700 rounded"
-            onClick={() => {
-              document.documentElement.classList.add('scrolled');
-              console.log('🔧 MANUAL: Added scrolled class');
-            }}
-          >
-            Force Scrolled
-          </button>
-          <button 
-            className="block w-full text-left p-1 bg-red-600 hover:bg-red-700 rounded"
-            onClick={() => {
-              document.documentElement.classList.remove('scrolled');
-              console.log('🔧 MANUAL: Removed scrolled class');
-            }}
-          >
-            Force Transparent
-          </button>
-          <div className="text-xs opacity-70">
-            ScrollY: {typeof window !== 'undefined' ? window.scrollY : 0}
-          </div>
-          <div className="text-xs opacity-70">
-            Has Scrolled: {typeof document !== 'undefined' ? String(document.documentElement.classList.contains('scrolled')) : 'unknown'}
-          </div>
-        </div>
-      )}
 
       {/* Hero Section */}
       <section id="main" className="hero">
@@ -571,7 +507,7 @@ export default function Home() {
 
       {/* Services Section */}
       <section ref={servicesRef} id="services" data-section="services" className="py-16 lg:py-24 bg-[hsl(210,17%,97%)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container">
           {/* Section Header */}
           <div className={`text-center mb-16 transition-all duration-700 ease-out transform ${
             visibleSections.has('services') 
@@ -625,7 +561,7 @@ export default function Home() {
         {/* Subtle gradient background */}
         <div className="absolute inset-0 bg-gradient-to-br from-[hsl(0,0%,10%)] via-[hsl(0,0%,7%)] to-[hsl(0,0%,10%)] opacity-90"></div>
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative container">
           {/* Section Header */}
           <div className={`text-center mb-16 transition-all duration-700 ease-out transform ${
             visibleSections.has('value-props') 
@@ -669,7 +605,7 @@ export default function Home() {
 
       {/* About Section */}
       <section id="about" className="py-16 lg:py-24 bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Logo Side */}
             <div className="order-2 lg:order-1 flex items-center justify-center">
@@ -714,7 +650,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-r from-primary to-orange-600 opacity-95"></div>
         <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent"></div>
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative container text-center">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8 tracking-tight">
             Get Your Site Cleared by the Experts
           </h2>
@@ -744,7 +680,7 @@ export default function Home() {
 
       {/* Contact Section */}
       <section ref={contactRef} id="contact" data-section="contact" className="py-16 lg:py-24 bg-[hsl(210,17%,97%)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container">
           {/* Section Header */}
           <div className={`text-center mb-16 transition-all duration-700 ease-out transform ${
             visibleSections.has('contact') 
@@ -947,7 +883,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="bg-[hsl(0,0%,10%)] py-12" data-testid="footer">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center mb-8">
             {/* Quick Links */}
             <div className="text-center md:text-left">
