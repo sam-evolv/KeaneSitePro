@@ -698,13 +698,29 @@ a.link-underline:hover::after {
   padding-left: 0 !important;
 }
 
-/* Enforce identical container geometry across all sections - higher specificity than Tailwind */
-.site-header > .container,
-.svc-hero > .container,
-.svc-main > .container {
+/* FORCE exact alignment - debug borders temporarily */
+.svc-hero .container {
   max-width: var(--container-w) !important;
-  margin-inline: auto !important;
-  padding-inline: var(--gutter) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: var(--gutter) !important;
+  padding-right: var(--gutter) !important;
+  border: 2px solid red !important; /* DEBUG: remove after fixing */
+}
+
+/* Body container debug */
+section:not(.svc-hero) .container {
+  border: 2px solid blue !important; /* DEBUG: remove after fixing */
+}
+
+/* Force all hero text elements to have zero left margin/padding */
+.svc-hero .svc-breadcrumb,
+.svc-hero .svc-back,
+.svc-hero .svc-headline,
+.svc-hero .svc-title {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  text-indent: 0 !important;
 }
 
 /* Body container */
