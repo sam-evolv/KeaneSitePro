@@ -407,10 +407,10 @@ export default function Home() {
         )}
       </header>
 
-      {/* Scroll detection sentinel - absolutely positioned to avoid layout gap */}
+      {/* Scroll detection sentinel - positioned at top to start transparent */}
       <div 
         ref={sentinelRef} 
-        className="absolute top-0 left-0 w-px h-px pointer-events-none opacity-0"
+        className="h-2 w-full pointer-events-none opacity-0"
         aria-hidden="true"
       />
 
