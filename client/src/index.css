@@ -430,7 +430,7 @@ select {
   display:flex; align-items:center; justify-content:space-between; gap:16px;
 }
 
-.brand{ position:relative; display:block; height:32px; }
+.brand{ position:relative; display:block; height:32px; width:132px; }
 .brand .logo{
   position:absolute; inset:0; height:32px; width:auto; object-fit:contain; display:block;
   transition: opacity .25s ease;
