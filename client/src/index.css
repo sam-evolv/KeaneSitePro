@@ -421,7 +421,7 @@ select {
 .scrolled .site-header{
   background: rgba(0,0,0,.90);
   backdrop-filter: saturate(140%) blur(8px);
-  border-bottom: 1px solid rgba(255,255,255,.06);
+  border-bottom: none;
   box-shadow: 0 6px 18px rgba(0,0,0,.28);
 }
 
