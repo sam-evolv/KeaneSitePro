@@ -428,6 +428,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
                 className="transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-[hsl(0,0%,10%)] rounded-lg cursor-pointer inline-block"
                 data-testid="footer-logo-button"
                 aria-label="Go to top of page"
+                onClick={() => { console.log('Service page footer logo clicked'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
               >
                 <img 
                   src={footerLogoSrc} 

@@ -872,10 +872,10 @@ export default function Home() {
             <div className="text-center md:text-left">
               <h4 className="text-white font-semibold mb-4">Quick Links</h4>
               <ul className="space-y-2">
-                <li><a href="#home" onClick={(e) => { e.preventDefault(); scrollToSection('home'); }} className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-home">Home</a></li>
-                <li><a href="#services" onClick={(e) => { e.preventDefault(); scrollToSection('services'); }} className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-services">Services</a></li>
-                <li><a href="#about" onClick={(e) => { e.preventDefault(); scrollToSection('about'); }} className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-about">About</a></li>
-                <li><a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }} className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-contact">Contact</a></li>
+                <li><a href="#home" onClick={(e) => { e.preventDefault(); console.log('Home clicked'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-home">Home</a></li>
+                <li><a href="#services" onClick={(e) => { e.preventDefault(); console.log('Services clicked'); document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-services">Services</a></li>
+                <li><a href="#about" onClick={(e) => { e.preventDefault(); console.log('About clicked'); document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-about">About</a></li>
+                <li><a href="#contact" onClick={(e) => { e.preventDefault(); console.log('Contact clicked'); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-contact">Contact</a></li>
               </ul>
             </div>
             
@@ -883,7 +883,7 @@ export default function Home() {
             <div className="flex justify-center">
               <a 
                 href="#home"
-                onClick={(e) => { e.preventDefault(); scrollToSection('home'); }}
+                onClick={(e) => { e.preventDefault(); console.log('Footer logo clicked'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                 className="transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-[hsl(0,0%,10%)] rounded-lg cursor-pointer"
                 data-testid="footer-logo-button"
                 aria-label="Go to top of page"
