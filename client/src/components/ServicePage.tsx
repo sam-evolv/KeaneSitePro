@@ -408,7 +408,13 @@ export default function ServicePage({ title, description, children, breadcrumb, 
             {/* Centered Large Logo */}
             <div className="flex justify-center">
               <button 
-                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                onClick={() => {
+                  try {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  } catch {
+                    window.scrollTo(0, 0);
+                  }
+                }}
                 className="transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-[hsl(0,0%,10%)] rounded-lg"
                 data-testid="footer-logo-button"
                 aria-label="Go to top of page"

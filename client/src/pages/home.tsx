@@ -415,7 +415,7 @@ export default function Home() {
       />
 
       {/* Hero Section */}
-      <section id="main" className="hero">
+      <section id="home" className="hero">
         {/* Video Media */}
         <div className="hero__media">
           <video 
