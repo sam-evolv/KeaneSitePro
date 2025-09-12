@@ -12,18 +12,11 @@ export function useHeaderScrolled() {
   const sentinelRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    console.log('🔧 useHeaderScrolled: useLayoutEffect starting');
     const root = document.documentElement;
-    
-    console.log('🔧 Classes before reset:', root.className);
-    console.log('🔧 Contains scrolled before reset:', root.classList.contains('scrolled'));
     
     // Unconditionally remove scrolled class first - before any checks
     // This ensures header always starts transparent, preventing FOUC
     root.classList.remove('scrolled');
-    
-    console.log('🔧 Classes after reset:', root.className);
-    console.log('🔧 Contains scrolled after reset:', root.classList.contains('scrolled'));
     
     let raf = 0;
     let cleanup: (() => void) | null = null;

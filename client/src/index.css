@@ -485,6 +485,18 @@ section, main {
 /* Services-only header hygiene: no bottom line, no unintended border */
 .page--services .site-header {
   border-bottom: 0 !important;
+  box-shadow: none !important;
+}
+
+/* If a top border/line comes from the first section, disable it on services hero */
+.page--services .svc-hero,
+.page--services .svc-hero * {
+  border-top: 0 !important;
+}
+
+/* Services-only header hygiene: no bottom line, no unintended border */
+.page--services .site-header {
+  border-bottom: 0 !important;
   box-shadow: none !important; /* keep your scroll state styles from existing logic */
 }
 
