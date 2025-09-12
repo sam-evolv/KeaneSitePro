@@ -411,7 +411,7 @@ select {
 .site-header {
   background: rgba(0, 0, 0, 0) !important;
   background-color: transparent !important;
-  border-bottom: 1px solid transparent;
+  border-bottom: none;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: fixed;
   top: 0;
@@ -421,7 +421,7 @@ select {
   height: var(--header-h);
   display: flex;
   align-items: center;
-  will-change: background, background-color, box-shadow, backdrop-filter, border-bottom;
+  will-change: background, background-color, box-shadow, backdrop-filter;
 }
 
 .scrolled .site-header {
@@ -429,7 +429,7 @@ select {
   background-color: rgba(0, 0, 0, 0.95) !important;
   backdrop-filter: saturate(140%) blur(12px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: none;
 }
 
 /* Logo stacking: identical position, smooth cross-fade */

@@ -282,6 +282,7 @@ export default function Home() {
       {/* Header */}
       <header ref={headerRef} className="site-header">
         <div className="container">
+          <div className="flex items-center justify-between h-20 lg:h-24">
             {/* Logo */}
             <a className="brand" href="#" onClick={(e) => { e.preventDefault(); scrollToSection('home'); }} aria-label="Keane Site Services">
               {/* Primary logo (visible at top / transparent header) */}
@@ -354,6 +355,7 @@ export default function Home() {
             >
               <Menu className="w-6 h-6" />
             </Button>
+          </div>
         </div>
         
         {/* Mobile Menu Overlay */}
