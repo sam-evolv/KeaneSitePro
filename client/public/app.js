@@ -1,8 +1,17 @@
+// Force scroll to top immediately - before React even loads
+document.documentElement.scrollTop = 0;
+document.body.scrollTop = 0;
+window.scrollTo(0, 0);
+
 // Wait for React to mount before initializing  
 window.addEventListener('load', function() {
   // 1) Always land at top on page load/navigation
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-  window.addEventListener('pageshow', () => { window.scrollTo(0,0); });
+  window.addEventListener('pageshow', () => { 
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    window.scrollTo(0,0); 
+  });
 
   // 3) Event delegation for CTAs - works with dynamically mounted React elements
   let modal = null;

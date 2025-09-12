@@ -490,6 +490,16 @@ section, main {
   box-shadow: 0 6px 18px rgba(0,0,0,.28);
 }
 
+/* Force scroll position for service pages */
+.page--services {
+  scroll-behavior: auto !important;
+}
+
+.page--services html,
+.page--services body {
+  scroll-behavior: auto !important;
+}
+
 /* If a top border/line comes from the first section, disable it on services hero */
 .page--services .svc-hero,
 .page--services .svc-hero * {

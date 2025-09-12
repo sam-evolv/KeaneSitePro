@@ -25,6 +25,13 @@ interface ServicePageProps {
 }
 
 export default function ServicePage({ title, description, children, breadcrumb, jsonLd }: ServicePageProps) {
+  // Immediately force scroll to top before any state initialization
+  if (typeof window !== 'undefined') {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    window.scrollTo(0, 0);
+  }
+
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const headerRef = useRef<HTMLElement>(null)
   const sentinelRef = useHeaderScrolled()
