@@ -482,21 +482,18 @@ section, main {
   padding-top: calc(24px + var(--header-h));
 }
 
-/* Services-only header hygiene: no bottom line, no unintended border */
+/* Services-only header: always black background */
 .page--services .site-header {
+  background: rgba(0,0,0,.90) !important;
+  backdrop-filter: saturate(140%) blur(8px);
   border-bottom: 0 !important;
-  box-shadow: none !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,.28);
 }
 
 /* If a top border/line comes from the first section, disable it on services hero */
 .page--services .svc-hero,
 .page--services .svc-hero * {
   border-top: 0 !important;
-}
-
-/* Services-only header hygiene: no bottom line, no unintended border */
-.page--services .site-header {
-  border-bottom: 0 !important;
   box-shadow: none !important; /* keep your scroll state styles from existing logic */
 }
 

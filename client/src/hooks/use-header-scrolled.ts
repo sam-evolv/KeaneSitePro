@@ -34,24 +34,12 @@ export function useHeaderScrolled() {
       
       const observer = new IntersectionObserver(
         ([entry]) => {
-          console.log('🔧 Observer callback fired:', {
-            isIntersecting: entry.isIntersecting,
-            boundingClientRect: entry.boundingClientRect,
-            rootBounds: entry.rootBounds
-          });
-          
           if (entry.isIntersecting) {
-            console.log('🔧 At top - removing scrolled class');
-            console.log('🔧 Classes before removing scrolled:', root.className);
             // At the top of page - remove scrolled state
             root.classList.remove('scrolled');
-            console.log('🔧 Classes after removing scrolled:', root.className);
           } else {
-            console.log('🔧 Scrolled past sentinel - adding scrolled class');
-            console.log('🔧 Classes before adding scrolled:', root.className);
             // Scrolled past sentinel - add scrolled state
             root.classList.add('scrolled');
-            console.log('🔧 Classes after adding scrolled:', root.className);
           }
         },
         {

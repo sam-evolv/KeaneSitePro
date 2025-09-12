@@ -131,7 +131,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
         <div className="wrap">
           {/* Logo */}
           <Link href="/" className="brand" aria-label="Keane Site Services">
-            <img className="logo logo--primary" src={logoSrc} alt="Keane Site Services" width="439" height="106" decoding="async" fetchpriority="high" />
+            <img className="logo logo--primary" src={logoSrc} alt="Keane Site Services" width="439" height="106" decoding="async" fetchPriority="high" />
             <img className="logo logo--scrolled" src={logoLightSrc} alt="" aria-hidden="true" width="439" height="106" decoding="async" />
           </Link>
 
