@@ -395,7 +395,10 @@ select {
 /* Enterprise Header Polish */
 .site-header {
   background: transparent; 
-  transition: background .25s ease, box-shadow .25s ease, border-color .25s ease;
+  transition: background .4s cubic-bezier(0.4, 0, 0.2, 1), 
+              box-shadow .4s cubic-bezier(0.4, 0, 0.2, 1), 
+              border-color .4s cubic-bezier(0.4, 0, 0.2, 1),
+              backdrop-filter .4s cubic-bezier(0.4, 0, 0.2, 1);
   position: fixed;
   top: 0;
   left: 0;
@@ -404,13 +407,14 @@ select {
   height: var(--header-h);
   display: flex;
   align-items: center;
+  will-change: background-color, box-shadow, backdrop-filter;
 }
 
 .scrolled .site-header {
-  background: rgba(0,0,0,.90);
-  backdrop-filter: saturate(140%) blur(8px);
-  box-shadow: 0 6px 18px rgba(0,0,0,.28);
-  border-bottom: 1px solid rgba(255,255,255,.06);
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: saturate(140%) blur(12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 /* Logo stacking: identical position, smooth cross-fade */
@@ -429,7 +433,9 @@ select {
   width: auto; 
   object-fit: contain;
   display: block;
-  transition: opacity .25s ease;
+  transition: opacity .4s cubic-bezier(0.4, 0, 0.2, 1), 
+              filter .4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity;
 }
 
 .logo--primary  { opacity: 1; }

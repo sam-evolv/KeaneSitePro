@@ -422,8 +422,8 @@ export default function Home() {
         )}
       </header>
 
-      {/* Scroll detection sentinel - positioned just below header */}
-      <div ref={sentinelRef} className="h-px mt-16 w-full pointer-events-none" aria-hidden="true" />
+      {/* Scroll detection sentinel - positioned at page top for immediate scroll detection */}
+      <div ref={sentinelRef} className="h-px w-full pointer-events-none" aria-hidden="true" />
 
       {/* Hero Section */}
       <section id="main" className="hero">
