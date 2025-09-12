@@ -497,6 +497,27 @@ section, main {
   box-shadow: none !important; /* keep your scroll state styles from existing logic */
 }
 
+/* Request a Quote form - make service dropdown solid white for visibility */
+[data-testid="select-service"],
+form select,
+.contact form select,
+select[name="service"] {
+  background-color: #fff !important;
+  color: #111;
+  border: 1px solid rgba(0,0,0,.2);
+  border-radius: 6px;
+}
+
+/* Focus states for dropdown */
+[data-testid="select-service"]:focus,
+form select:focus,
+.contact form select:focus,
+select[name="service"]:focus {
+  outline: 0;
+  box-shadow: 0 0 0 3px rgba(241,90,41,.25);
+  border-color: rgba(241,90,41,.55);
+}
+
 /* If a top border/line comes from the first section, disable it on services hero */
 .page--services .svc-hero,
 .page--services .svc-hero * {
