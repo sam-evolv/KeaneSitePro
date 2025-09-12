@@ -482,6 +482,18 @@ section, main {
   padding-top: calc(24px + var(--header-h));
 }
 
+/* Services-only header hygiene: no bottom line, no unintended border */
+.page--services .site-header {
+  border-bottom: 0 !important;
+  box-shadow: none !important; /* keep your scroll state styles from existing logic */
+}
+
+/* If a top border/line comes from the first section, disable it on services hero */
+.page--services .svc-hero,
+.page--services .svc-hero * {
+  border-top: 0 !important;
+}
+
 /* Z-index hygiene in the hero */
 .hero__media, .svc-hero__bg { 
   z-index: 0; 

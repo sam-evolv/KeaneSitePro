@@ -67,6 +67,14 @@ export default function ServicePage({ title, description, children, breadcrumb, 
     }
   }, [title, description, jsonLd])
 
+  // Add page--services class to body for service pages
+  useEffect(() => {
+    document.body.classList.add('page--services');
+    return () => {
+      document.body.classList.remove('page--services');
+    };
+  }, [])
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
     if (element) {

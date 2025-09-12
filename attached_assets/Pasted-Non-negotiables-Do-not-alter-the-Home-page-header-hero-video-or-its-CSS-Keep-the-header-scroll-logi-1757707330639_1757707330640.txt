@@ -1,0 +1,148 @@
+Non-negotiables
+Do not alter the Home page header/hero/video or its CSS.
+Keep the header scroll logic and logo-swap behavior exactly as-is.
+Make only the changes below. If a rule would affect the Home page, scope it to Services pages only.
+0) Scoping (so Home header isn’t touched)
+In each services page (/services/*.html), add class="page--services" on the <body> element:
+<body class="page--services">
+Do not add this class on the Home page.
+1) “Learn more” should land at the top of each service page
+HTML: Ensure all “Learn more” links in index.html are clean (no hash fragments):
+<a class="card__more" href="services/site-clear-outs.html">Learn more</a>
+<a class="card__more" href="services/waste-removal.html">Learn more</a>
+<a class="card__more" href="services/ground-preparation.html">Learn more</a>
+<a class="card__more" href="services/haulage-support.html">Learn more</a>
+JS (append to existing app.js):
+// Services: always land at the top on navigation (no mid-page anchors)
+(function(){
+  if (!document.body.classList.contains('page--services')) return;
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.addEventListener('pageshow', () => {
+    try { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); }
+    catch { window.scrollTo(0, 0); }
+  });
+  // Defensive: strip accidental hash fragments
+  if (location.hash && !location.hash.startsWith('#top')) {
+    history.replaceState(null, '', location.pathname + location.search);
+  }
+})();
+2) Remove the thin white line under the header on Services pages only
+CSS (append):
+/* Services-only header hygiene: no bottom line, no unintended border */
+.page--services .site-header {
+  border-bottom: 0 !important;
+  box-shadow: none; /* keep your scroll state styles from existing logic */
+}
+
+/* If a top border/line comes from the first section, disable it on services hero */
+.page--services .svc-hero,
+.page--services .svc-hero * {
+  border-top: 0 !important;
+}
+3) Align the Services hero text flush left with the body (“Overview”, “What’s Included”)
+(This only realigns; no typography changes.)
+CSS (append):
+/* Same container as body to ensure a shared left edge */
+:root { --container-w: 1100px; --gutter: 20px; --header-h: 64px; }
+
+.page--services .container { max-width: var(--container-w); padding-inline: var(--gutter); margin-inline:auto; }
+
+.page--services .svc-hero { background:#111; color:#fff; }
+.page--services .svc-hero--compact { padding: calc(var(--header-h) + 28px) 0 28px; }
+.page--services .svc-hero .container { max-width: var(--container-w); padding-inline: var(--gutter); }
+
+/* Kill any stray offsets in the hero band that push text right */
+.page--services .svc-breadcrumb,
+.page--services .svc-back,
+.page--services .svc-headline,
+.page--services .svc-divider { margin-left: 0 !important; }
+
+/* Body container remains identical so left edges match */
+.page--services .svc-main .container { max-width: var(--container-w); padding-inline: var(--gutter); }
+4) Rename the Home section heading: “Why Choose Keane Site Services”
+In index.html, find the “Why Choose Keane” H2 and change only the text to:
+Why Choose Keane Site Services
+Do not change IDs/anchors.
+Hover effect for the four reasons (lightweight, premium)
+CSS (append):
+/* Cards likely have .strength / .card pattern; keep selectors additive */
+.why .card,
+.strength {
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
+}
+.why .card:hover,
+.strength:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,0,0,.28);
+  border-color: rgba(241,90,41,.35); /* brand orange accent */
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+}
+.why .card .icon,
+.strength .strength__icon {
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.2));
+}
+(If your “Why” cards use a different class than .why .card or .strength, apply the same hover rules to that class without renaming elements.)
+5) Request a Quote form — make “Select a service” a solid dropdown (not transparent)
+CSS (append):
+/* Only alter the select inside the quote form; no global inputs */
+.form select, .contact .form select, select[name="service"] {
+  background-color: #fff !important;  /* solid */
+  color: #111;
+  border: 1px solid rgba(0,0,0,.2);
+  border-radius: 10px;
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, #111 50%), linear-gradient(135deg, #111 50%, transparent 50%);
+  background-position: calc(100% - 18px) calc(1.05em), calc(100% - 13px) calc(1.05em);
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  z-index: 5;
+}
+.form select:focus { outline: 0; box-shadow: 0 0 0 3px rgba(241,90,41,.25); border-color: rgba(241,90,41,.55); }
+
+/* Parent containers must not clip the opened dropdown */
+.form, .form-grid, .form-group { overflow: visible !important; }
+HTML sanity in the form:
+Ensure the first option is a placeholder:
+<select name="service" id="service" required>
+  <option value="" selected disabled>Select a service</option>
+  <option>Site Clear-Outs</option>
+  <option>Waste Removal</option>
+  <option>Ground Preparation</option>
+  <option>Haulage Support</option>
+  <option>Other</option>
+</select>
+Keep the textarea below the select in DOM order to avoid overlap.
+6) Footer links must all work; footer logo scrolls to top
+HTML (footer):
+<footer class="site-footer">
+  <!-- ... -->
+  <nav class="footer-nav">
+    <a href="/">Home</a>
+    <a href="/#services">Services</a>
+    <a href="/#about">About</a>
+    <a href="/#contact">Contact</a>
+  </nav>
+
+  <!-- Footer brand/logo/title should jump to top -->
+  <a class="footer-brand" href="#top">Keane Site Services</a>
+</footer>
+JS (append):
+// Smooth jump to top when clicking footer brand; safe fallback
+(function(){
+  const topLinks = document.querySelectorAll('a[href="#top"], .footer-brand');
+  topLinks.forEach(a => a.addEventListener('click', (e) => {
+    e.preventDefault();
+    try { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    catch { window.scrollTo(0, 0); }
+    history.replaceState(null, '', location.pathname + location.search);
+  }));
+})();
+7) Acceptance criteria (must pass before finishing)
+Learn more → Services always opens at the top (no mid-page landing).
+On all services pages: no white line under the header; hero band text (breadcrumb, back link, H1, subhead) is flush-left aligned with “Overview/What’s Included”.
+Home header/hero remains unchanged (look and behavior).
+“Why Choose Keane Site Services” text updated; the four reason cards have a clean hover (lift, shadow, border accent) with no layout shift.
+In the quote form, the Select a service dropdown is solid white (not transparent), with proper focus ring; its dropdown isn’t clipped by containers.
+Footer links: Home/Services/About/Contact all navigate; clicking Keane Site Services in the footer scrolls to top.
+No new console errors; no unintended style changes elsewhere.
+Make only the scoped edits above. Do not alter other styles, copy, or layout.
