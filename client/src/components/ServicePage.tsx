@@ -451,7 +451,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
           
           <div className="pt-8 border-t border-gray-700 text-center">
             <p className="text-gray-400 text-sm">
-              © 2024 Keane Site Services. All rights reserved.
+              © 2025 Keane Site Services. All rights reserved.
             </p>
           </div>
         </div>
