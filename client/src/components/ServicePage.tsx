@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useLayoutEffect, useRef } from 'react'
 import { Link } from 'wouter'
 import { Menu, X, Phone, Mail, MapPin, ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -68,36 +68,16 @@ export default function ServicePage({ title, description, children, breadcrumb, 
   }, [title, description, jsonLd])
 
   // Add page--services class to body and ensure page starts at top
-  useEffect(() => {
+  useLayoutEffect(() => {
     document.body.classList.add('page--services');
     
     // Always land at the top on navigation (no mid-page anchors)
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
     
-    // Force scroll to top with multiple methods for reliability
-    const forceScrollToTop = () => {
-      // Method 1: Direct DOM manipulation
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-      
-      // Method 2: Window scroll
-      try {
-        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-      } catch {
-        window.scrollTo(0, 0);
-      }
-      
-      // Method 3: Additional fallback
-      setTimeout(() => {
-        document.documentElement.scrollTop = 0;
-        document.body.scrollTop = 0;
-        window.scrollTo(0, 0);
-      }, 50);
-    };
-    
-    // Execute immediately and after a short delay to ensure it works
-    forceScrollToTop();
-    const timeoutId = setTimeout(forceScrollToTop, 100);
+    // Instantly set scroll position to top before any visual rendering
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    window.scrollTo(0, 0);
     
     // Defensive: strip accidental hash fragments
     if (location.hash && !location.hash.startsWith('#top')) {
@@ -105,7 +85,6 @@ export default function ServicePage({ title, description, children, breadcrumb, 
     }
     
     return () => {
-      clearTimeout(timeoutId);
       document.body.classList.remove('page--services');
     };
   }, [])
