@@ -699,7 +699,7 @@ a.link-underline:hover::after {
 }
 
 /* FORCE exact alignment - debug borders temporarily */
-.svc-hero .container {
+.hero-container {
   max-width: var(--container-w) !important;
   margin-left: auto !important;
   margin-right: auto !important;
@@ -714,10 +714,10 @@ section:not(.svc-hero) .container {
 }
 
 /* Force all hero text elements to have zero left margin/padding */
-.svc-hero .svc-breadcrumb,
-.svc-hero .svc-back,
-.svc-hero .svc-headline,
-.svc-hero .svc-title {
+.hero-container .svc-breadcrumb,
+.hero-container .svc-back,
+.hero-container .svc-headline,
+.hero-container .svc-title {
   margin-left: 0 !important;
   padding-left: 0 !important;
   text-indent: 0 !important;
