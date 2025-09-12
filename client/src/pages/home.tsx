@@ -565,7 +565,7 @@ export default function Home() {
             {valueProps.map((prop, index) => (
               <div 
                 key={index} 
-                className={`text-center transition-all duration-700 ease-out transform hover:scale-105 hover:-translate-y-2 cursor-pointer group ${
+                className={`text-center transition-all duration-700 ease-out transform cursor-pointer group p-6 rounded-lg ${
                   visibleSections.has('value-props') 
                     ? 'opacity-100 scale-100 translate-y-0' 
                     : 'opacity-0 scale-95 translate-y-8'
@@ -573,8 +573,8 @@ export default function Home() {
                 style={{ transitionDelay: `${index * 200}ms` }}
                 data-testid={`value-prop-${index}`}
               >
-                <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-primary to-orange-600 rounded-full flex items-center justify-center group-hover:shadow-lg group-hover:shadow-primary/25 transition-all duration-300">
-                  <prop.icon className="w-8 h-8 text-white group-hover:scale-110 transition-transform duration-300" />
+                <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-primary to-orange-600 rounded-full flex items-center justify-center group-hover:shadow-xl group-hover:shadow-primary/30 transition-all duration-300">
+                  <prop.icon className="w-8 h-8 text-white transition-all duration-300" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-4">{prop.title}</h3>
                 <p className="text-gray-300 leading-relaxed">

@@ -546,17 +546,15 @@ footer button {
   pointer-events: auto !important;
 }
 
-/* Value props hover effects */
+/* Value props hover effects - simple and elegant */
+.group:hover {
+  background: rgba(241,90,41,0.08);
+  box-shadow: 0 8px 32px rgba(241,90,41,0.15);
+}
+
 .group:hover h3 {
   color: hsl(var(--primary));
   transition: color 0.3s ease;
-}
-
-.group:hover {
-  background: linear-gradient(135deg, rgba(241,90,41,0.05), rgba(255,255,255,0.02));
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 }
 
 /* If a top border/line comes from the first section, disable it on services hero */
