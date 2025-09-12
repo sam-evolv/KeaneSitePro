@@ -553,7 +553,7 @@ export default function Home() {
           }`}>
             <div className="section-divider mx-auto mb-6"></div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 tracking-tight">
-              Why Choose Keane
+              Why Choose Keane Site Services
             </h2>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
               Professional excellence backed by experience, equipment, and unwavering commitment to quality.
@@ -565,7 +565,7 @@ export default function Home() {
             {valueProps.map((prop, index) => (
               <div 
                 key={index} 
-                className={`text-center transition-all duration-700 ease-out transform ${
+                className={`text-center transition-all duration-700 ease-out transform hover:scale-105 hover:-translate-y-2 cursor-pointer group ${
                   visibleSections.has('value-props') 
                     ? 'opacity-100 scale-100 translate-y-0' 
                     : 'opacity-0 scale-95 translate-y-8'
@@ -573,8 +573,8 @@ export default function Home() {
                 style={{ transitionDelay: `${index * 200}ms` }}
                 data-testid={`value-prop-${index}`}
               >
-                <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-primary to-orange-600 rounded-full flex items-center justify-center">
-                  <prop.icon className="w-8 h-8 text-white" />
+                <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-primary to-orange-600 rounded-full flex items-center justify-center group-hover:shadow-lg group-hover:shadow-primary/25 transition-all duration-300">
+                  <prop.icon className="w-8 h-8 text-white group-hover:scale-110 transition-transform duration-300" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-4">{prop.title}</h3>
                 <p className="text-gray-300 leading-relaxed">
@@ -872,10 +872,10 @@ export default function Home() {
             <div className="text-center md:text-left">
               <h4 className="text-white font-semibold mb-4">Quick Links</h4>
               <ul className="space-y-2">
-                <li><a href="#home" onClick={(e) => { e.preventDefault(); console.log('Home clicked'); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; try { window.scrollTo({ top: 0, left: 0, behavior: 'smooth' }); } catch { window.scrollTo(0, 0); } }} className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-home">Home</a></li>
-                <li><a href="#services" onClick={(e) => { e.preventDefault(); console.log('Services clicked'); document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-services">Services</a></li>
-                <li><a href="#about" onClick={(e) => { e.preventDefault(); console.log('About clicked'); document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-about">About</a></li>
-                <li><a href="#contact" onClick={(e) => { e.preventDefault(); console.log('Contact clicked'); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-contact">Contact</a></li>
+                <li><a href="#home" onClick={(e) => { e.preventDefault(); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; try { window.scrollTo({ top: 0, left: 0, behavior: 'smooth' }); } catch { window.scrollTo(0, 0); } }} className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-home">Home</a></li>
+                <li><a href="#services" onClick={(e) => { e.preventDefault(); document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-services">Services</a></li>
+                <li><a href="#about" onClick={(e) => { e.preventDefault(); document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-about">About</a></li>
+                <li><a href="#contact" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-contact">Contact</a></li>
               </ul>
             </div>
             
@@ -883,7 +883,7 @@ export default function Home() {
             <div className="flex justify-center">
               <a 
                 href="#home"
-                onClick={(e) => { e.preventDefault(); console.log('Footer logo clicked'); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; try { window.scrollTo({ top: 0, left: 0, behavior: 'smooth' }); } catch { window.scrollTo(0, 0); } }}
+                onClick={(e) => { e.preventDefault(); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; try { window.scrollTo({ top: 0, left: 0, behavior: 'smooth' }); } catch { window.scrollTo(0, 0); } }}
                 className="transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-[hsl(0,0%,10%)] rounded-lg cursor-pointer"
                 data-testid="footer-logo-button"
                 aria-label="Go to top of page"
