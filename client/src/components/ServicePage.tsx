@@ -74,12 +74,30 @@ export default function ServicePage({ title, description, children, breadcrumb, 
     // Always land at the top on navigation (no mid-page anchors)
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
     
-    // Immediately scroll to top
-    try {
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    } catch {
-      window.scrollTo(0, 0);
-    }
+    // Force scroll to top with multiple methods for reliability
+    const forceScrollToTop = () => {
+      // Method 1: Direct DOM manipulation
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      
+      // Method 2: Window scroll
+      try {
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      } catch {
+        window.scrollTo(0, 0);
+      }
+      
+      // Method 3: Additional fallback
+      setTimeout(() => {
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        window.scrollTo(0, 0);
+      }, 50);
+    };
+    
+    // Execute immediately and after a short delay to ensure it works
+    forceScrollToTop();
+    const timeoutId = setTimeout(forceScrollToTop, 100);
     
     // Defensive: strip accidental hash fragments
     if (location.hash && !location.hash.startsWith('#top')) {
@@ -87,6 +105,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
     }
     
     return () => {
+      clearTimeout(timeoutId);
       document.body.classList.remove('page--services');
     };
   }, [])
