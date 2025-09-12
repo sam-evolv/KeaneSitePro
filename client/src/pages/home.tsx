@@ -284,7 +284,7 @@ export default function Home() {
         <div className="wrap">
           {/* Logo */}
           <a className="brand" href="/" aria-label="Keane Site Services">
-            <img className="logo logo--primary" src={logoSrc} alt="Keane Site Services" width="439" height="106" decoding="async" fetchpriority="high" />
+            <img className="logo logo--primary" src={logoSrc} alt="Keane Site Services" width="439" height="106" decoding="async" fetchPriority="high" />
             <img className="logo logo--scrolled" src={logoLightSrc} alt="" aria-hidden="true" width="439" height="106" decoding="async" />
           </a>
 
