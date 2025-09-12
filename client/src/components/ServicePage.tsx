@@ -407,14 +407,19 @@ export default function ServicePage({ title, description, children, breadcrumb, 
             
             {/* Centered Large Logo */}
             <div className="flex justify-center">
-              <Link href="/" data-testid="footer-logo-link">
+              <button 
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                className="transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-[hsl(0,0%,10%)] rounded-lg"
+                data-testid="footer-logo-button"
+                aria-label="Go to top of page"
+              >
                 <img 
                   src={footerLogoSrc} 
                   alt="Keane Site Services" 
                   className="h-64 w-auto logo-hover"
                   data-testid="footer-logo"
                 />
-              </Link>
+              </button>
             </div>
             
             {/* Contact Info */}
