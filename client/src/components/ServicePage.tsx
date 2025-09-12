@@ -414,24 +414,18 @@ export default function ServicePage({ title, description, children, breadcrumb, 
             <div className="text-center md:text-left">
               <h4 className="text-white font-semibold mb-4">Quick Links</h4>
               <ul className="space-y-2">
-                <li><Link href="/" className="text-gray-400 hover:text-primary transition-colors text-sm" data-testid="footer-link-home">Home</Link></li>
-                <li><Link href="/#services" className="text-gray-400 hover:text-primary transition-colors text-sm" data-testid="footer-link-services">Services</Link></li>
-                <li><Link href="/#about" className="text-gray-400 hover:text-primary transition-colors text-sm" data-testid="footer-link-about">About</Link></li>
-                <li><Link href="/#contact" className="text-gray-400 hover:text-primary transition-colors text-sm" data-testid="footer-link-contact">Contact</Link></li>
+                <li><Link href="/" className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-home">Home</Link></li>
+                <li><Link href="/#services" className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-services">Services</Link></li>
+                <li><Link href="/#about" className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-about">About</Link></li>
+                <li><Link href="/#contact" className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-contact">Contact</Link></li>
               </ul>
             </div>
             
             {/* Centered Large Logo */}
             <div className="flex justify-center">
-              <button 
-                onClick={() => {
-                  try {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  } catch {
-                    window.scrollTo(0, 0);
-                  }
-                }}
-                className="transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-[hsl(0,0%,10%)] rounded-lg"
+              <Link 
+                href="/"
+                className="transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-[hsl(0,0%,10%)] rounded-lg cursor-pointer inline-block"
                 data-testid="footer-logo-button"
                 aria-label="Go to top of page"
               >
@@ -441,7 +435,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
                   className="h-64 w-auto logo-hover"
                   data-testid="footer-logo"
                 />
-              </button>
+              </Link>
             </div>
             
             {/* Contact Info */}

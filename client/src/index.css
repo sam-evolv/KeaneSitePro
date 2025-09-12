@@ -528,6 +528,22 @@ form select:focus {
   border: 1px solid rgba(0,0,0,.2) !important;
 }
 
+/* Ensure footer is above any overlays and clickable */
+footer {
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+/* Make sure mobile menu overlay doesn't block footer clicks */
+[class*="fixed inset-0"] {
+  pointer-events: auto;
+}
+
+.lg\:hidden.fixed.inset-0 {
+  pointer-events: auto;
+}
+
 /* If a top border/line comes from the first section, disable it on services hero */
 .page--services .svc-hero,
 .page--services .svc-hero * {

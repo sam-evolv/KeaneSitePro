@@ -872,18 +872,19 @@ export default function Home() {
             <div className="text-center md:text-left">
               <h4 className="text-white font-semibold mb-4">Quick Links</h4>
               <ul className="space-y-2">
-                <li><button onClick={() => scrollToSection('home')} className="text-gray-400 hover:text-primary transition-colors text-sm" data-testid="footer-link-home">Home</button></li>
-                <li><button onClick={() => scrollToSection('services')} className="text-gray-400 hover:text-primary transition-colors text-sm" data-testid="footer-link-services">Services</button></li>
-                <li><button onClick={() => scrollToSection('about')} className="text-gray-400 hover:text-primary transition-colors text-sm" data-testid="footer-link-about">About</button></li>
-                <li><button onClick={() => scrollToSection('contact')} className="text-gray-400 hover:text-primary transition-colors text-sm" data-testid="footer-link-contact">Contact</button></li>
+                <li><a href="#home" onClick={(e) => { e.preventDefault(); scrollToSection('home'); }} className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-home">Home</a></li>
+                <li><a href="#services" onClick={(e) => { e.preventDefault(); scrollToSection('services'); }} className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-services">Services</a></li>
+                <li><a href="#about" onClick={(e) => { e.preventDefault(); scrollToSection('about'); }} className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-about">About</a></li>
+                <li><a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }} className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-contact">Contact</a></li>
               </ul>
             </div>
             
             {/* Centered Large Logo */}
             <div className="flex justify-center">
-              <button 
-                onClick={() => scrollToSection('home')}
-                className="transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-[hsl(0,0%,10%)] rounded-lg"
+              <a 
+                href="#home"
+                onClick={(e) => { e.preventDefault(); scrollToSection('home'); }}
+                className="transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-[hsl(0,0%,10%)] rounded-lg cursor-pointer"
                 data-testid="footer-logo-button"
                 aria-label="Go to top of page"
               >
@@ -893,7 +894,7 @@ export default function Home() {
                   className="h-64 w-auto logo-hover"
                   data-testid="footer-logo"
                 />
-              </button>
+              </a>
             </div>
             
             {/* Contact Info */}
