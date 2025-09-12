@@ -221,8 +221,8 @@ export default function ServicePage({ title, description, children, breadcrumb, 
         )}
       </header>
 
-      {/* Scroll detection sentinel - positioned just below header */}
-      <div ref={sentinelRef} className="h-px mt-16 w-full pointer-events-none" aria-hidden="true" />
+      {/* Scroll detection sentinel - absolutely positioned to avoid layout gaps */}
+      <div ref={sentinelRef} className="absolute -top-px left-0 w-px h-px opacity-0 pointer-events-none" aria-hidden="true" />
 
       {/* Service Hero (polished) */}
       <section className="svc-hero svc-hero--compact" aria-labelledby="svc-title">

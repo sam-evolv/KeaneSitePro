@@ -698,12 +698,13 @@ a.link-underline:hover::after {
   padding-left: 0 !important;
 }
 
-/* Ensure hero container has exact same alignment as body content */
-.svc-hero .container {
-  padding-left: var(--gutter) !important;
-  padding-right: var(--gutter) !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
+/* Enforce identical container geometry across all sections - higher specificity than Tailwind */
+.site-header > .container,
+.svc-hero > .container,
+.svc-main > .container {
+  max-width: var(--container-w) !important;
+  margin-inline: auto !important;
+  padding-inline: var(--gutter) !important;
 }
 
 /* Body container */
