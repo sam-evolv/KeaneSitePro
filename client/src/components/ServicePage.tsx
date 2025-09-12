@@ -67,9 +67,25 @@ export default function ServicePage({ title, description, children, breadcrumb, 
     }
   }, [title, description, jsonLd])
 
-  // Add page--services class to body for service pages
+  // Add page--services class to body and ensure page starts at top
   useEffect(() => {
     document.body.classList.add('page--services');
+    
+    // Always land at the top on navigation (no mid-page anchors)
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    
+    // Immediately scroll to top
+    try {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    } catch {
+      window.scrollTo(0, 0);
+    }
+    
+    // Defensive: strip accidental hash fragments
+    if (location.hash && !location.hash.startsWith('#top')) {
+      history.replaceState(null, '', location.pathname + location.search);
+    }
+    
     return () => {
       document.body.classList.remove('page--services');
     };
