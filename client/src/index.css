@@ -428,7 +428,7 @@ select {
   background: rgba(0, 0, 0, 0.95) !important;
   background-color: rgba(0, 0, 0, 0.95) !important;
   backdrop-filter: saturate(140%) blur(12px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  box-shadow: none;
   border-bottom: none;
 }
 
@@ -695,6 +695,15 @@ a.link-underline:hover::after {
 .svc-headline,
 .svc-divider { 
   margin-left: 0 !important; 
+  padding-left: 0 !important;
+}
+
+/* Ensure hero container has exact same alignment as body content */
+.svc-hero .container {
+  padding-left: var(--gutter) !important;
+  padding-right: var(--gutter) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
 /* Body container */
