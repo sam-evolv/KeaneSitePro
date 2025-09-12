@@ -883,29 +883,52 @@ export default function Home() {
             <div className="text-center md:text-left">
               <h4 className="text-white font-semibold mb-4">Quick Links</h4>
               <ul className="space-y-2">
-                <li><button onClick={() => scrollToSection('home')} className="text-gray-400 hover:text-primary transition-colors text-sm">Home</button></li>
-                <li><button onClick={() => scrollToSection('services')} className="text-gray-400 hover:text-primary transition-colors text-sm">Services</button></li>
-                <li><button onClick={() => scrollToSection('about')} className="text-gray-400 hover:text-primary transition-colors text-sm">About</button></li>
-                <li><button onClick={() => scrollToSection('contact')} className="text-gray-400 hover:text-primary transition-colors text-sm">Contact</button></li>
+                <li><button onClick={() => scrollToSection('home')} className="text-gray-400 hover:text-primary transition-colors text-sm" data-testid="footer-link-home">Home</button></li>
+                <li><button onClick={() => scrollToSection('services')} className="text-gray-400 hover:text-primary transition-colors text-sm" data-testid="footer-link-services">Services</button></li>
+                <li><button onClick={() => scrollToSection('about')} className="text-gray-400 hover:text-primary transition-colors text-sm" data-testid="footer-link-about">About</button></li>
+                <li><button onClick={() => scrollToSection('contact')} className="text-gray-400 hover:text-primary transition-colors text-sm" data-testid="footer-link-contact">Contact</button></li>
               </ul>
             </div>
             
             {/* Centered Large Logo */}
             <div className="flex justify-center">
-              <img 
-                src={footerLogoSrc} 
-                alt="Keane Site Services" 
-                className="h-64 w-auto logo-hover"
-                data-testid="footer-logo"
-              />
+              <button 
+                onClick={() => scrollToSection('home')}
+                className="transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-[hsl(0,0%,10%)] rounded-lg"
+                data-testid="footer-logo-button"
+                aria-label="Go to top of page"
+              >
+                <img 
+                  src={footerLogoSrc} 
+                  alt="Keane Site Services" 
+                  className="h-64 w-auto logo-hover"
+                  data-testid="footer-logo"
+                />
+              </button>
             </div>
             
             {/* Contact Info */}
             <div className="text-center md:text-right">
               <h4 className="text-white font-semibold mb-4">Contact</h4>
               <div className="space-y-2 text-sm text-gray-400">
-                <div>Phone: +353 87 646 0921</div>
-                <div>Email: info@keanesiteservices.com</div>
+                <div>
+                  Phone: <a 
+                    href="tel:+353876460921" 
+                    className="text-primary hover:text-primary/80 transition-colors"
+                    data-testid="footer-phone-link"
+                  >
+                    +353 87 646 0921
+                  </a>
+                </div>
+                <div>
+                  Email: <a 
+                    href="mailto:info@keanesiteservices.com" 
+                    className="text-primary hover:text-primary/80 transition-colors"
+                    data-testid="footer-email-link"
+                  >
+                    info@keanesiteservices.com
+                  </a>
+                </div>
                 <div>Service Area: Ireland</div>
               </div>
             </div>

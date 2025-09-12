@@ -405,20 +405,21 @@ export default function ServicePage({ title, description, children, breadcrumb, 
             <div className="text-center md:text-left">
               <h4 className="text-white font-semibold mb-4">Quick Links</h4>
               <ul className="space-y-2">
-                <li><Link href="/" className="text-gray-400 hover:text-primary transition-colors text-sm">Home</Link></li>
-                <li><Link href="/#services" className="text-gray-400 hover:text-primary transition-colors text-sm">Services</Link></li>
-                <li><Link href="/#about" className="text-gray-400 hover:text-primary transition-colors text-sm">About</Link></li>
-                <li><Link href="/#contact" className="text-gray-400 hover:text-primary transition-colors text-sm">Contact</Link></li>
+                <li><Link href="/" className="text-gray-400 hover:text-primary transition-colors text-sm" data-testid="footer-link-home">Home</Link></li>
+                <li><Link href="/#services" className="text-gray-400 hover:text-primary transition-colors text-sm" data-testid="footer-link-services">Services</Link></li>
+                <li><Link href="/#about" className="text-gray-400 hover:text-primary transition-colors text-sm" data-testid="footer-link-about">About</Link></li>
+                <li><Link href="/#contact" className="text-gray-400 hover:text-primary transition-colors text-sm" data-testid="footer-link-contact">Contact</Link></li>
               </ul>
             </div>
             
             {/* Centered Large Logo */}
             <div className="flex justify-center">
-              <Link href="/">
+              <Link href="/" data-testid="footer-logo-link">
                 <img 
                   src={footerLogoSrc} 
                   alt="Keane Site Services" 
                   className="h-64 w-auto logo-hover"
+                  data-testid="footer-logo"
                 />
               </Link>
             </div>
@@ -427,8 +428,24 @@ export default function ServicePage({ title, description, children, breadcrumb, 
             <div className="text-center md:text-right">
               <h4 className="text-white font-semibold mb-4">Contact</h4>
               <div className="space-y-2 text-sm text-gray-400">
-                <div>Phone: +353 87 646 0921</div>
-                <div>Email: info@keanesiteservices.com</div>
+                <div>
+                  Phone: <a 
+                    href="tel:+353876460921" 
+                    className="text-primary hover:text-primary/80 transition-colors"
+                    data-testid="footer-phone-link"
+                  >
+                    +353 87 646 0921
+                  </a>
+                </div>
+                <div>
+                  Email: <a 
+                    href="mailto:info@keanesiteservices.com" 
+                    className="text-primary hover:text-primary/80 transition-colors"
+                    data-testid="footer-email-link"
+                  >
+                    info@keanesiteservices.com
+                  </a>
+                </div>
                 <div>Service Area: Ireland</div>
               </div>
             </div>
