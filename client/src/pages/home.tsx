@@ -281,33 +281,15 @@ export default function Home() {
       
       {/* Header */}
       <header ref={headerRef} className="site-header">
-        <div className="container">
-          <div className="flex items-center justify-between h-20 lg:h-24">
-            {/* Logo */}
-            <a className="brand" href="#" onClick={(e) => { e.preventDefault(); scrollToSection('home'); }} aria-label="Keane Site Services">
-              {/* Primary logo (visible at top / transparent header) */}
-              <img
-                className="logo logo--primary"
-                src={logoSrc}
-                alt="Keane Site Services"
-                width="132" height="96"
-                decoding="async" 
-                fetchPriority="high"
-              />
-              
-              {/* Scrolled logo (visible when header turns black) */}
-              <img
-                className="logo logo--scrolled"
-                src={logoLightSrc}
-                alt="" 
-                aria-hidden="true"
-                width="132" height="96"
-                decoding="async"
-              />
-            </a>
+        <div className="wrap">
+          {/* Logo */}
+          <a className="brand" href="/" aria-label="Keane Site Services">
+            <img className="logo logo--primary" src={logoSrc} alt="Keane Site Services" width="132" height="32" decoding="async" fetchPriority="high" />
+            <img className="logo logo--scrolled" src={logoLightSrc} alt="" aria-hidden="true" width="132" height="32" decoding="async" />
+          </a>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-8">
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center space-x-8">
               <button 
                 onClick={() => scrollToSection('home')} 
                 className="text-white hover:text-primary transition-colors duration-200 font-medium"
@@ -355,7 +337,6 @@ export default function Home() {
             >
               <Menu className="w-6 h-6" />
             </Button>
-          </div>
         </div>
         
         {/* Mobile Menu Overlay */}

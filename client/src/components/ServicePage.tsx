@@ -120,33 +120,15 @@ export default function ServicePage({ title, description, children, breadcrumb, 
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header ref={headerRef} className="site-header">
-        <div className="container">
-          <div className="flex items-center justify-between h-20 lg:h-24">
-            {/* Logo */}
-            <Link href="/" className="brand" aria-label="Keane Site Services">
-              {/* Primary logo (visible at top / transparent header) */}
-              <img
-                className="logo logo--primary"
-                src={logoSrc}
-                alt="Keane Site Services"
-                width="132" height="96"
-                decoding="async" 
-                fetchPriority="high"
-              />
-              
-              {/* Scrolled logo (visible when header turns black) */}
-              <img
-                className="logo logo--scrolled"
-                src={logoLightSrc}
-                alt="" 
-                aria-hidden="true"
-                width="132" height="96"
-                decoding="async"
-              />
-            </Link>
+        <div className="wrap">
+          {/* Logo */}
+          <Link href="/" className="brand" aria-label="Keane Site Services">
+            <img className="logo logo--primary" src={logoSrc} alt="Keane Site Services" width="132" height="32" decoding="async" fetchPriority="high" />
+            <img className="logo logo--scrolled" src={logoLightSrc} alt="" aria-hidden="true" width="132" height="32" decoding="async" />
+          </Link>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-8">
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center space-x-8">
               <Link href="/" className="text-white hover:text-primary transition-colors duration-200 font-medium">
                 Home
               </Link>
@@ -173,7 +155,6 @@ export default function ServicePage({ title, description, children, breadcrumb, 
             >
               {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </Button>
-          </div>
         </div>
 
         {/* Mobile Menu */}
