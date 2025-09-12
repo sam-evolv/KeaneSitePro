@@ -5,9 +5,18 @@ window.addEventListener('load', function() {
   // 1) Header state: transparent → black - requery each time
   const applyScroll = () => {
     const header = document.querySelector('.site-header');
-    if (!header) return;
-    if (window.scrollY > 8) root.classList.add('scrolled');
-    else root.classList.remove('scrolled');
+    if (!header) {
+      console.log('Header not found');
+      return;
+    }
+    console.log('Scroll Y:', window.scrollY);
+    if (window.scrollY > 8) {
+      root.classList.add('scrolled');
+      console.log('Added scrolled class');
+    } else {
+      root.classList.remove('scrolled');
+      console.log('Removed scrolled class');
+    }
   };
   applyScroll();
   window.addEventListener('scroll', applyScroll, { passive: true });
