@@ -1,0 +1,50 @@
+Objective: Produce a deploy-ready keane-site-services.zip that contains the current static website exactly as it renders now. No code changes that could alter behavior. Validate that all local asset references resolve.
+Guardrails
+Do not change HTML structure, content, CSS, or JS logic.
+Do not alter header/toolbar behavior, hero video, or service pages.
+Only add non-invasive deploy metadata files alongside existing files (safe defaults).
+Use relative paths as they exist now; do not rewrite links.
+Steps
+Create export directory
+Create /dist (empty).
+Copy all site files and folders into /dist, preserving structure:
+index.html
+/services/** (all service pages)
+/public/** (css/js)
+/assets/** (images, video, brand, icons, etc.)
+Any favicon / web manifest files
+(Optional but recommended) Add Netlify config without changing behavior
+Write /dist/netlify.toml with safe defaults:
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Cache-Control = "public, max-age=0, must-revalidate"
+If a thank-you.html exists, do nothing else.
+Do not add redirects unless they already exist.
+Preserve Netlify Forms (if used)
+If any form has data-netlify="true", ensure its name and hidden form-name match. Do not modify forms; only verify presence. If absent, skip.
+Validation pass
+Verify that every <link href>, <script src>, <img src>, <video src/poster>, and <source srcset> in /dist points to a file that exists under /dist. Fail the build if any are missing and output the offending paths.
+Confirm that the hero video file(s) are copied and the total ZIP size is reasonable (<100 MB). Do not compress media further.
+ZIP packaging
+Create keane-site-services.zip from the contents of /dist (so the root of the ZIP contains index.html, not a nested /dist folder).
+Output the absolute path to the ZIP.
+Smoke test (local file open)
+Open /dist/index.html in the Replit preview to ensure CSS/JS load and hero media renders. Do not change code; just report status.
+Acceptance Criteria
+keane-site-services.zip exists and unzips to a flat site tree with index.html at root.
+All asset references resolve; no broken links or missing files reported.
+No HTML/CSS/JS content or behaviors were altered.
+If Netlify Forms are present, name/hidden form-name alignment is confirmed (no mutation).
+Provide a short summary with:
+ZIP path
+File count and total size
+Any non-blocking warnings (if any)
+Deliverable: keane-site-services.zip ready for drag-and-drop on Netlify Deploys.
