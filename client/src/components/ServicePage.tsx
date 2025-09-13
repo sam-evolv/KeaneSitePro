@@ -259,7 +259,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
       {/* Scroll detection sentinel - positioned at top to start transparent */}
       <div 
         ref={sentinelRef} 
-        className="h-2 w-full pointer-events-none opacity-0"
+        className="header-sentinel"
         aria-hidden="true"
       />
 
