@@ -199,7 +199,7 @@ export default function Home() {
 
       // Create form data for Netlify
       const netlifyFormData = new FormData();
-      netlifyFormData.append('form-name', 'contact');
+      netlifyFormData.append('form-name', 'quote');
       Object.entries(formData).forEach(([key, value]) => {
         netlifyFormData.append(key, value);
       });
@@ -215,10 +215,13 @@ export default function Home() {
         setFormData({ name: "", email: "", phone: "", service: "", message: "" });
         toast({
           title: "Message sent successfully!",
-          description: "We'll get back to you soon."
+          description: "Redirecting to thank you page..."
         });
         
-        setTimeout(() => setSubmitSuccess(false), 5000);
+        // Redirect to thank you page after successful submission
+        setTimeout(() => {
+          window.location.href = "/thank-you.html";
+        }, 1500);
       } else {
         throw new Error("Failed to send message");
       }
