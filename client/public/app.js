@@ -53,7 +53,7 @@ window.addEventListener('load', function() {
             <div class="cn-overlay" role="presentation"></div>
             <div class="cn-dialog" role="dialog" aria-modal="true" aria-label="Call Now">
               <h3>Call Now</h3>
-              <p><a class="cn-number" href="tel:${phone}">${phone}</a></p>
+              <p>Mark Keane</p>
               <div class="cn-actions">
                 <a class="btn btn--primary" href="tel:${phone}">Call ${phone}</a>
                 <button class="btn btn--ghost" type="button" data-close>Close</button>
