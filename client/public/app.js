@@ -1,15 +1,13 @@
-// Force scroll to top as soon as DOM is available
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', function() {
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-    window.scrollTo(0, 0);
+// Force top-of-page landing for service pages (instant positioning)
+(function(){
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.addEventListener('pageshow', () => {
+    try{window.scrollTo({top:0,left:0,behavior:'instant'});}catch{window.scrollTo(0,0);}
   });
-} else {
-  document.documentElement.scrollTop = 0;
-  document.body.scrollTop = 0;
-  window.scrollTo(0, 0);
-}
+  if(location.hash && !location.hash.startsWith('#top')){
+    history.replaceState(null,'',location.pathname+location.search);
+  }
+})();
 
 // Wait for React to mount before initializing  
 window.addEventListener('load', function() {

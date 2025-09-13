@@ -490,6 +490,7 @@ export default function Home() {
 
       {/* Services Section */}
       <section ref={servicesRef} id="services" data-section="services" className="py-16 lg:py-24 bg-[hsl(210,17%,97%)]">
+        <div id="main" aria-hidden="true"></div>
         <div className="container">
           {/* Section Header */}
           <div className={`text-center mb-16 transition-all duration-700 ease-out transform ${
@@ -540,7 +541,7 @@ export default function Home() {
       </section>
 
       {/* Why Choose Keane Section */}
-      <section ref={valuePropsRef} data-section="value-props" className="py-16 lg:py-24 bg-[hsl(0,0%,10%)] relative overflow-hidden">
+      <section ref={valuePropsRef} data-section="value-props" className="why py-16 lg:py-24 bg-[hsl(0,0%,10%)] relative overflow-hidden">
         {/* Subtle gradient background */}
         <div className="absolute inset-0 bg-gradient-to-br from-[hsl(0,0%,10%)] via-[hsl(0,0%,7%)] to-[hsl(0,0%,10%)] opacity-90"></div>
         
@@ -565,7 +566,7 @@ export default function Home() {
             {valueProps.map((prop, index) => (
               <div 
                 key={index} 
-                className={`text-center transition-all duration-700 ease-out transform cursor-pointer group p-6 rounded-lg hover:-translate-y-3 hover:border hover:border-primary ${
+                className={`card text-center transition-all duration-700 ease-out transform cursor-pointer group p-6 rounded-lg hover:-translate-y-3 hover:border hover:border-primary ${
                   visibleSections.has('value-props') 
                     ? 'opacity-100 scale-100 translate-y-0' 
                     : 'opacity-0 scale-95 translate-y-8'
@@ -574,7 +575,7 @@ export default function Home() {
                 data-testid={`value-prop-${index}`}
               >
                 <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-primary to-orange-600 rounded-full flex items-center justify-center group-hover:shadow-lg group-hover:shadow-black/50 transition-all duration-300">
-                  <prop.icon className="w-8 h-8 text-white" />
+                  <prop.icon className="icon w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-4">{prop.title}</h3>
                 <p className="text-gray-300 leading-relaxed">
@@ -596,6 +597,7 @@ export default function Home() {
                 ref={aboutLogoRef}
                 src={aboutLogoSrc} 
                 alt="Keane Site Services Logo" 
+                loading="lazy"
                 className={`w-80 h-80 logo-hover transition-all duration-1000 ease-out transform ${
                   isAboutLogoVisible 
                     ? 'opacity-100 scale-100 translate-y-0' 
@@ -891,6 +893,7 @@ export default function Home() {
                 <img 
                   src={footerLogoSrc} 
                   alt="Keane Site Services" 
+                  loading="lazy"
                   className="h-64 w-auto logo-hover"
                   data-testid="footer-logo"
                 />

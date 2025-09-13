@@ -52,17 +52,31 @@
 }
 
 /* Dropdown styling fixes */
-/* Ensure dropdown appears above other form fields */
-select {
+/* shadcn Select component styling */
+[data-radix-select-trigger] {
   position: relative;
   z-index: 10;
-  background-color: #fff;
+  background-color: #fff !important;
+  border: 1px solid hsl(var(--input)) !important;
 }
 
-/* Dark mode support for dropdown */
-.dark select {
-  background-color: hsl(var(--background));
-  color: hsl(var(--foreground));
+[data-radix-select-content] {
+  background-color: #fff !important;
+  border: 1px solid hsl(var(--border)) !important;
+  z-index: 50;
+}
+
+/* Dark mode support for shadcn Select */
+.dark [data-radix-select-trigger] {
+  background-color: hsl(var(--background)) !important;
+  color: hsl(var(--foreground)) !important;
+  border-color: hsl(var(--border)) !important;
+}
+
+.dark [data-radix-select-content] {
+  background-color: hsl(var(--background)) !important;
+  color: hsl(var(--foreground)) !important;
+  border-color: hsl(var(--border)) !important;
 }
 
 /* Ensure parent containers don't clip the dropdown */
@@ -497,6 +511,95 @@ select {
   .page--services .site-header {
     border-bottom: 0 !important; 
     box-shadow: none;
+  }
+  
+  /* Why Choose Keane Site Services - Micro-interactions */
+  .why .card:hover {
+    transform: translateY(-2px); 
+    box-shadow: var(--shadow-2); 
+    border-color: rgba(241,90,41,.35);
+  }
+  
+  .why .card .icon {
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,.2));
+  }
+  
+  /* Enterprise Form System */
+  .form select, 
+  .contact .form select, 
+  select[name="service"] {
+    background: #fff !important; 
+    color: #111; 
+    border: 1px solid rgba(0,0,0,.2); 
+    border-radius: var(--radius-1);
+    appearance: none;
+    background-image: linear-gradient(45deg,transparent 50%, #111 50%),linear-gradient(135deg,#111 50%,transparent 50%);
+    background-position: calc(100% - 18px) calc(1.05em),calc(100% - 13px) calc(1.05em);
+    background-size: 5px 5px,5px 5px; 
+    background-repeat: no-repeat; 
+    z-index: 5;
+  }
+  
+  .form select:focus {
+    outline: 0; 
+    box-shadow: 0 0 0 3px rgba(241,90,41,.25); 
+    border-color: rgba(241,90,41,.55);
+  }
+  
+  .form, 
+  .form-grid, 
+  .form-group {
+    overflow: visible !important;
+  }
+  
+  /* Services Page Alignment & Top Landing */
+  .page--services .container {
+    max-width: var(--container-w); 
+    padding-inline: var(--gutter); 
+    margin-inline: auto;
+  }
+  
+  .page--services .svc-hero {
+    background: #111; 
+    color: #fff;
+  }
+  
+  .page--services .svc-hero--compact {
+    padding: calc(var(--header-h) + 28px) 0 28px;
+  }
+  
+  .page--services .svc-hero .container {
+    max-width: var(--container-w); 
+    padding-inline: var(--gutter);
+  }
+  
+  .page--services .svc-breadcrumb,
+  .page--services .svc-back,
+  .page--services .svc-headline,
+  .page--services .svc-divider {
+    margin-left: 0 !important;
+  }
+  
+  .page--services .svc-main .container {
+    max-width: var(--container-w); 
+    padding-inline: var(--gutter);
+  }
+  
+  /* Enterprise Accessibility System */
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+  }
+  
+  .skip-link:focus {
+    left: 20px;
+    top: 14px;
+    background: #000;
+    color: #fff;
+    padding: .5rem .7rem;
+    border-radius: 10px;
+    z-index: 1100;
   }
 
 .brand{ position:relative; display:block; height:106px; width:439px; }
