@@ -27,12 +27,12 @@ export default function HaulageSupport() {
   return (
     <ServicePage
       title="Haulage Support"
-      description="Coordinated logistics and plant movement to keep projects on schedule."
+      description="Coordinated logistics and plant movement to keep construction projects on schedule and within budget."
       breadcrumb="Haulage Support"
       jsonLd={jsonLd}
     >
       <section className="py-16 lg:py-24">
-        <div className="container">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Main Content */}
             <div className="lg:col-span-2">
@@ -163,9 +163,9 @@ export default function HaulageSupport() {
                   <p className="mb-4">Get a personalized quote for your haulage requirements.</p>
                   <a 
                     href="#contact" 
-                    className="btn btn--ghost btn--pill"
+                    className="inline-block bg-white text-primary px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
                   >
-                    Request a Quote
+                    Request Quote
                   </a>
                 </div>
               </div>

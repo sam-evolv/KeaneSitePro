@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'wouter'
 import { Menu, X, Phone, Mail, MapPin, ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -7,7 +7,6 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { useToast } from '@/hooks/use-toast'
-import { useHeaderScrolled } from '@/hooks/use-header-scrolled'
 import logoAsset from '../assets/logo.png'
 import logoLightAsset from '../assets/logo-light.png'
 import footerLogoAsset from '../assets/footer-logo.png'
@@ -25,16 +24,9 @@ interface ServicePageProps {
 }
 
 export default function ServicePage({ title, description, children, breadcrumb, jsonLd }: ServicePageProps) {
-  // Immediately force scroll to top before any state initialization
-  if (typeof window !== 'undefined') {
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-    window.scrollTo(0, 0);
-  }
-
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isHeaderScrolled, setIsHeaderScrolled] = useState(false)
   const headerRef = useRef<HTMLElement>(null)
-  const sentinelRef = useHeaderScrolled()
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -46,7 +38,23 @@ export default function ServicePage({ title, description, children, breadcrumb, 
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const { toast } = useToast()
 
-  // Header scroll detection is now handled by useHeaderScrolled hook
+  // Toggle "scrolled" class on header
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrolled = window.scrollY > 10
+      if (headerRef.current) {
+        if (scrolled) {
+          headerRef.current.classList.add('scrolled')
+        } else {
+          headerRef.current.classList.remove('scrolled')
+        }
+      }
+      setIsHeaderScrolled(scrolled)
+    }
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   // Set page title and meta description
   useEffect(() => {
@@ -61,28 +69,6 @@ export default function ServicePage({ title, description, children, breadcrumb, 
     }
     metaDescription.setAttribute('content', description)
 
-    // Update Open Graph tags for better social sharing
-    const ogTitle = document.querySelector('meta[property="og:title"]')
-    if (ogTitle) {
-      ogTitle.setAttribute('content', `${title} | Keane Site Services`)
-    }
-    
-    const ogDescription = document.querySelector('meta[property="og:description"]')
-    if (ogDescription) {
-      ogDescription.setAttribute('content', description)
-    }
-    
-    // Update Twitter card tags
-    const twitterTitle = document.querySelector('meta[name="twitter:title"]')
-    if (twitterTitle) {
-      twitterTitle.setAttribute('content', `${title} | Keane Site Services`)
-    }
-    
-    const twitterDescription = document.querySelector('meta[name="twitter:description"]')
-    if (twitterDescription) {
-      twitterDescription.setAttribute('content', description)
-    }
-
     // Add JSON-LD structured data
     if (jsonLd) {
       const script = document.createElement('script')
@@ -95,28 +81,6 @@ export default function ServicePage({ title, description, children, breadcrumb, 
       }
     }
   }, [title, description, jsonLd])
-
-  // Add page--services class to body and ensure page starts at top
-  useLayoutEffect(() => {
-    document.body.classList.add('page--services');
-    
-    // Always land at the top on navigation (no mid-page anchors)
-    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-    
-    // Instantly set scroll position to top before any visual rendering
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-    window.scrollTo(0, 0);
-    
-    // Defensive: strip accidental hash fragments
-    if (location.hash && !location.hash.startsWith('#top')) {
-      history.replaceState(null, '', location.pathname + location.search);
-    }
-    
-    return () => {
-      document.body.classList.remove('page--services');
-    };
-  }, [])
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
@@ -169,20 +133,23 @@ export default function ServicePage({ title, description, children, breadcrumb, 
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Skip Link Accessibility */}
-      <a className="skip-link" href="#main">Skip to content</a>
-      
       {/* Header */}
       <header ref={headerRef} className="site-header">
-        <div className="wrap">
-          {/* Logo */}
-          <Link href="/" className="brand" aria-label="Keane Site Services">
-            <img className="logo logo--primary" src={logoSrc} alt="Keane Site Services" width="439" height="106" decoding="async" fetchPriority="high" />
-            <img className="logo logo--scrolled" src={logoLightSrc} alt="" aria-hidden="true" width="439" height="106" decoding="async" loading="lazy" />
-          </Link>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16 lg:h-20">
+            {/* Logo */}
+            <div className="flex-shrink-0 relative flex items-center justify-center h-24 w-32">
+              <Link href="/">
+                <img 
+                  src={isHeaderScrolled ? logoLightSrc : logoSrc} 
+                  alt="Keane Site Services" 
+                  className="absolute h-24 w-auto header-logo cursor-pointer transition-opacity duration-500"
+                />
+              </Link>
+            </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-8">
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center space-x-8">
               <Link href="/" className="text-white hover:text-primary transition-colors duration-200 font-medium">
                 Home
               </Link>
@@ -195,7 +162,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
               <Link href="/#contact" className="text-white hover:text-primary transition-colors duration-200 font-medium">
                 Contact
               </Link>
-              <Button className="btn btn--primary btn--pill" asChild>
+              <Button className="btn-primary px-6 py-2" asChild>
                 <Link href="/#contact">Request a Quote</Link>
               </Button>
             </nav>
@@ -209,6 +176,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
             >
               {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </Button>
+          </div>
         </div>
 
         {/* Mobile Menu */}
@@ -246,7 +214,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
                   Contact
                 </Link>
                 <div className="pt-8">
-                  <Button className="btn btn--primary btn--pill w-full" asChild>
+                  <Button className="btn-primary w-full px-6 py-3 text-base" asChild>
                     <Link href="/#contact">Request a Quote</Link>
                   </Button>
                 </div>
@@ -256,45 +224,43 @@ export default function ServicePage({ title, description, children, breadcrumb, 
         )}
       </header>
 
-      {/* Scroll detection sentinel - positioned at top to start transparent */}
-      <div 
-        ref={sentinelRef} 
-        className="header-sentinel"
-        aria-hidden="true"
-      />
-
-      {/* Service Hero (polished) */}
-      <section className="svc-hero svc-hero--compact" aria-labelledby="svc-title">
-        <div className="container">
-          <nav className="svc-breadcrumb" aria-label="Breadcrumb">
-            <Link href="/">Home</Link><span aria-hidden="true">/</span>
-            <Link href="/#services">Services</Link><span aria-hidden="true">/</span>
-            <span className="current">{breadcrumb || title}</span>
+      {/* Service Hero */}
+      <section className="relative pt-20 pb-16 bg-charcoal text-white overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-charcoal via-dark-charcoal to-charcoal opacity-90"></div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Breadcrumb */}
+          <nav className="flex items-center space-x-2 text-sm text-gray-300 mb-6">
+            <Link href="/" className="hover:text-white transition-colors">Home</Link>
+            <span>/</span>
+            <Link href="/#services" className="hover:text-white transition-colors">Services</Link>
+            <span>/</span>
+            <span className="text-white">{breadcrumb || title}</span>
           </nav>
 
-          <Link className="svc-back" href="/#services" aria-label="Back to services">
-            <span className="svc-back__icon" aria-hidden="true"></span>
+          {/* Back Button */}
+          <Link href="/#services" className="inline-flex items-center text-primary hover:text-primary/80 transition-colors mb-6">
+            <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Services
           </Link>
 
-          <header className="svc-headline">
-            <h1 id="svc-title" className="svc-title">{title}</h1>
-            <p className="svc-sub">
-              {description}
-            </p>
-          </header>
-
-          <div className="svc-divider" aria-hidden="true"></div>
+          {/* Hero Content */}
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 tracking-tight">
+            {title}
+          </h1>
+          <p className="text-xl text-gray-200 max-w-3xl">
+            {description}
+          </p>
         </div>
       </section>
 
       {/* Main Content */}
-      <main id="main" tabIndex={-1} className="bg-background">
+      <main className="bg-background">
         {children}
         
         {/* CTA Section */}
         <section className="py-16 bg-charcoal text-white">
-          <div className="container text-center">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl sm:text-4xl font-bold mb-6">
               Ready to Get Started?
             </h2>
@@ -303,11 +269,11 @@ export default function ServicePage({ title, description, children, breadcrumb, 
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
-              <Button className="btn btn--ghost btn--pill" asChild>
+              <Button className="bg-white text-primary px-8 py-4 text-lg font-semibold hover:bg-gray-100 transition-all duration-300 hover:-translate-y-1 shadow-lg w-full sm:w-auto" asChild>
                 <a href="tel:+353876460921">Call Now</a>
               </Button>
               <Button 
-                className="btn btn--primary btn--pill"
+                className="bg-transparent border-2 border-white text-white px-8 py-4 text-lg font-semibold hover:bg-white hover:text-primary transition-all duration-300 hover:-translate-y-1 w-full sm:w-auto"
                 onClick={() => scrollToSection('contact')}
               >
                 Request a Quote
@@ -318,7 +284,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
 
         {/* Contact Form Section */}
         <section id="contact" className="py-16 lg:py-24 bg-[hsl(210,17%,97%)]">
-          <div className="container" style={{maxWidth: '800px'}}>
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6 tracking-tight">
                 Request a Quote
@@ -414,7 +380,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
                 
                 <Button 
                   type="submit" 
-                  className="btn btn--primary btn--pill w-full" 
+                  className="btn-primary w-full px-6 py-4 text-lg" 
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? 'Sending...' : 'Send Request'}
@@ -438,33 +404,26 @@ export default function ServicePage({ title, description, children, breadcrumb, 
 
       {/* Footer */}
       <footer className="bg-[hsl(0,0%,10%)] py-12">
-        <div className="container">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center mb-8">
             {/* Quick Links */}
             <div className="text-center md:text-left">
               <h4 className="text-white font-semibold mb-4">Quick Links</h4>
               <ul className="space-y-2">
-                <li><Link href="/" className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-home">Home</Link></li>
-                <li><Link href="/#services" className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-services">Services</Link></li>
-                <li><Link href="/#about" className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-about">About</Link></li>
-                <li><Link href="/#contact" className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-contact">Contact</Link></li>
+                <li><Link href="/" className="text-gray-400 hover:text-primary transition-colors text-sm">Home</Link></li>
+                <li><Link href="/#services" className="text-gray-400 hover:text-primary transition-colors text-sm">Services</Link></li>
+                <li><Link href="/#about" className="text-gray-400 hover:text-primary transition-colors text-sm">About</Link></li>
+                <li><Link href="/#contact" className="text-gray-400 hover:text-primary transition-colors text-sm">Contact</Link></li>
               </ul>
             </div>
             
             {/* Centered Large Logo */}
             <div className="flex justify-center">
-              <Link 
-                href="/"
-                className="transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-[hsl(0,0%,10%)] rounded-lg cursor-pointer inline-block"
-                data-testid="footer-logo-button"
-                aria-label="Go to top of page"
-                onClick={() => { console.log('Service page footer logo clicked'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-              >
+              <Link href="/">
                 <img 
                   src={footerLogoSrc} 
                   alt="Keane Site Services" 
                   className="h-64 w-auto logo-hover"
-                  data-testid="footer-logo"
                 />
               </Link>
             </div>
@@ -473,24 +432,8 @@ export default function ServicePage({ title, description, children, breadcrumb, 
             <div className="text-center md:text-right">
               <h4 className="text-white font-semibold mb-4">Contact</h4>
               <div className="space-y-2 text-sm text-gray-400">
-                <div>
-                  Phone: <a 
-                    href="tel:+353876460921" 
-                    className="text-primary hover:text-primary/80 transition-colors"
-                    data-testid="footer-phone-link"
-                  >
-                    +353 87 646 0921
-                  </a>
-                </div>
-                <div>
-                  Email: <a 
-                    href="mailto:info@keanesiteservices.com" 
-                    className="text-primary hover:text-primary/80 transition-colors"
-                    data-testid="footer-email-link"
-                  >
-                    info@keanesiteservices.com
-                  </a>
-                </div>
+                <div>Phone: +353 87 646 0921</div>
+                <div>Email: info@keanesiteservices.com</div>
                 <div>Service Area: Ireland</div>
               </div>
             </div>
@@ -498,7 +441,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
           
           <div className="pt-8 border-t border-gray-700 text-center">
             <p className="text-gray-400 text-sm">
-              © 2025 Keane Site Services. All rights reserved.
+              © 2024 Keane Site Services. All rights reserved.
             </p>
           </div>
         </div>
