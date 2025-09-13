@@ -783,8 +783,9 @@ form select {
   background-color: #fff !important;
   background: #fff !important;
   color: #111 !important;
-  border: 1px solid rgba(0,0,0,.3) !important;
-  border-radius: 6px !important;
+  border: 2px solid rgba(0,0,0,.4) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,.1) !important;
 }
 
 /* Focus states for dropdown */
@@ -797,11 +798,25 @@ form select:focus {
   border-color: rgba(241,90,41,.55) !important;
 }
 
-/* Dropdown content background */
+/* Dropdown content background - fully opaque with stronger border */
 [data-radix-select-content],
 [role="listbox"] {
   background-color: #fff !important;
-  border: 1px solid rgba(0,0,0,.2) !important;
+  border: 2px solid rgba(0,0,0,.3) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,.15) !important;
+}
+
+/* Individual dropdown items - ensure fully opaque background */
+[data-radix-select-item],
+[role="option"] {
+  background-color: #fff !important;
+  color: #111 !important;
+}
+
+[data-radix-select-item]:hover,
+[role="option"]:hover {
+  background-color: rgba(241,90,41,.1) !important;
+  color: #111 !important;
 }
 
 /* Ensure footer is above any overlays and clickable */
