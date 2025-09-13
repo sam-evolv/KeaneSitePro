@@ -213,8 +213,8 @@ div[data-side] div[role="listbox"] {
   }
   
   .btn--pill {
-    border-radius: var(--radius-pill) !important;
-    padding: .8rem 2rem;
+    border-radius: var(--pill) !important;
+    padding: .8rem 2rem !important;
   }
   
   /* Enterprise Card System */
@@ -243,12 +243,16 @@ div[data-side] div[role="listbox"] {
   
   /* Enterprise Motion System */
   .fade-in {
-    opacity: 0; 
-    transform: translateY(6px); 
+    opacity: 1 !important; 
+    transform: none !important; 
     animation: fadeIn .5s var(--ease) forwards;
   }
   
   @keyframes fadeIn {
+    from {
+      opacity: 0; 
+      transform: translateY(6px);
+    }
     to {
       opacity: 1; 
       transform: none;
@@ -257,9 +261,9 @@ div[data-side] div[role="listbox"] {
   
   @media (prefers-reduced-motion: reduce) {
     .fade-in {
-      animation: none; 
-      opacity: 1; 
-      transform: none;
+      animation: none !important; 
+      opacity: 1 !important; 
+      transform: none !important;
     }
   }
   .hero__media,
@@ -486,8 +490,7 @@ div[data-side] div[role="listbox"] {
   .scrolled .site-header {
     background: rgba(0,0,0,.90); 
     backdrop-filter: saturate(140%) blur(8px);
-    box-shadow: 0 6px 18px rgba(0,0,0,.28); 
-    border-bottom: 1px solid rgba(255,255,255,.06);
+    box-shadow: 0 6px 18px rgba(0,0,0,.28);
   }
   
   .site-header .wrap {
