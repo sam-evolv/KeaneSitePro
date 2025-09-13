@@ -136,8 +136,15 @@ div[data-side] div[role="listbox"] {
     @apply border-border;
   }
 
-  body {
+  html, body {
     @apply font-sans antialiased bg-background text-foreground;
+    border: none !important;
+    border-top: none !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
   
   /* Enterprise Container */
@@ -511,14 +518,12 @@ div[data-side] div[role="listbox"] {
   }
 }
 
-/* Header geometry normalization and transparent scroll effect */
+/* Header geometry normalization - CLEAN VERSION */
 :root {
   --header-h: 64px;
-  --header-bg: rgba(0, 0, 0, 0.85); /* dark background when scrolled */
-  --header-border: rgba(255, 255, 255, 0.08);
 }
 
-  /* Enterprise Header System */
+  /* Enterprise Header System - COMPLETELY CLEAN */
   .site-header {
     position: fixed; 
     top: 0; 
@@ -527,15 +532,24 @@ div[data-side] div[role="listbox"] {
     height: var(--header-h); 
     z-index: 1000;
     background: transparent; 
-    transition: background .25s ease, box-shadow .25s ease;
+    transition: background .25s ease;
     border: none !important;
     border-bottom: none !important;
+    border-top: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
   
   .scrolled .site-header {
     background: rgba(0,0,0,.90); 
     backdrop-filter: saturate(140%) blur(8px);
-    box-shadow: 0 6px 18px rgba(0,0,0,.28);
+    box-shadow: none !important;
+    border: none !important;
+    border-bottom: none !important;
+    border-top: none !important;
+    outline: none !important;
   }
   
   .site-header .wrap {
@@ -566,7 +580,9 @@ div[data-side] div[role="listbox"] {
   .page--services .site-header {
     border: none !important;
     border-bottom: none !important; 
+    border-top: none !important;
     box-shadow: none !important;
+    outline: none !important;
   }
   
   /* Why Choose Keane Site Services - Micro-interactions */
@@ -714,8 +730,11 @@ section, main {
 .page--services .site-header {
   background: rgba(0,0,0,.90) !important;
   backdrop-filter: saturate(140%) blur(8px);
-  border-bottom: 0 !important;
-  box-shadow: 0 6px 18px rgba(0,0,0,.28);
+  border: none !important;
+  border-bottom: none !important;
+  border-top: none !important;
+  box-shadow: none !important;
+  outline: none !important;
 }
 
 /* Force scroll position for service pages */
