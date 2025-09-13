@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You - Keane Site Services</title>
+  <meta name="description" content="Thank you for your quote request. We'll be in touch shortly.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --orange: #F15A29; 
+      --white: #fff; 
+      --ink: #0B0B0B; 
+      --charcoal: #121212; 
+      --muted: #B8B8B8;
+      --container-w: 1100px; 
+      --gutter: 20px; 
+      --radius-1: 10px; 
+      --radius-2: 14px; 
+      --pill: 999px;
+      --shadow-1: 0 6px 18px rgba(0,0,0,.25);
+      --ease: .22s cubic-bezier(.2,.8,.2,1);
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: linear-gradient(135deg, var(--charcoal) 0%, var(--ink) 100%);
+      color: var(--white);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--gutter);
+    }
+
+    .container {
+      max-width: 600px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-2);
+      padding: 3rem 2rem;
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow-1);
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      font-size: 1.25rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .phone {
+      color: var(--orange);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .phone:hover {
+      text-decoration: underline;
+    }
+
+    .btn {
+      border-radius: var(--radius-1); 
+      padding: .9rem 1.8rem; 
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.025em;
+      border: 2px solid transparent; 
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: inline-block;
+      text-decoration: none;
+      margin-top: 2rem;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn--primary {
+      background: linear-gradient(135deg, var(--orange) 0%, #e04e1f 100%);
+      color: #fff; 
+      box-shadow: 0 8px 32px rgba(241, 90, 41, 0.4);
+      border: 2px solid var(--orange);
+    }
+
+    .btn--primary:hover {
+      transform: translateY(-3px) scale(1.02); 
+      box-shadow: 0 12px 40px rgba(241, 90, 41, 0.6);
+      border-color: #fff;
+      background: linear-gradient(135deg, #f16a39 0%, var(--orange) 100%);
+    }
+
+    .btn--primary:active {
+      transform: translateY(-1px) scale(1.01);
+      box-shadow: 0 6px 24px rgba(241, 90, 41, 0.5);
+    }
+
+    .btn--pill {
+      border-radius: var(--pill) !important;
+      padding: 1rem 2.5rem !important;
+      font-size: 1.1rem !important;
+      font-weight: 700 !important;
+    }
+
+    .btn:focus-visible {
+      outline: 0; 
+      box-shadow: 0 0 0 3px rgba(241,90,41,.35);
+    }
+
+    .redirect-notice {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 1.5rem;
+      opacity: 0.8;
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding: 2rem 1.5rem;
+      }
+      
+      .subtitle {
+        font-size: 1.1rem;
+      }
+      
+      .btn--pill {
+        padding: 0.9rem 2rem !important;
+        font-size: 1rem !important;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Thanks — we've received your request</h1>
+    <p class="subtitle">
+      We'll be in touch shortly. If it's urgent, call 
+      <a href="tel:+353876460921" class="phone">+353 87 646 0921</a>.
+    </p>
+    
+    <a href="/" class="btn btn--primary btn--pill" data-testid="button-home">
+      Back to Home
+    </a>
+    
+    <p class="redirect-notice">
+      You'll be redirected automatically in <span id="countdown">4</span> seconds.
+    </p>
+  </div>
+
+  <script>
+    // Auto-redirect after 4 seconds with countdown
+    let timeLeft = 4;
+    const countdownElement = document.getElementById('countdown');
+    
+    const countdown = setInterval(() => {
+      timeLeft--;
+      if (countdownElement) {
+        countdownElement.textContent = timeLeft;
+      }
+      
+      if (timeLeft <= 0) {
+        clearInterval(countdown);
+        window.location.href = '/';
+      }
+    }, 1000);
+
+    // Allow user to cancel auto-redirect by interacting with the page
+    let userInteracted = false;
+    
+    const cancelRedirect = () => {
+      if (!userInteracted) {
+        userInteracted = true;
+        clearInterval(countdown);
+        if (countdownElement) {
+          countdownElement.parentElement.style.display = 'none';
+        }
+      }
+    };
+
+    // Cancel redirect on any user interaction
+    document.addEventListener('click', cancelRedirect);
+    document.addEventListener('keydown', cancelRedirect);
+    document.addEventListener('scroll', cancelRedirect);
+  </script>
+</body>
+</html>
