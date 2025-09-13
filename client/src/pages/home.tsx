@@ -905,7 +905,7 @@ export default function Home() {
               <a 
                 href="#home"
                 onClick={(e) => { e.preventDefault(); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; try { window.scrollTo({ top: 0, left: 0, behavior: 'smooth' }); } catch { window.scrollTo(0, 0); } }}
-                className="transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-[hsl(0,0%,10%)] rounded-lg cursor-pointer"
+                className="transition-transform hover:scale-105 focus:outline-none rounded-lg cursor-pointer"
                 data-testid="footer-logo-button"
                 aria-label="Go to top of page"
               >
