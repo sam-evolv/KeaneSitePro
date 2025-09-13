@@ -850,8 +850,8 @@ html, body {
   overflow: hidden;
   display: grid;
   place-items: center;
-  margin-top: -5px;              /* overlap the black line completely */
-  padding-top: 5px;              /* maintain layout height */
+  margin-top: -7px;              /* overlap the black line completely */
+  padding-top: 7px;              /* maintain layout height */
 }
 
 /* 3) Make the video overscan to hide sub-pixel seams on some GPUs */
