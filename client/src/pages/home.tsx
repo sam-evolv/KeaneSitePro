@@ -772,17 +772,21 @@ export default function Home() {
               
               {/* Netlify Form */}
               <form 
-                name="contact" 
+                name="quote" 
                 method="POST" 
                 data-netlify="true" 
                 netlify-honeypot="bot-field" 
+                action="/thank-you.html"
                 className="space-y-6" 
                 onSubmit={handleSubmit}
                 data-testid="contact-form"
               >
-                {/* Honeypot field */}
-                <input type="hidden" name="bot-field" />
-                <input type="hidden" name="form-name" value="contact" />
+                <input type="hidden" name="form-name" value="quote" />
+                <p className="hidden" aria-hidden="true" style={{position:'absolute', left:'-9999px'}}>
+                  <label>Don't fill this out if you're human:
+                    <input name="bot-field" />
+                  </label>
+                </p>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
