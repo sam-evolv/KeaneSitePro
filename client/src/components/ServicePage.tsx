@@ -458,6 +458,13 @@ export default function ServicePage({ title, description, children, breadcrumb, 
                 className="transition-transform hover:scale-105 focus:outline-none rounded-lg cursor-pointer inline-block"
                 data-testid="footer-logo-button"
                 aria-label="Go to home page"
+                onClick={() => {
+                  setTimeout(() => {
+                    document.documentElement.scrollTop = 0;
+                    document.body.scrollTop = 0;
+                    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+                  }, 50);
+                }}
               >
                 <img 
                   src={footerLogoSrc} 
