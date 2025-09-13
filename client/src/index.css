@@ -499,11 +499,12 @@ div[data-side] div[role="listbox"] {
 
   .header-logo {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
   }
 
   .header-logo:hover {
-    transform: scale(1.1);
-    filter: brightness(1.1) drop-shadow(0 2px 8px rgba(241, 90, 41, 0.5));
+    transform: scale(1.08) translateY(-2px);
+    filter: brightness(1.15) drop-shadow(0 6px 20px rgba(241, 90, 41, 0.5));
   }
 
   /* Smooth logo switching */
@@ -674,10 +675,28 @@ div[data-side] div[role="listbox"] {
     z-index: 1100;
   }
 
-.brand{ position:relative; display:block; height:106px; width:439px; }
+.brand{ 
+  position:relative; 
+  display:block; 
+  height:106px; 
+  width:439px; 
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.brand:hover {
+  transform: scale(1.05) translateY(-2px);
+  filter: brightness(1.15) drop-shadow(0 8px 24px rgba(241, 90, 41, 0.4));
+}
+
 .brand .logo{
-  position:absolute; inset:0; height:106px; width:auto; object-fit:contain; display:block;
-  transition: opacity .25s ease;
+  position:absolute; 
+  inset:0; 
+  height:106px; 
+  width:auto; 
+  object-fit:contain; 
+  display:block;
+  transition: opacity .25s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .logo--primary{  opacity:1; }
 .logo--scrolled{ opacity:0; }
