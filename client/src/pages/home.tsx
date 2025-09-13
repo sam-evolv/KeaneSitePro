@@ -69,7 +69,7 @@ export default function Home() {
   // Header scroll detection is now handled by useHeaderScrolled hook
   
 
-  // Premium scroll animations for all sections
+  // Premium scroll animations for all sections - reset when scrolling back up
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -81,6 +81,19 @@ export default function Home() {
             }
             if (entry.target === aboutLogoRef.current) {
               setIsAboutLogoVisible(true);
+            }
+          } else {
+            // Reset animations when scrolling back up
+            const sectionId = entry.target.getAttribute('data-section');
+            if (sectionId) {
+              setVisibleSections(prev => {
+                const newSet = new Set(prev);
+                newSet.delete(sectionId);
+                return newSet;
+              });
+            }
+            if (entry.target === aboutLogoRef.current) {
+              setIsAboutLogoVisible(false);
             }
           }
         });
