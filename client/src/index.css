@@ -52,30 +52,37 @@
 }
 
 /* Dropdown styling fixes */
-/* shadcn Select component styling */
-[data-radix-select-trigger] {
+/* shadcn Select component styling - using correct Radix UI selectors */
+button[data-state][role="combobox"],
+button[data-state][aria-haspopup="listbox"] {
   position: relative;
   z-index: 10;
-  background-color: #fff !important;
+  background-color: hsl(var(--background)) !important;
   border: 1px solid hsl(var(--input)) !important;
+  color: hsl(var(--foreground)) !important;
 }
 
-[data-radix-select-content] {
-  background-color: #fff !important;
+/* Select content dropdown */
+div[data-radix-popper-content-wrapper] div[role="listbox"],
+div[data-side] div[role="listbox"] {
+  background-color: hsl(var(--popover)) !important;
   border: 1px solid hsl(var(--border)) !important;
+  color: hsl(var(--popover-foreground)) !important;
   z-index: 50;
 }
 
 /* Dark mode support for shadcn Select */
-.dark [data-radix-select-trigger] {
+.dark button[data-state][role="combobox"],
+.dark button[data-state][aria-haspopup="listbox"] {
   background-color: hsl(var(--background)) !important;
   color: hsl(var(--foreground)) !important;
   border-color: hsl(var(--border)) !important;
 }
 
-.dark [data-radix-select-content] {
-  background-color: hsl(var(--background)) !important;
-  color: hsl(var(--foreground)) !important;
+.dark div[data-radix-popper-content-wrapper] div[role="listbox"],
+.dark div[data-side] div[role="listbox"] {
+  background-color: hsl(var(--popover)) !important;
+  color: hsl(var(--popover-foreground)) !important;
   border-color: hsl(var(--border)) !important;
 }
 

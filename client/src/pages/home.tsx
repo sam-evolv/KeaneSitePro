@@ -285,7 +285,7 @@ export default function Home() {
           {/* Logo */}
           <a className="brand" href="/" aria-label="Keane Site Services">
             <img className="logo logo--primary" src={logoSrc} alt="Keane Site Services" width="439" height="106" decoding="async" fetchPriority="high" />
-            <img className="logo logo--scrolled" src={logoLightSrc} alt="" aria-hidden="true" width="439" height="106" decoding="async" />
+            <img className="logo logo--scrolled" src={logoLightSrc} alt="" aria-hidden="true" width="439" height="106" decoding="async" fetchPriority="high" />
           </a>
 
           {/* Desktop Navigation */}
@@ -351,6 +351,8 @@ export default function Home() {
                     className="absolute h-24 w-auto header-logo cursor-pointer"
                     style={{ maxWidth: '128px' }}
                     onClick={() => scrollToSection('home')}
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
                 <Button
@@ -458,6 +460,8 @@ export default function Home() {
             src={logoSrc} 
             alt="" 
             className="h-60 lg:h-72 mx-auto mb-6 hero-logo"
+            fetchPriority="high"
+            decoding="async"
           />
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white mb-6 tracking-tight leading-tight">
             Professional Site<br/>
@@ -488,9 +492,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Services Section */}
-      <section ref={servicesRef} id="services" data-section="services" className="py-16 lg:py-24 bg-[hsl(210,17%,97%)]">
-        <div id="main" aria-hidden="true"></div>
+      {/* Main Content */}
+      <main id="main" tabIndex={-1}>
+        {/* Services Section */}
+        <section ref={servicesRef} id="services" data-section="services" className="py-16 lg:py-24 bg-[hsl(210,17%,97%)]">
         <div className="container">
           {/* Section Header */}
           <div className={`text-center mb-16 transition-all duration-700 ease-out transform ${
@@ -865,6 +870,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      </main>
 
       {/* Footer */}
       <footer className="bg-[hsl(0,0%,10%)] py-12" data-testid="footer">

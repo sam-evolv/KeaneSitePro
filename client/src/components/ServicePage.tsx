@@ -61,6 +61,28 @@ export default function ServicePage({ title, description, children, breadcrumb, 
     }
     metaDescription.setAttribute('content', description)
 
+    // Update Open Graph tags for better social sharing
+    const ogTitle = document.querySelector('meta[property="og:title"]')
+    if (ogTitle) {
+      ogTitle.setAttribute('content', `${title} | Keane Site Services`)
+    }
+    
+    const ogDescription = document.querySelector('meta[property="og:description"]')
+    if (ogDescription) {
+      ogDescription.setAttribute('content', description)
+    }
+    
+    // Update Twitter card tags
+    const twitterTitle = document.querySelector('meta[name="twitter:title"]')
+    if (twitterTitle) {
+      twitterTitle.setAttribute('content', `${title} | Keane Site Services`)
+    }
+    
+    const twitterDescription = document.querySelector('meta[name="twitter:description"]')
+    if (twitterDescription) {
+      twitterDescription.setAttribute('content', description)
+    }
+
     // Add JSON-LD structured data
     if (jsonLd) {
       const script = document.createElement('script')
@@ -147,6 +169,9 @@ export default function ServicePage({ title, description, children, breadcrumb, 
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Skip Link Accessibility */}
+      <a className="skip-link" href="#main">Skip to content</a>
+      
       {/* Header */}
       <header ref={headerRef} className="site-header">
         <div className="wrap">
@@ -264,7 +289,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
       </section>
 
       {/* Main Content */}
-      <main className="bg-background">
+      <main id="main" tabIndex={-1} className="bg-background">
         {children}
         
         {/* CTA Section */}
