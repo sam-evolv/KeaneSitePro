@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useHeaderScrolled } from "@/hooks/use-header-scrolled";
 import { 
   Menu, 
   X, 
@@ -40,9 +41,10 @@ const footerLogoSrc = footerLogoAsset;
 const posterSrc = posterAsset;
 
 export default function Home() {
+  console.log('🏠 Home component is mounting...');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isHeaderScrolled, setIsHeaderScrolled] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
+  const sentinelRef = useHeaderScrolled();
   const [isVideoPlaying, setIsVideoPlaying] = useState(true);
   const [isAboutLogoVisible, setIsAboutLogoVisible] = useState(false);
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set());
@@ -64,23 +66,8 @@ export default function Home() {
   const { toast } = useToast();
   const isMobile = useIsMobile();
 
-  // Toggle "scrolled" class on header
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrolled = window.scrollY > 10;
-      if (headerRef.current) {
-        if (scrolled) {
-          headerRef.current.classList.add('scrolled');
-        } else {
-          headerRef.current.classList.remove('scrolled');
-        }
-      }
-      setIsHeaderScrolled(scrolled);
-    };
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // Header scroll detection is now handled by useHeaderScrolled hook
+  
 
   // Premium scroll animations for all sections
   useEffect(() => {
@@ -289,22 +276,20 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
+      {/* Skip Link Accessibility */}
+      <a className="skip-link" href="#main">Skip to content</a>
+      
       {/* Header */}
       <header ref={headerRef} className="site-header">
-        <div className="wrap max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Logo */}
-            <div className="brand flex-shrink-0">
-              <img 
-                src={isHeaderScrolled ? logoLightSrc : logoSrc} 
-                alt="Keane Site Services" 
-                className="header-logo cursor-pointer transition-all duration-500"
-                onClick={() => scrollToSection('home')}
-                data-testid="header-logo"
-              />
-            </div>
+        <div className="wrap">
+          {/* Logo */}
+          <a className="brand" href="/" aria-label="Keane Site Services">
+            <img className="logo logo--primary" src={logoSrc} alt="Keane Site Services" width="439" height="106" decoding="async" fetchPriority="high" />
+            <img className="logo logo--scrolled" src={logoLightSrc} alt="" aria-hidden="true" width="439" height="106" decoding="async" fetchPriority="high" />
+          </a>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-8">
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center space-x-8">
               <button 
                 onClick={() => scrollToSection('home')} 
                 className="text-white hover:text-primary transition-colors duration-200 font-medium"
@@ -334,7 +319,7 @@ export default function Home() {
                 Contact
               </button>
               <Button 
-                className="btn-primary px-6 py-2 text-sm" 
+                className="btn btn--primary btn--pill" 
                 onClick={() => scrollToSection('contact')}
                 data-testid="button-request-quote-header"
               >
@@ -366,6 +351,8 @@ export default function Home() {
                     className="absolute h-24 w-auto header-logo cursor-pointer"
                     style={{ maxWidth: '128px' }}
                     onClick={() => scrollToSection('home')}
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
                 <Button
@@ -409,7 +396,7 @@ export default function Home() {
                 </button>
                 <div className="pt-8">
                   <Button 
-                    className="btn-primary w-full px-6 py-3 text-base" 
+                    className="btn btn--primary btn--pill w-full" 
                     onClick={() => scrollToSection('contact')}
                     data-testid="button-request-quote-mobile"
                   >
@@ -422,26 +409,35 @@ export default function Home() {
         )}
       </header>
 
+      {/* Scroll detection sentinel - positioned at top to start transparent */}
+      <div 
+        ref={sentinelRef} 
+        className="h-2 w-full pointer-events-none opacity-0"
+        aria-hidden="true"
+      />
+
       {/* Hero Section */}
-      <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-charcoal">
-        {/* Background Video */}
-        <video 
-          ref={videoRef}
-          id="heroVideo"
-          className="hero-video" 
-          autoPlay 
-          loop 
-          muted 
-          playsInline
-          preload="metadata"
-          poster={posterSrc}
-          data-testid="hero-video"
-        >
-          <source src={videoSrc} type="video/mp4" />
-        </video>
+      <section id="home" className="hero">
+        {/* Video Media */}
+        <div className="hero__media">
+          <video 
+            ref={videoRef}
+            id="heroVideo"
+            className="hero-video" 
+            autoPlay 
+            loop 
+            muted 
+            playsInline
+            preload="metadata"
+            poster={posterSrc}
+            data-testid="hero-video"
+          >
+            <source src={videoSrc} type="video/mp4" />
+          </video>
+        </div>
         
-        {/* Overlay */}
-        <div className="hero-overlay"></div>
+        {/* Hero Overlay */}
+        <div className="hero__overlay"></div>
         
         {/* Video Controls */}
         <Button
@@ -458,12 +454,14 @@ export default function Home() {
         </Button>
         
         {/* Hero Content */}
-        <div className="relative z-[2] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="hero__content fade-in">
           {/* Logo */}
           <img 
             src={logoSrc} 
             alt="" 
             className="h-60 lg:h-72 mx-auto mb-6 hero-logo"
+            fetchPriority="high"
+            decoding="async"
           />
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white mb-6 tracking-tight leading-tight">
             Professional Site<br/>
@@ -477,14 +475,14 @@ export default function Home() {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
             <Button 
-              className="btn-primary px-8 py-4 text-lg w-full sm:w-auto" 
+              className="btn btn--primary btn--pill" 
               onClick={() => scrollToSection('contact')}
               data-testid="button-request-quote-hero"
             >
               Request a Quote
             </Button>
             <Button 
-              className="btn-secondary px-8 py-4 text-lg w-full sm:w-auto" 
+              className="btn btn--ghost btn--pill" 
               asChild
               data-testid="button-call-now-hero"
             >
@@ -494,9 +492,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Services Section */}
-      <section ref={servicesRef} id="services" data-section="services" className="py-16 lg:py-24 bg-[hsl(210,17%,97%)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Main Content */}
+      <main id="main" tabIndex={-1}>
+        {/* Services Section */}
+        <section ref={servicesRef} id="services" data-section="services" className="py-16 lg:py-24 bg-[hsl(210,17%,97%)]">
+        <div className="container">
           {/* Section Header */}
           <div className={`text-center mb-16 transition-all duration-700 ease-out transform ${
             visibleSections.has('services') 
@@ -546,11 +546,11 @@ export default function Home() {
       </section>
 
       {/* Why Choose Keane Section */}
-      <section ref={valuePropsRef} data-section="value-props" className="py-16 lg:py-24 bg-[hsl(0,0%,10%)] relative overflow-hidden">
+      <section ref={valuePropsRef} data-section="value-props" className="why py-16 lg:py-24 bg-[hsl(0,0%,10%)] relative overflow-hidden">
         {/* Subtle gradient background */}
         <div className="absolute inset-0 bg-gradient-to-br from-[hsl(0,0%,10%)] via-[hsl(0,0%,7%)] to-[hsl(0,0%,10%)] opacity-90"></div>
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative container">
           {/* Section Header */}
           <div className={`text-center mb-16 transition-all duration-700 ease-out transform ${
             visibleSections.has('value-props') 
@@ -559,7 +559,7 @@ export default function Home() {
           }`}>
             <div className="section-divider mx-auto mb-6"></div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 tracking-tight">
-              Why Choose Keane
+              Why Choose Keane Site Services
             </h2>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
               Professional excellence backed by experience, equipment, and unwavering commitment to quality.
@@ -571,7 +571,7 @@ export default function Home() {
             {valueProps.map((prop, index) => (
               <div 
                 key={index} 
-                className={`text-center transition-all duration-700 ease-out transform ${
+                className={`card text-center transition-all duration-700 ease-out transform cursor-pointer group p-6 rounded-lg hover:-translate-y-3 hover:border hover:border-primary ${
                   visibleSections.has('value-props') 
                     ? 'opacity-100 scale-100 translate-y-0' 
                     : 'opacity-0 scale-95 translate-y-8'
@@ -579,8 +579,8 @@ export default function Home() {
                 style={{ transitionDelay: `${index * 200}ms` }}
                 data-testid={`value-prop-${index}`}
               >
-                <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-primary to-orange-600 rounded-full flex items-center justify-center">
-                  <prop.icon className="w-8 h-8 text-white" />
+                <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-primary to-orange-600 rounded-full flex items-center justify-center group-hover:shadow-lg group-hover:shadow-black/50 transition-all duration-300">
+                  <prop.icon className="icon w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-4">{prop.title}</h3>
                 <p className="text-gray-300 leading-relaxed">
@@ -594,7 +594,7 @@ export default function Home() {
 
       {/* About Section */}
       <section id="about" className="py-16 lg:py-24 bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Logo Side */}
             <div className="order-2 lg:order-1 flex items-center justify-center">
@@ -602,6 +602,7 @@ export default function Home() {
                 ref={aboutLogoRef}
                 src={aboutLogoSrc} 
                 alt="Keane Site Services Logo" 
+                loading="lazy"
                 className={`w-80 h-80 logo-hover transition-all duration-1000 ease-out transform ${
                   isAboutLogoVisible 
                     ? 'opacity-100 scale-100 translate-y-0' 
@@ -639,7 +640,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-r from-primary to-orange-600 opacity-95"></div>
         <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent"></div>
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative container text-center">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8 tracking-tight">
             Get Your Site Cleared by the Experts
           </h2>
@@ -650,14 +651,14 @@ export default function Home() {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
             <Button 
-              className="bg-white text-primary px-8 py-4 text-lg font-semibold hover:bg-gray-100 transition-all duration-300 hover:-translate-y-1 shadow-lg w-full sm:w-auto" 
+              className="btn btn--ghost btn--pill w-full sm:w-auto" 
               asChild
               data-testid="button-call-now-cta"
             >
               <a href="tel:+353876460921">Call Now</a>
             </Button>
             <Button 
-              className="bg-transparent border-2 border-white text-white px-8 py-4 text-lg font-semibold hover:bg-white hover:text-primary transition-all duration-300 hover:-translate-y-1 w-full sm:w-auto" 
+              className="btn btn--primary btn--pill w-full sm:w-auto" 
               onClick={() => scrollToSection('contact')}
               data-testid="button-request-quote-cta"
             >
@@ -669,7 +670,7 @@ export default function Home() {
 
       {/* Contact Section */}
       <section ref={contactRef} id="contact" data-section="contact" className="py-16 lg:py-24 bg-[hsl(210,17%,97%)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container">
           {/* Section Header */}
           <div className={`text-center mb-16 transition-all duration-700 ease-out transform ${
             visibleSections.has('contact') 
@@ -846,7 +847,7 @@ export default function Home() {
                 {/* Submit Button */}
                 <Button 
                   type="submit" 
-                  className="btn-primary w-full px-6 py-4 text-lg" 
+                  className="btn btn--primary btn--pill w-full" 
                   disabled={isSubmitting}
                   data-testid="button-submit-form"
                 >
@@ -869,38 +870,64 @@ export default function Home() {
           </div>
         </div>
       </section>
+      </main>
 
       {/* Footer */}
       <footer className="bg-[hsl(0,0%,10%)] py-12" data-testid="footer">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center mb-8">
             {/* Quick Links */}
             <div className="text-center md:text-left">
               <h4 className="text-white font-semibold mb-4">Quick Links</h4>
               <ul className="space-y-2">
-                <li><button onClick={() => scrollToSection('home')} className="text-gray-400 hover:text-primary transition-colors text-sm">Home</button></li>
-                <li><button onClick={() => scrollToSection('services')} className="text-gray-400 hover:text-primary transition-colors text-sm">Services</button></li>
-                <li><button onClick={() => scrollToSection('about')} className="text-gray-400 hover:text-primary transition-colors text-sm">About</button></li>
-                <li><button onClick={() => scrollToSection('contact')} className="text-gray-400 hover:text-primary transition-colors text-sm">Contact</button></li>
+                <li><a href="#home" onClick={(e) => { e.preventDefault(); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; try { window.scrollTo({ top: 0, left: 0, behavior: 'smooth' }); } catch { window.scrollTo(0, 0); } }} className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-home">Home</a></li>
+                <li><a href="#services" onClick={(e) => { e.preventDefault(); document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-services">Services</a></li>
+                <li><a href="#about" onClick={(e) => { e.preventDefault(); document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-about">About</a></li>
+                <li><a href="#contact" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-gray-400 hover:text-primary transition-colors text-sm cursor-pointer" data-testid="footer-link-contact">Contact</a></li>
               </ul>
             </div>
             
             {/* Centered Large Logo */}
             <div className="flex justify-center">
-              <img 
-                src={footerLogoSrc} 
-                alt="Keane Site Services" 
-                className="h-64 w-auto logo-hover"
-                data-testid="footer-logo"
-              />
+              <a 
+                href="#home"
+                onClick={(e) => { e.preventDefault(); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; try { window.scrollTo({ top: 0, left: 0, behavior: 'smooth' }); } catch { window.scrollTo(0, 0); } }}
+                className="transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-[hsl(0,0%,10%)] rounded-lg cursor-pointer"
+                data-testid="footer-logo-button"
+                aria-label="Go to top of page"
+              >
+                <img 
+                  src={footerLogoSrc} 
+                  alt="Keane Site Services" 
+                  loading="lazy"
+                  className="h-64 w-auto logo-hover"
+                  data-testid="footer-logo"
+                />
+              </a>
             </div>
             
             {/* Contact Info */}
             <div className="text-center md:text-right">
               <h4 className="text-white font-semibold mb-4">Contact</h4>
               <div className="space-y-2 text-sm text-gray-400">
-                <div>Phone: +353 87 646 0921</div>
-                <div>Email: info@keanesiteservices.com</div>
+                <div>
+                  Phone: <a 
+                    href="tel:+353876460921" 
+                    className="text-primary hover:text-primary/80 transition-colors"
+                    data-testid="footer-phone-link"
+                  >
+                    +353 87 646 0921
+                  </a>
+                </div>
+                <div>
+                  Email: <a 
+                    href="mailto:info@keanesiteservices.com" 
+                    className="text-primary hover:text-primary/80 transition-colors"
+                    data-testid="footer-email-link"
+                  >
+                    info@keanesiteservices.com
+                  </a>
+                </div>
                 <div>Service Area: Ireland</div>
               </div>
             </div>
@@ -909,7 +936,7 @@ export default function Home() {
           {/* Bottom Bar */}
           <div className="pt-8 border-t border-gray-700 text-center">
             <p className="text-gray-400 text-sm">
-              © 2024 Keane Site Services. All rights reserved.
+              © 2025 Keane Site Services. All rights reserved.
             </p>
           </div>
         </div>

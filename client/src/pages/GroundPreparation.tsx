@@ -27,12 +27,12 @@ export default function GroundPreparation() {
   return (
     <ServicePage
       title="Ground Preparation"
-      description="Accurate grading, debris removal, and site readiness for next-stage construction works."
+      description="Accurate grading, debris removal, and readiness for next-stage works."
       breadcrumb="Ground Preparation"
       jsonLd={jsonLd}
     >
       <section className="py-16 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Main Content */}
             <div className="lg:col-span-2">
@@ -161,9 +161,9 @@ export default function GroundPreparation() {
                   <p className="mb-4">Get a personalized quote for your ground preparation project.</p>
                   <a 
                     href="#contact" 
-                    className="inline-block bg-white text-primary px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+                    className="btn btn--ghost btn--pill"
                   >
-                    Request Quote
+                    Request a Quote
                   </a>
                 </div>
               </div>
