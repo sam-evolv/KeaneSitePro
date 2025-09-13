@@ -773,50 +773,70 @@ section, main {
   box-shadow: none !important; /* keep your scroll state styles from existing logic */
 }
 
-/* Request a Quote form - make service dropdown solid white for visibility */
-/* Target Radix UI Select components specifically */
+/* Request a Quote form - Enhanced styling for Radix UI Select */
+/* Very specific selectors to override any default styling */
+button[data-testid="select-service"],
 [data-testid="select-service"],
-[data-testid="select-service"] button,
-button[role="combobox"],
+[data-testid="select-service"] > button,
+button[role="combobox"][data-testid="select-service"],
+button[data-state][role="combobox"],
+button[data-state][aria-haspopup="listbox"],
 .contact form select,
 form select {
-  background-color: #fff !important;
-  background: #fff !important;
-  color: #111 !important;
-  border: 2px solid rgba(0,0,0,.4) !important;
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  color: #111111 !important;
+  border: 2px solid rgba(0,0,0,.5) !important;
   border-radius: 8px !important;
-  box-shadow: 0 2px 4px rgba(0,0,0,.1) !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,.15) !important;
+  opacity: 1 !important;
 }
 
-/* Focus states for dropdown */
+/* Focus states for dropdown - stronger selectors */
+button[data-testid="select-service"]:focus,
 [data-testid="select-service"]:focus,
 [data-testid="select-service"] button:focus,
 button[role="combobox"]:focus,
+button[data-state]:focus[role="combobox"],
 form select:focus {
   outline: 0 !important;
-  box-shadow: 0 0 0 3px rgba(241,90,41,.25) !important;
-  border-color: rgba(241,90,41,.55) !important;
+  box-shadow: 0 0 0 3px rgba(241,90,41,.3) !important;
+  border-color: rgba(241,90,41,.6) !important;
 }
 
-/* Dropdown content background - fully opaque with stronger border */
+/* Radix UI Select content styling - very specific selectors */
+div[data-radix-select-content],
+div[data-side][role="listbox"],
+div[data-radix-popper-content-wrapper] div[role="listbox"],
 [data-radix-select-content],
 [role="listbox"] {
-  background-color: #fff !important;
-  border: 2px solid rgba(0,0,0,.3) !important;
-  box-shadow: 0 4px 12px rgba(0,0,0,.15) !important;
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  border: 2px solid rgba(0,0,0,.4) !important;
+  box-shadow: 0 6px 16px rgba(0,0,0,.2) !important;
+  z-index: 999 !important;
 }
 
-/* Individual dropdown items - ensure fully opaque background */
+/* Individual dropdown options - fully opaque */
+div[data-radix-select-item],
+div[role="option"],
 [data-radix-select-item],
 [role="option"] {
-  background-color: #fff !important;
-  color: #111 !important;
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  color: #111111 !important;
+  opacity: 1 !important;
 }
 
+/* Hover states for dropdown items */
+div[data-radix-select-item]:hover,
+div[role="option"]:hover,
 [data-radix-select-item]:hover,
-[role="option"]:hover {
-  background-color: rgba(241,90,41,.1) !important;
-  color: #111 !important;
+[role="option"]:hover,
+div[data-highlighted] {
+  background-color: rgba(241,90,41,.12) !important;
+  background: rgba(241,90,41,.12) !important;
+  color: #111111 !important;
 }
 
 /* Ensure footer is above any overlays and clickable */
