@@ -503,8 +503,8 @@ div[data-side] div[role="listbox"] {
   }
 
   .header-logo:hover {
-    transform: scale(1.08) translateY(-2px);
-    filter: brightness(1.15) drop-shadow(0 6px 20px rgba(241, 90, 41, 0.5));
+    transform: scale(1.05);
+    filter: brightness(1.1) drop-shadow(0 4px 12px rgba(241, 90, 41, 0.4));
   }
 
   /* Smooth logo switching */
@@ -685,8 +685,8 @@ div[data-side] div[role="listbox"] {
 }
 
 .brand:hover {
-  transform: scale(1.05) translateY(-2px);
-  filter: brightness(1.15) drop-shadow(0 8px 24px rgba(241, 90, 41, 0.4));
+  transform: scale(1.05);
+  filter: brightness(1.1) drop-shadow(0 4px 12px rgba(241, 90, 41, 0.4));
 }
 
 .brand .logo{
