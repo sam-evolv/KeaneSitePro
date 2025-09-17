@@ -9,7 +9,7 @@
   }
 
   /* Header sits over the hero, always visible */
-  .header, .navbar {
+  .site-header {
     position: fixed;
     top: env(safe-area-inset-top, 0);
     left: 0; right: 0;
@@ -19,7 +19,7 @@
     -webkit-tap-highlight-color: transparent;
   }
   /* Legible after scroll */
-  .header--scrolled, .navbar--scrolled {
+  .site-header--scrolled {
     background: rgba(0,0,0,0.92);
   }
 
@@ -53,7 +53,7 @@
   }
 
   /* Overlay content perfectly centered */
-  .hero__overlay, .hero .overlay, .hero-content {
+  .hero__overlay, .hero .overlay, .hero-content, .hero__content {
     position: absolute; inset: 0;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
@@ -73,7 +73,7 @@
   }
 
   /* Mobile menu panel: opaque, smooth slide/fade, starts below header line */
-  .mobile-nav, .nav__drawer, .nav-panel {
+  .mobile-menu-overlay {
     position: fixed;
     left: 0; right: 0;
     top: calc(env(safe-area-inset-top, 0) + var(--header-h, 0px));
@@ -84,13 +84,11 @@
     pointer-events: none;
     transition: opacity 220ms ease, transform 220ms ease;
   }
-  .menu-open .mobile-nav,
-  .menu-open .nav__drawer,
-  .menu-open .nav-panel {
+  .mobile-menu-overlay.menu-open {
     opacity: 1; transform: translateY(0);
     pointer-events: auto;
   }
-  .mobile-nav a, .nav__drawer a, .nav-panel a {
+  .mobile-menu-overlay a {
     color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.35);
   }
 
