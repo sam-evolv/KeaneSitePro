@@ -1,0 +1,224 @@
+Objective
+
+iOS/iPhone: eliminate black strip under hero.
+
+Mobile menu: always opaque + high contrast, smooth open/close animation.
+
+Replace the “X” close icon with hamburger toggle behavior; hide/remove the “X”.
+
+Keep all changes under max-width: 768px. No desktop regressions.
+
+Implement exactly these changes
+
+Create public/css/mobile-fixes.final.css and import it last in index.html (after all other CSS).
+
+Create public/js/mobile-fixes.final.js and import it last before </body>.
+
+Remove any controls attribute on the hero <video> in HTML if still present.
+
+If there’s a dedicated close button for the menu (the “X”), do not render it or hide it via CSS.
+
+CSS (mobile-fixes.final.css)
+/* -------- Mobile-only scope -------- */
+@media (max-width: 768px) {
+  /* 1) Header + Menu layering and contrast */
+  .header,
+  .navbar {
+    position: sticky; top: 0; z-index: 10000;
+    will-change: background-color, transform;
+    transition: background-color 200ms ease;
+    background: rgba(0,0,0,0.6); /* initial transparent look at page top */
+  }
+  .header.header--scrolled,
+  .navbar.navbar--scrolled {
+    background: rgba(0,0,0,0.92); /* legible after scroll */
+  }
+
+  /* Menu panel must be opaque and readable everywhere */
+  .mobile-nav,
+  .nav__drawer,
+  .nav-panel {
+    position: fixed; inset: 0 0 auto 0;
+    top: var(--header-h, 0px);
+    height: calc(100dvh - var(--header-h, 0px));
+    background: rgba(0,0,0,0.96);  /* opaque */
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    z-index: 10001;
+
+    /* smooth slide+fade */
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: opacity 220ms ease, transform 220ms ease;
+  }
+  .menu-open .mobile-nav,
+  .menu-open .nav__drawer,
+  .menu-open .nav-panel {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  /* Ensure menu links are readable */
+  .mobile-nav a, .nav__drawer a, .nav-panel a {
+    color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.35);
+  }
+
+  /* Remove the separate X button if present */
+  .nav-close, .menu-close, .close-btn {
+    display: none !important;
+  }
+
+  /* 2) Hamburger (toggle) must stay above hero */
+  .menu-toggle, .hamburger {
+    position: relative; z-index: 10002;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* 3) Hero must fill viewport without black strip */
+  .hero,
+  .hero__media,
+  .hero-video {
+    position: relative;
+    width: 100%;
+    min-height: calc(100dvh - var(--header-h, 0px));
+    height: calc(100svh - var(--header-h, 0px)); /* handles iOS toolbar */
+    overflow: hidden;
+    background: #000; /* safety */
+  }
+  .hero video,
+  .hero__media video,
+  .hero-video video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center center;
+    background: #000;
+  }
+
+  /* 4) Center hero overlay content precisely */
+  .hero__overlay,
+  .hero .overlay,
+  .hero-content {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 16px;
+    transform: none !important; left: 0 !important; right: 0 !important; margin: 0 auto !important;
+    pointer-events: none;
+  }
+  .hero__overlay * { pointer-events: auto; }
+
+  .hero__logo, .hero-content .logo {
+    display: block; margin: 0 auto;
+  }
+
+  /* 5) Services section should sit below header layer (no z-index fights) */
+  .section-services { position: relative; z-index: 1; }
+
+  /* 6) Hide any UA media controls if they leak through */
+  .hero video::-webkit-media-controls,
+  .hero video::-webkit-media-controls-enclosure { display: none !important; }
+}
+
+JS (mobile-fixes.final.js)
+(() => {
+  const doc = document;
+  const html = doc.documentElement;
+  const body = doc.body;
+
+  // Resolve real header height for calc()
+  const header = doc.querySelector('.header, .navbar');
+  const setHeaderH = () => {
+    const h = header ? Math.round(header.getBoundingClientRect().height) : 0;
+    doc.documentElement.style.setProperty('--header-h', h + 'px');
+  };
+  window.addEventListener('resize', setHeaderH);
+  window.addEventListener('orientationchange', setHeaderH);
+  setHeaderH();
+
+  // iOS viewport fix – set vh unit via CSS var (used implicitly by dvh/svh fallbacks if you add it later)
+  const setVH = () => {
+    const vh = window.innerHeight * 0.01;
+    doc.documentElement.style.setProperty('--vh', `${vh}px`);
+  };
+  window.addEventListener('resize', setVH);
+  window.addEventListener('orientationchange', setVH);
+  setVH();
+
+  // Header scrolled state for legibility
+  const onScroll = () => {
+    const scrolled = window.scrollY > 8;
+    if (header) {
+      header.classList.toggle('header--scrolled', scrolled);
+      header.classList.toggle('navbar--scrolled', scrolled);
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Hamburger acts as open/close toggle. Remove any separate X if present.
+  const toggle = doc.querySelector('.menu-toggle, .hamburger');
+  const menuPanel = doc.querySelector('.mobile-nav, .nav__drawer, .nav-panel');
+  const killClose = doc.querySelector('.nav-close, .menu-close, .close-btn');
+  if (killClose) killClose.remove();
+
+  const setMenu = (open) => {
+    html.classList.toggle('menu-open', open);
+    if (menuPanel) menuPanel.classList.toggle('is-open', open);
+    body.style.overflow = open ? 'hidden' : '';
+    body.style.touchAction = open ? 'none' : '';
+  };
+
+  if (toggle) {
+    toggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      setMenu(!html.classList.contains('menu-open'));
+    }, { passive: false });
+  }
+
+  // Close menu on nav link tap
+  doc.addEventListener('click', (e) => {
+    const a = e.target.closest('a');
+    if (a && html.classList.contains('menu-open')) setMenu(false);
+  }, { passive: true });
+
+  // Ensure hero video is autoplaying silently and never shows controls
+  const vids = doc.querySelectorAll('.hero video, .hero__media video, .hero-video video');
+  vids.forEach(v => {
+    v.removeAttribute('controls');
+    v.setAttribute('muted','');
+    v.setAttribute('playsinline','');
+    v.setAttribute('loop','');
+    const tryPlay = () => v.play().catch(()=>{});
+    doc.addEventListener('visibilitychange', tryPlay, { passive: true });
+    tryPlay();
+  });
+})();
+
+HTML updates (surgical)
+
+In the hero <video> tag: remove controls. Keep autoplay muted playsinline loop.
+
+Ensure the new files are loaded last:
+
+<link rel="stylesheet" href="/css/mobile-fixes.final.css" />
+...
+<script src="/js/mobile-fixes.final.js"></script>
+</body>
+
+Acceptance criteria (verify on iPhone 16 Pro Max in DevTools and physical device)
+
+No black strip: hero fills the viewport exactly from bottom of fixed header to top of Services, in both portrait and landscape.
+
+Menu is 100 percent readable at any scroll offset; background is opaque and consistent.
+
+Menu open/close animates with a subtle slide + fade; feels polished.
+
+The hamburger toggles open and close; there is no separate “X”.
+
+Hero overlay logo and text are perfectly centered. If you drop a vertical midline, they’re symmetrical.
+
+No desktop changes.
