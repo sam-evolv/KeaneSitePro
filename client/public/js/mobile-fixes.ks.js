@@ -88,76 +88,81 @@
     });
   }
   
-  // D. Enhanced mobile menu behavior and scroll locking
-  function setupMobileMenu() {
-    const menuButton = document.querySelector('[data-testid="button-mobile-menu"]');
-    const closeButton = document.querySelector('[data-testid="button-mobile-menu-close"]');
+  // D. Smart scroll locking based on DOM state (React-friendly)
+  function setupMobileMenuScrollLock() {
     const body = document.body;
-    const html = document.documentElement;
+    let scrollPosition = 0;
+    let isLocked = false;
     
-    if (!menuButton) return;
-    
-    // Lock scroll when menu opens
+    // Lock scroll when menu overlay is present
     function lockScroll() {
-      const scrollY = window.scrollY;
+      if (isLocked) return;
+      
+      scrollPosition = window.scrollY;
       body.classList.add('mobile-menu-open');
-      body.style.top = `-${scrollY}px`;
+      body.style.position = 'fixed';
+      body.style.top = `-${scrollPosition}px`;
+      body.style.width = '100%';
+      isLocked = true;
+      console.log('🔧 Scroll locked - mobile menu opened');
     }
     
-    // Restore scroll when menu closes
+    // Restore scroll when menu overlay is removed
     function unlockScroll() {
-      const scrollY = body.style.top;
+      if (!isLocked) return;
+      
       body.classList.remove('mobile-menu-open');
+      body.style.position = '';
       body.style.top = '';
-      if (scrollY) {
-        window.scrollTo(0, parseInt(scrollY || '0') * -1);
-      }
+      body.style.width = '';
+      window.scrollTo(0, scrollPosition);
+      isLocked = false;
+      console.log('🔧 Scroll unlocked - mobile menu closed');
     }
     
-    // Enhanced menu toggle behavior
-    let menuOpen = false;
-    
-    menuButton.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
+    // Observe DOM changes to detect React mobile menu overlay
+    const observer = new MutationObserver((mutations) => {
+      // Check if mobile menu overlay exists in DOM
+      const mobileMenuOverlay = document.querySelector('.lg\\:hidden.fixed.inset-0.bg-charcoal');
       
-      if (!menuOpen) {
+      if (mobileMenuOverlay && !isLocked) {
+        // Menu just opened - lock scroll
         lockScroll();
-        menuOpen = true;
-        console.log('🔧 Mobile menu opened with scroll lock');
+      } else if (!mobileMenuOverlay && isLocked) {
+        // Menu just closed - unlock scroll
+        unlockScroll();
       }
-    }, { passive: false });
+    });
     
-    // Close menu handler
-    if (closeButton) {
-      closeButton.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        if (menuOpen) {
-          unlockScroll();
-          menuOpen = false;
-          console.log('🔧 Mobile menu closed with scroll unlock');
-        }
-      }, { passive: false });
-    }
+    // Start observing DOM changes
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['class', 'style']
+    });
     
-    // Close menu on navigation link tap
-    document.addEventListener('click', (e) => {
-      const navButton = e.target.closest('[data-testid^="nav-mobile-"]');
-      const quoteButton = e.target.closest('[data-testid="button-request-quote-mobile"]');
+    // Periodic check as backup (in case MutationObserver misses something)
+    let checkInterval = setInterval(() => {
+      const mobileMenuOverlay = document.querySelector('.lg\\:hidden.fixed.inset-0.bg-charcoal');
       
-      if (navButton || quoteButton) {
-        if (menuOpen) {
-          // Small delay to allow scroll animation
-          setTimeout(() => {
-            unlockScroll();
-            menuOpen = false;
-            console.log('🔧 Mobile menu closed after navigation');
-          }, 100);
-        }
+      if (mobileMenuOverlay && !isLocked) {
+        lockScroll();
+      } else if (!mobileMenuOverlay && isLocked) {
+        unlockScroll();
       }
-    }, { passive: true });
+    }, 100);
+    
+    // Cleanup on page unload
+    window.addEventListener('beforeunload', () => {
+      observer.disconnect();
+      clearInterval(checkInterval);
+      if (isLocked) {
+        unlockScroll();
+      }
+    });
+    
+    console.log('🔧 Smart mobile menu scroll lock initialized (React-friendly)');
   }
   
   // E. Orientation change handling
@@ -179,7 +184,7 @@
     updateHeaderHeight();
     setupScrollHandler();
     setupVideoFixes();
-    setupMobileMenu();
+    setupMobileMenuScrollLock();
     setupOrientationHandler();
     
     console.log('🔧 All mobile fixes initialized successfully');
