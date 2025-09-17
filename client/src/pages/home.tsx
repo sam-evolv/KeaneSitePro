@@ -68,6 +68,33 @@ export default function Home() {
 
   // Header scroll detection is now handled by useHeaderScrolled hook
   
+  // Lock background scroll when mobile menu is open
+  useEffect(() => {
+    const body = document.body;
+    
+    if (isMenuOpen) {
+      // Store original styles
+      const originalStyle = window.getComputedStyle(body);
+      const scrollY = window.scrollY;
+      
+      // Lock scroll
+      body.style.position = 'fixed';
+      body.style.top = `-${scrollY}px`;
+      body.style.width = '100%';
+      body.style.overflow = 'hidden';
+      body.style.touchAction = 'none';
+      
+      return () => {
+        // Restore scroll on cleanup
+        body.style.position = '';
+        body.style.top = '';
+        body.style.width = '';
+        body.style.overflow = '';
+        body.style.touchAction = '';
+        window.scrollTo(0, scrollY);
+      };
+    }
+  }, [isMenuOpen]);
 
   // Premium scroll animations for all sections - reset when scrolling back up
   useEffect(() => {
@@ -356,9 +383,16 @@ export default function Home() {
         </div>
         
         {/* Mobile Menu Overlay */}
-        {isMenuOpen && (
-          <div className="lg:hidden fixed inset-0 bg-charcoal bg-opacity-95 backdrop-blur-lg z-50">
-            <div className="flex flex-col h-full">
+        <div 
+          className={`mobile-menu-overlay lg:hidden fixed inset-0 bg-charcoal bg-opacity-95 backdrop-blur-lg z-50 ${
+            isMenuOpen ? 'menu-open' : 'menu-closed'
+          }`}
+          data-mobile-menu-overlay="true"
+          data-menu-open={isMenuOpen ? "true" : "false"}
+        >
+            <div className={`mobile-menu-content flex flex-col h-full ${
+              isMenuOpen ? 'menu-open' : 'menu-closed'
+            }`}>
               <div className="flex items-center justify-between p-4 border-b border-white/20">
                 <div className="relative flex items-center justify-center h-24 w-32">
                   <img 
@@ -384,33 +418,43 @@ export default function Home() {
               <nav className="flex flex-col flex-1 px-4 py-8 space-y-6">
                 <button 
                   onClick={() => scrollToSection('home')} 
-                  className="text-white text-xl font-semibold hover:text-primary transition-colors text-left"
+                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left ${
+                    isMenuOpen ? 'menu-open' : 'menu-closed'
+                  }`}
                   data-testid="nav-mobile-home"
                 >
                   Home
                 </button>
                 <button 
                   onClick={() => scrollToSection('services')} 
-                  className="text-white text-xl font-semibold hover:text-primary transition-colors text-left"
+                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left ${
+                    isMenuOpen ? 'menu-open' : 'menu-closed'
+                  }`}
                   data-testid="nav-mobile-services"
                 >
                   Services
                 </button>
                 <button 
                   onClick={() => scrollToSection('about')} 
-                  className="text-white text-xl font-semibold hover:text-primary transition-colors text-left"
+                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left ${
+                    isMenuOpen ? 'menu-open' : 'menu-closed'
+                  }`}
                   data-testid="nav-mobile-about"
                 >
                   About
                 </button>
                 <button 
                   onClick={() => scrollToSection('contact')} 
-                  className="text-white text-xl font-semibold hover:text-primary transition-colors text-left"
+                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left ${
+                    isMenuOpen ? 'menu-open' : 'menu-closed'
+                  }`}
                   data-testid="nav-mobile-contact"
                 >
                   Contact
                 </button>
-                <div className="pt-8">
+                <div className={`mobile-nav-item pt-8 ${
+                  isMenuOpen ? 'menu-open' : 'menu-closed'
+                }`}>
                   <Button 
                     className="btn btn--primary btn--pill w-full" 
                     onClick={() => scrollToSection('contact')}
@@ -421,8 +465,7 @@ export default function Home() {
                 </div>
               </nav>
             </div>
-          </div>
-        )}
+        </div>
       </header>
 
       {/* Scroll detection sentinel - positioned at top to start transparent */}

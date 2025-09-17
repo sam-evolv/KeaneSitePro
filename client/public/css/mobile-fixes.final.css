@@ -1,22 +1,18 @@
 /* -------- Mobile-only scope -------- */
 @media (max-width: 768px) {
   /* 1) Header + Menu layering and contrast */
-  .header,
-  .navbar {
+  .site-header {
     position: sticky; top: 0; z-index: 10000;
     will-change: background-color, transform;
     transition: background-color 200ms ease;
     background: rgba(0,0,0,0.6); /* initial transparent look at page top */
   }
-  .header.header--scrolled,
-  .navbar.navbar--scrolled {
+  .site-header.header--scrolled {
     background: rgba(0,0,0,0.92); /* legible after scroll */
   }
 
-  /* Menu panel must be opaque and readable everywhere */
-  .mobile-nav,
-  .nav__drawer,
-  .nav-panel {
+  /* Menu panel must be opaque and readable everywhere - React overlay */
+  [data-mobile-menu-overlay] {
     position: fixed; inset: 0 0 auto 0;
     top: var(--header-h, 0px);
     height: calc(100dvh - var(--header-h, 0px));
@@ -31,26 +27,21 @@
     pointer-events: none;
     transition: opacity 220ms ease, transform 220ms ease;
   }
-  .menu-open .mobile-nav,
-  .menu-open .nav__drawer,
-  .menu-open .nav-panel {
+  [data-mobile-menu-overlay][data-menu-open="true"] {
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
   }
 
   /* Ensure menu links are readable */
-  .mobile-nav a, .nav__drawer a, .nav-panel a {
+  [data-mobile-menu-overlay] a, [data-mobile-menu-overlay] button {
     color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.35);
   }
 
-  /* Remove the separate X button if present */
-  .nav-close, .menu-close, .close-btn {
-    display: none !important;
-  }
+  /* React manages close button - no need to hide since it's controlled by state */
 
-  /* 2) Hamburger (toggle) must stay above hero */
-  .menu-toggle, .hamburger {
+  /* 2) Hamburger (toggle) must stay above hero - React button */
+  [data-testid="button-mobile-menu"] {
     position: relative; z-index: 10002;
     -webkit-tap-highlight-color: transparent;
   }
@@ -78,9 +69,7 @@
   }
 
   /* 4) Center hero overlay content precisely */
-  .hero__overlay,
-  .hero .overlay,
-  .hero-content {
+  .hero__content {
     position: absolute; inset: 0;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
@@ -88,9 +77,9 @@
     transform: none !important; left: 0 !important; right: 0 !important; margin: 0 auto !important;
     pointer-events: none;
   }
-  .hero__overlay * { pointer-events: auto; }
+  .hero__content * { pointer-events: auto; }
 
-  .hero__logo, .hero-content .logo {
+  .hero__logo, .hero__content .logo {
     display: block; margin: 0 auto;
   }
 
