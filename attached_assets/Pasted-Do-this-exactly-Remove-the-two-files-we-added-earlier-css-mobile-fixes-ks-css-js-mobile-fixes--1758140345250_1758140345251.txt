@@ -1,0 +1,216 @@
+Do this exactly
+
+Remove the two files we added earlier:
+
+/css/mobile-fixes.ks.css
+
+/js/mobile-fixes.ks.js
+
+/css/mobile-fixes.final.css
+
+/js/mobile-fixes.final.js
+
+Add these files and load them last:
+
+/css/mobile-fixes.clean.css
+
+/js/mobile-fixes.clean.js
+
+Head meta: ensure the viewport line includes viewport-fit=cover (for iOS safe areas).
+
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+
+HTML hero video: remove controls; keep autoplay muted playsinline loop.
+
+/css/mobile-fixes.clean.css
+/* MOBILE ONLY */
+@media (max-width: 768px) {
+  /* Baseline hardening: avoid ghost margins/padding that create black bars */
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #000;
+  }
+
+  /* Header sits over the hero, always visible */
+  .header, .navbar {
+    position: fixed;
+    top: env(safe-area-inset-top, 0);
+    left: 0; right: 0;
+    z-index: 10000;
+    background: transparent;               /* transparent at top */
+    transition: background-color 200ms ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  /* Legible after scroll */
+  .header--scrolled, .navbar--scrolled {
+    background: rgba(0,0,0,0.92);
+  }
+
+  /* Hamburger as the only toggle; any close/X is hidden */
+  .nav-close, .menu-close, .close-btn { display: none !important; }
+  .menu-toggle, .hamburger { position: relative; z-index: 10002; }
+
+  /* HERO: full device viewport without double subtraction.
+     Use small/large/dynamic viewport units to stabilise on iOS. */
+  .hero, .hero__media, .hero-video {
+    position: relative;
+    width: 100%;
+    height: 100dvh;              /* dynamic viewport (accounts for toolbars) */
+    min-height: 100svh;          /* safety for when small viewport is exposed */
+    overflow: hidden;
+    margin: 0;
+    background: #000;
+  }
+  /* Nuke any default margins that can create bars */
+  .hero { margin-block: 0 !important; }
+
+  .hero video,
+  .hero__media video,
+  .hero-video video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center center;
+    background: #000;
+  }
+
+  /* Overlay content perfectly centered */
+  .hero__overlay, .hero .overlay, .hero-content {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: max(16px, env(safe-area-inset-top)) 16px 16px 16px;
+    transform: none !important;
+    left: 0 !important; right: 0 !important; margin: 0 auto !important;
+    pointer-events: none;
+  }
+  .hero__overlay * { pointer-events: auto; }
+  .hero__logo, .hero-content .logo { display: block; margin: 0 auto; }
+
+  /* The section after hero must hug the bottom of the hero
+     so there’s no black strip between them */
+  .section-services, #services {
+    margin-top: 0 !important;
+  }
+
+  /* Mobile menu panel: opaque, smooth slide/fade, starts below header line */
+  .mobile-nav, .nav__drawer, .nav-panel {
+    position: fixed;
+    left: 0; right: 0;
+    top: calc(env(safe-area-inset-top, 0) + var(--header-h, 0px));
+    height: calc(100dvh - var(--header-h, 0px));
+    background: rgba(0,0,0,0.96);
+    z-index: 10001;
+    opacity: 0; transform: translateY(-8px);
+    pointer-events: none;
+    transition: opacity 220ms ease, transform 220ms ease;
+  }
+  .menu-open .mobile-nav,
+  .menu-open .nav__drawer,
+  .menu-open .nav-panel {
+    opacity: 1; transform: translateY(0);
+    pointer-events: auto;
+  }
+  .mobile-nav a, .nav__drawer a, .nav-panel a {
+    color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.35);
+  }
+
+  /* Ensure content below doesn't fight z-index with header/nav */
+  main, .page, .section { position: relative; z-index: 1; }
+
+  /* Hide any UA video controls if they leak through */
+  .hero video::-webkit-media-controls,
+  .hero video::-webkit-media-controls-enclosure { display: none !important; }
+}
+
+/js/mobile-fixes.clean.js
+(() => {
+  const doc = document;
+  const html = doc.documentElement;
+  const body = doc.body;
+
+  // Measure header height and expose as CSS var
+  const header = doc.querySelector('.header, .navbar');
+  const setHeaderH = () => {
+    const h = header ? Math.round(header.getBoundingClientRect().height) : 0;
+    doc.documentElement.style.setProperty('--header-h', h + 'px');
+  };
+  window.addEventListener('resize', setHeaderH);
+  window.addEventListener('orientationchange', setHeaderH);
+  setHeaderH();
+
+  // Add scrolled class for header legibility
+  const onScroll = () => {
+    const scrolled = window.scrollY > 8;
+    if (header) {
+      header.classList.toggle('header--scrolled', scrolled);
+      header.classList.toggle('navbar--scrolled', scrolled);
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Hamburger toggles open/close; remove any separate "X"
+  const toggle = doc.querySelector('.menu-toggle, .hamburger');
+  const panel  = doc.querySelector('.mobile-nav, .nav__drawer, .nav-panel');
+  const killClose = doc.querySelector('.nav-close, .menu-close, .close-btn');
+  if (killClose) killClose.remove();
+
+  const setMenu = (open) => {
+    html.classList.toggle('menu-open', open);
+    if (panel) panel.classList.toggle('is-open', open);
+    body.style.overflow = open ? 'hidden' : '';
+    body.style.touchAction = open ? 'none' : '';
+  };
+
+  if (toggle) {
+    toggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      setMenu(!html.classList.contains('menu-open'));
+    }, { passive: false });
+  }
+
+  // Close menu on link tap
+  doc.addEventListener('click', (e) => {
+    const a = e.target.closest('a');
+    if (a && html.classList.contains('menu-open')) setMenu(false);
+  }, { passive: true });
+
+  // Hero video: no controls, autoplay inline, loop
+  const vids = doc.querySelectorAll('.hero video, .hero__media video, .hero-video video');
+  vids.forEach(v => {
+    v.removeAttribute('controls');
+    v.setAttribute('muted','');
+    v.setAttribute('playsinline','');
+    v.setAttribute('loop','');
+    const tryPlay = () => v.play().catch(()=>{});
+    doc.addEventListener('visibilitychange', tryPlay, { passive: true });
+    tryPlay();
+  });
+
+  // Defensive: remove default margins on the element after hero to avoid gaps
+  const hero = doc.querySelector('.hero, .hero__media, .hero-video');
+  if (hero) {
+    const next = hero.nextElementSibling;
+    if (next && getComputedStyle(next).marginTop !== '0px') {
+      next.style.marginTop = '0px';
+    }
+  }
+})();
+
+Why this fixes your screenshots
+
+No black bars: we use 100dvh/100svh and kill stray margins/padding that were creating the gaps. We are not subtracting the header from hero height anymore, so there’s no double offset pushing the video down.
+
+Header/logo off-screen: header is fixed with safe-area top padding and a very high z-index; overlay content is centered within the hero and not shifted by transforms.
+
+Opaque, smooth menu: dark, opaque panel with slide/fade, hamburger toggles open/close, and the separate “X” is removed.
+
+Parity with desktop: mobile-only media query; desktop CSS/JS paths are untouched.
+
+Run this, then validate on iPhone 16 Pro Max (portrait/landscape) and a Pixel profile. If your actual class names differ (.header, .navbar, .mobile-nav, .nav__drawer, .hero-video, etc.), keep the logic identical and remap the selectors.
