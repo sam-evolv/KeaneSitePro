@@ -1,0 +1,119 @@
+/**
+ * Mobile-Only Polish Fixes for Keane Site Services
+ * Addresses mobile UX issues while preserving desktop experience
+ */
+
+/* Hide video controls on ALL breakpoints (only global change) */
+[data-testid="button-video-toggle"] {
+  display: none !important;
+}
+
+/* Mobile-only fixes - everything below only applies to ≤768px */
+@media (max-width: 768px) {
+  
+  /* A. Fix mobile menu transparency - solid background always */
+  .lg\:hidden.fixed.inset-0.bg-charcoal {
+    background: rgba(0, 0, 0, 0.98) !important;
+    backdrop-filter: none !important;
+  }
+  
+  /* Ensure mobile menu has highest z-index */
+  .lg\:hidden.fixed.inset-0 {
+    z-index: 9999 !important;
+  }
+  
+  /* B. Hero video fills viewport perfectly - no black strips */
+  .hero {
+    min-height: calc(100vh - var(--header-h, 64px)) !important;
+    height: calc(100vh - var(--header-h, 64px)) !important;
+  }
+  
+  .hero__media,
+  .hero-video {
+    min-height: calc(100vh - var(--header-h, 64px)) !important;
+    height: calc(100vh - var(--header-h, 64px)) !important;
+  }
+  
+  .hero video,
+  .hero__media video,
+  .hero-video {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: calc(100vh - var(--header-h, 64px)) !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+  }
+  
+  /* C. Perfect center hero content on mobile */
+  .hero__content {
+    position: absolute !important;
+    inset: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    padding: 16px !important;
+    z-index: 2 !important;
+  }
+  
+  /* Remove any legacy transforms that offset centering */
+  .hero__content,
+  .hero__content * {
+    transform: none !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  
+  /* Ensure logo is pixel-perfect centered */
+  .hero__content .hero-logo,
+  .hero__content img {
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  
+  /* D. Mobile menu button reliability - always on top */
+  button[data-testid="button-mobile-menu"] {
+    position: relative !important;
+    z-index: 10001 !important;
+  }
+  
+  /* E. Ensure Services section doesn't interfere with menu */
+  #services {
+    position: relative !important;
+    z-index: 1 !important;
+  }
+  
+  /* F. Body scroll locking when menu open */
+  .mobile-menu-open {
+    overflow: hidden !important;
+    touch-action: none !important;
+    position: fixed !important;
+    width: 100% !important;
+  }
+  
+  /* G. Header stays readable on scroll for mobile */
+  .site-header {
+    z-index: 1000 !important;
+  }
+  
+  .scrolled .site-header {
+    background: rgba(0,0,0,0.95) !important;
+  }
+}
+
+/* Mobile landscape orientation specific fixes */
+@media (max-width: 768px) and (orientation: landscape) {
+  .hero {
+    min-height: 100vh !important;
+    height: 100vh !important;
+  }
+  
+  .hero__media,
+  .hero-video,
+  .hero video {
+    min-height: 100vh !important;
+    height: 100vh !important;
+  }
+}

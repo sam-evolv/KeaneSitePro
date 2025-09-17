@@ -455,19 +455,6 @@ export default function Home() {
         {/* Hero Overlay */}
         <div className="hero__overlay"></div>
         
-        {/* Video Controls */}
-        <Button
-          variant="ghost"
-          size="icon"
-          id="toggleVideo"
-          className="absolute top-24 right-4 z-10 bg-black/50 text-white p-2 rounded-full backdrop-blur-sm hover:bg-black/70"
-          onClick={toggleVideo}
-          aria-pressed={!isVideoPlaying}
-          aria-label={isVideoPlaying ? "Pause background video" : "Play background video"}
-          data-testid="button-video-toggle"
-        >
-          {isVideoPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
-        </Button>
         
         {/* Hero Content */}
         <div className="hero__content fade-in">

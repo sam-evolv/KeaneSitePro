@@ -1,0 +1,326 @@
+Goal: Ship a mobile-only polish pass that fixes:
+
+Transparent/low-contrast mobile menu after scroll,
+
+Hero video not fully filling the viewport on mobile,
+
+Menu button inside Services not working reliably,
+
+Remove play/pause UI from the hero video on both desktop and mobile,
+
+Perfectly center the hero overlay logo + text on mobile,
+
+Ensure no desktop regressions.
+
+Branching & Safety
+
+Create a new branch: feat/mobile-polish-ks-services.
+
+Grep the codebase for the header/nav, hero video, and overlay classes. Common candidates:
+
+Header/nav: .header, .navbar, .nav, .menu, .menu-toggle, .hamburger, .mobile-nav, .nav__overlay, .nav__drawer, .nav-open.
+
+Hero: .hero, .hero-video, .hero__media, .hero__overlay, <video> in the hero section.
+
+Services section anchor/id for offset measuring: #services, .section-services.
+
+Add a small, isolated mobile stylesheet (or section) and minimal JS patch file named mobile-fixes.ks.js, imported last, so it can override safely. Desktop styles must remain unchanged.
+
+Implementation Requirements
+
+A. Mobile menu must always be readable (no transparency after scroll)
+
+If the mobile menu panel/overlay becomes transparent on scroll, enforce an opaque background.
+
+Add a high-contrast backdrop and consistent elevation only under mobile breakpoints.
+
+Ensure the menu toggle is always visible and tappable on top of hero/video content.
+
+/* mobile-only overrides */
+@media (max-width: 768px) {
+  .nav,
+  .navbar,
+  .mobile-nav,
+  .nav__drawer,
+  .nav__overlay {
+    /* pick the actual selector used for the opened menu panel */
+  }
+
+  /* Ensure the opened menu has a solid background */
+  .nav--open .nav__drawer,
+  .mobile-nav.is-open,
+  .menu-open .nav__drawer {
+    background: rgba(0,0,0,0.95); /* or brand color; must be opaque enough */
+    backdrop-filter: none;
+  }
+
+  /* Ensure menu container always sits above page/video */
+  .nav,
+  .navbar,
+  .mobile-nav,
+  .menu-toggle {
+    position: relative;
+    z-index: 9999;
+  }
+
+  /* If the header becomes transparent on scroll, keep it legible */
+  .header--scrolled,
+  .navbar--scrolled {
+    background: rgba(0,0,0,0.85);
+  }
+}
+
+
+If a “scrolled” class is used, ensure JS sets it consistently on scroll for mobile. If not present, add it.
+
+// mobile-fixes.ks.js
+(function() {
+  const header = document.querySelector('.header, .navbar');
+  if (!header) return;
+
+  function onScroll() {
+    if (window.scrollY > 8) {
+      header.classList.add('navbar--scrolled','header--scrolled');
+    } else {
+      header.classList.remove('navbar--scrolled','header--scrolled');
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+
+B. Hero video fills the viewport on mobile (no black strip under “Call Now”)
+
+Target the hero container to be full viewport height minus any fixed header height. If header is fixed and ~64px high, use calc. If header height differs, measure it dynamically (JS) and set a CSS var.
+
+Ensure <video> uses object-fit: cover and fills its container.
+
+@media (max-width: 768px) {
+  .hero,
+  .hero__media,
+  .hero-video {
+    position: relative;
+    width: 100%;
+    min-height: calc(100vh - var(--header-h, 0px));
+    height: calc(100vh - var(--header-h, 0px));
+    overflow: hidden;
+  }
+  .hero video,
+  .hero__media video,
+  .hero-video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
+    background: #000; /* safety to avoid flashes */
+  }
+}
+
+// mobile-fixes.ks.js (append)
+(function() {
+  const header = document.querySelector('.header, .navbar');
+  const root = document.documentElement;
+  function setHeaderVar() {
+    const h = header ? header.getBoundingClientRect().height : 0;
+    root.style.setProperty('--header-h', `${h}px`);
+  }
+  window.addEventListener('resize', setHeaderVar);
+  window.addEventListener('orientationchange', setHeaderVar);
+  setHeaderVar();
+})();
+
+C. Remove play/pause UI for hero video on ALL breakpoints
+
+If native controls are used, remove the controls attribute in HTML. If dynamically added, remove via JS.
+
+Hide residual UA buttons with vendor CSS where needed. If there’s a custom overlay play/pause button, remove that element or hide it.
+
+// mobile-fixes.ks.js (append)
+(function() {
+  const vids = document.querySelectorAll('.hero video, .hero__media video, .hero-video video');
+  vids.forEach(v => {
+    v.removeAttribute('controls');
+    // Optional: ensure autoplay/muted/loop for hero polish
+    v.setAttribute('muted','');
+    v.setAttribute('playsinline','');
+    v.setAttribute('loop','');
+    // Restart if paused by UA policies when visible
+    const tryPlay = () => v.play().catch(()=>{});
+    document.addEventListener('visibilitychange', tryPlay, { passive: true });
+    tryPlay();
+  });
+})();
+
+/* Hide UA controls if any remain */
+.hero video::-webkit-media-controls { display: none !important; }
+.hero video::-webkit-media-controls-enclosure { display: none !important; }
+
+D. Center the logo + text overlay perfectly on mobile
+
+Use a flexbox centering container with precise alignment and a subtle safe padding.
+
+Remove any stray transforms/margins that push it off center on mobile.
+
+@media (max-width: 768px) {
+  .hero__overlay,
+  .hero .overlay,
+  .hero-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;   /* perfect horizontal center */
+    justify-content: center; /* perfect vertical center */
+    text-align: center;
+    padding: 16px;
+    pointer-events: none;  /* keep overlays non-blocking for menu */
+  }
+  .hero__overlay * { pointer-events: auto; } /* re-enable for buttons if needed */
+
+  /* Remove any legacy centering hacks that offset on mobile */
+  .hero__overlay,
+  .hero .overlay,
+  .hero-content {
+    transform: none !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin: 0 auto !important;
+  }
+
+  /* Ensure logo is pixel-centered */
+  .hero__logo,
+  .hero-content .logo {
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+E. Fix “menu button inside Services” not working
+
+Likely causes: z-index conflict over the services section, overlay capturing taps, or scroll-lock issues. Apply:
+
+Ensure the menu toggle is always the top tap target with a very high z-index.
+
+When the mobile nav is open, lock body scroll cleanly. When closed, restore it.
+
+Ensure overlays don’t block taps when nav is closed.
+
+@media (max-width: 768px) {
+  .menu-toggle,
+  .hamburger {
+    position: relative;
+    z-index: 10001;
+  }
+  .nav__overlay {
+    /* only capture taps when open */
+    pointer-events: none;
+  }
+  .nav--open .nav__overlay {
+    pointer-events: auto;
+  }
+  /* Ensure Services section content sits below the header/nav layer */
+  .section-services {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+// mobile-fixes.ks.js (append)
+(function(){
+  const html = document.documentElement;
+  const body = document.body;
+  const toggle = document.querySelector('.menu-toggle, .hamburger');
+  const nav = document.querySelector('.mobile-nav, .nav__drawer, .nav');
+
+  if (toggle && nav) {
+    toggle.addEventListener('click', () => {
+      const open = html.classList.toggle('menu-open');
+      nav.classList.toggle('is-open', open);
+      if (open) {
+        body.style.overflow = 'hidden';
+        body.style.touchAction = 'none';
+      } else {
+        body.style.overflow = '';
+        body.style.touchAction = '';
+      }
+    }, { passive: true });
+  }
+
+  // Close menu on nav link tap (avoid overlay blocking)
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a');
+    if (a && html.classList.contains('menu-open')) {
+      html.classList.remove('menu-open');
+      nav && nav.classList.remove('is-open');
+      body.style.overflow = '';
+      body.style.touchAction = '';
+    }
+  }, { passive: true });
+})();
+
+
+Note: Replace selectors with the real ones found in the codebase. Keep changes limited to @media (max-width: 768px) except for the hero video control removal which applies globally.
+
+File Changes
+
+Create public/css/mobile-fixes.ks.css (or equivalent path) and import it last in the HTML or main CSS bundle.
+
+Create public/js/mobile-fixes.ks.js and import it last before </body>.
+
+Remove any controls attributes from the hero <video> in the HTML templates.
+
+If a custom play/pause overlay button exists in the DOM, remove it or add:
+
+.hero .play-btn, .hero .pause-btn { display: none !important; }
+
+
+Testing & Acceptance Criteria
+
+Mobile breakpoint (≤ 768px):
+
+Opening the menu at the top of the page yields a solid, readable background.
+
+Scrolling down and opening the menu yields the same solid background (no transparency).
+
+The menu toggle is always tappable; no dead zones over Services or hero.
+
+The hero video fully fills the viewport area between the fixed header and the top of Services — no black strip visible under “Call Now”.
+
+Logo and text in the hero are mathematically centered. If you draw a vertical centerline, both sides are symmetric.
+
+Scrolling is locked when the menu is open; restored on close.
+
+Desktop breakpoint (> 768px):
+
+No visual regressions to header/nav or layout.
+
+The play/pause control for the hero is not visible and the hero still autoplays muted inline.
+
+Cross-device spot checks in DevTools:
+
+iPhone 12/13/14/15 Pro, iPad, Pixel 6/7.
+
+Portrait and landscape.
+
+Lighthouse: no regressions in performance or accessibility from these changes.
+
+Deliverables
+
+PR on feat/mobile-polish-ks-services with:
+
+mobile-fixes.ks.css
+
+mobile-fixes.ks.js
+
+Minimal HTML tweaks (remove controls on hero video; remove any custom play/pause overlay)
+
+Short changelog in PR description summarising selectors touched and why.
+
+If Something Is Ambiguous
+
+Do not refactor unrelated components.
+
+Keep overrides surgical, mobile-scoped, and revert-friendly.
+
+If the site uses a CSS framework (Tailwind/Bootstrap), implement the same logic using framework utilities and extract only what’s necessary to a utilities layer under the mobile breakpoint.
