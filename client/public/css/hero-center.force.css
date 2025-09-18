@@ -1,0 +1,63 @@
+/* Scope strictly to the hero to avoid side-effects */
+.hero, .hero__media, .hero-video { position: relative; }
+
+/* The injected wrapper that we pin to the geometric center */
+#hero-centroid-lock {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); /* hard center */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  /* Keep it stable across viewports without altering other elements */
+  width: min(92vw, 1100px);
+  max-width: 90%;
+  pointer-events: none; /* children re-enable */
+  z-index: 5;           /* above video, below header/menu */
+}
+
+/* Re-enable interaction for buttons/links inside */
+#hero-centroid-lock * { pointer-events: auto; }
+
+/* Kill legacy offsets that cause drift */
+.hero__overlay,
+.hero .overlay,
+.hero__content {
+  position: static !important;
+  inset: auto !important;
+  left: auto !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Ensure the video truly fills its container (prevents perceived off-center) */
+.hero video,
+.hero__media video,
+.hero-video video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center center;
+  background: #000;
+}
+
+/* Optional: quick debug crosshair. Toggle class on body if needed. */
+body.debug-hero-center::before,
+body.debug-hero-center::after {
+  content: "";
+  position: fixed;
+  left: 50%; top: 0; bottom: 0; width: 1px; background: rgba(255,255,255,.35);
+  pointer-events: none; z-index: 99999;
+}
+body.debug-hero-center::after {
+  top: 50%; left: 0; right: 0; height: 1px; width: auto;
+}

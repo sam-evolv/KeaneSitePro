@@ -1,0 +1,128 @@
+Goal
+Guarantee the hero logo + text block sits at the exact center of the hero on all screens. Do not change layout elsewhere.
+
+Actions
+
+Create /css/hero-center.force.css and import it last on pages with the hero.
+
+Create /js/hero-center.force.js and import it last before </body>.
+
+Do not modify your HTML manually; the JS will wrap the existing overlay content.
+
+/css/hero-center.force.css
+/* Scope strictly to the hero to avoid side-effects */
+.hero, .hero__media, .hero-video { position: relative; }
+
+/* The injected wrapper that we pin to the geometric center */
+#hero-centroid-lock {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); /* hard center */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  /* Keep it stable across viewports without altering other elements */
+  width: min(92vw, 1100px);
+  max-width: 90%;
+  pointer-events: none; /* children re-enable */
+  z-index: 5;           /* above video, below header/menu */
+}
+
+/* Re-enable interaction for buttons/links inside */
+#hero-centroid-lock * { pointer-events: auto; }
+
+/* Kill legacy offsets that cause drift */
+.hero__overlay,
+.hero .overlay,
+.hero-content {
+  position: static !important;
+  inset: auto !important;
+  left: auto !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Ensure the video truly fills its container (prevents perceived off-center) */
+.hero video,
+.hero__media video,
+.hero-video video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center center;
+  background: #000;
+}
+
+/* Optional: quick debug crosshair. Toggle class on body if needed. */
+body.debug-hero-center::before,
+body.debug-hero-center::after {
+  content: "";
+  position: fixed;
+  left: 50%; top: 0; bottom: 0; width: 1px; background: rgba(255,255,255,.35);
+  pointer-events: none; z-index: 99999;
+}
+body.debug-hero-center::after {
+  top: 50%; left: 0; right: 0; height: 1px; width: auto;
+}
+
+/js/hero-center.force.js
+(() => {
+  const doc = document;
+
+  // 1) Locate your existing overlay container
+  const overlay = doc.querySelector('.hero__overlay, .hero .overlay, .hero-content');
+  const hero = overlay ? overlay.closest('.hero, .hero__media, .hero-video') : null;
+  if (!overlay || !hero) return;
+
+  // 2) Create the hard-center wrapper
+  const lock = doc.createElement('div');
+  lock.id = 'hero-centroid-lock';
+
+  // 3) Move ALL children of your overlay into the lock (logo, headings, buttons)
+  while (overlay.firstChild) lock.appendChild(overlay.firstChild);
+
+  // 4) Append the lock inside the hero (not inside overlay anymore)
+  hero.appendChild(lock);
+
+  // 5) Remove empty overlay node to avoid stray styles
+  overlay.remove();
+
+  // 6) Defensive: recenter on font load/resize/orientation
+  const recalc = () => {
+    // no calculations needed—translate(-50%, -50%) handles all states,
+    // but forcing a reflow after orientation changes keeps some mobile UAs honest
+    void lock.offsetHeight;
+  };
+  ['load','resize','orientationchange'].forEach(ev =>
+    window.addEventListener(ev, recalc, { passive: true })
+  );
+})();
+
+Why this will finally stick
+
+We stop depending on previous CSS and inject our own wrapper exactly at hero level.
+
+We place it at left:50% / top:50% and translate -50%/-50%. That’s pure geometry—no margins, no header offsets, no transforms from legacy code can skew it.
+
+We move your current logo/text/buttons inside that wrapper, so the whole group is centered as one unit on every viewport.
+
+Scoping is razor-tight: only the hero overlay is touched. Desktop layout elsewhere is unaffected.
+
+Acceptance Criteria
+
+On desktop, tablet, and phones (iPhone 16 PM and smaller), draw a vertical/horizontal guide through the screen center. The logo sits precisely at the intersection; headings and CTAs are centered around it.
+
+Rotating the device, changing text size, or switching browsers does not shift the overlay.
+
+No other component on the site changes.
+
+If your overlay class names differ, swap them in the two selector lists, but keep the pattern identical.
