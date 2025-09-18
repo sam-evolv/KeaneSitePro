@@ -405,15 +405,6 @@ export default function Home() {
                     decoding="async"
                   />
                 </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-white p-2"
-                  onClick={() => setIsMenuOpen(false)}
-                  data-testid="button-mobile-menu-close"
-                >
-                  <X className="w-6 h-6" />
-                </Button>
               </div>
               <nav className="flex flex-col flex-1 px-4 py-8 space-y-6">
                 <button 

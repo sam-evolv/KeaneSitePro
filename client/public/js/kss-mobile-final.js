@@ -40,12 +40,6 @@
     setMenu(!html.classList.contains('menu-open'));
   }, { passive:false });
 
-  // Also handle React close button
-  const closeButton = doc.querySelector('[data-testid="button-mobile-menu-close"]');
-  closeButton?.addEventListener('click', (e) => {
-    e.preventDefault();
-    setMenu(false);
-  }, { passive:false });
 
   // Close menu on link tap
   doc.addEventListener('click', (e) => {
