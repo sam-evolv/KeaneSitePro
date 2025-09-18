@@ -1,5 +1,5 @@
-/* ===== MOBILE ONLY ===== */
-@media (max-width: 768px) {
+/* ===== MOBILE FIRST + RESPONSIVE ===== */
+/* Base styles for all devices */
   html, body { margin:0; padding:0; background:#000; }
 
   /* Fixed header with safe-area padding; readable after scroll */
@@ -66,8 +66,18 @@
     text-align: center;
     padding: calc(var(--header-h, 64px) + env(safe-area-inset-top, 0px)) 16px 16px;
     pointer-events: none;
+    z-index: 2;
   }
   .hero__content > * { pointer-events: auto; }
+  
+  /* Ensure hero content is visible */
+  .hero__content .hero-logo,
+  .hero__content h1,
+  .hero__content p,
+  .hero__content .btn {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
 
   /* Remove any gap between hero and services */
   #services, .section-services { margin-top: 0 !important; }
@@ -89,4 +99,11 @@
 
   /* Ensure page content sits below header layer */
   main, .page, .section { position: relative; z-index: 1; }
+
+/* Desktop adjustments */
+@media (min-width: 769px) {
+  /* On desktop, ensure centering still works */
+  .hero__content {
+    padding: calc(var(--header-h, 64px) + env(safe-area-inset-top, 0px)) 32px 32px;
+  }
 }
