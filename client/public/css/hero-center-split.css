@@ -56,5 +56,19 @@
     margin: 0 auto !important;
     margin-bottom: 1.5rem !important;
     display: block !important;
+    /* Reintroduce the pulse/breathe animation */
+    animation: breathe 4s ease-in-out infinite !important;
+  }
+  
+  /* Define the breathe animation for desktop */
+  @keyframes breathe {
+    0%, 100% {
+      transform: translateX(0) scale(1);
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.35));
+    }
+    50% {
+      transform: translateX(0) scale(1.08);
+      filter: drop-shadow(0 4px 12px rgba(241, 90, 41, 0.3));
+    }
   }
 }
