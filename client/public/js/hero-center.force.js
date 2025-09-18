@@ -48,12 +48,6 @@
     );
 
     console.log('🎯 Hero centering complete!');
-    
-    // Add unmistakable visual indicator
-    document.body.style.setProperty('--centering-active', 'YES');
-    lock.style.setProperty('border', '5px solid red', 'important');
-    lock.style.setProperty('box-shadow', '0 0 20px yellow', 'important');
-    
     return true;
   };
 

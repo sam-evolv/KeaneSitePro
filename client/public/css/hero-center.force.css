@@ -19,9 +19,6 @@
   pointer-events: none; /* children re-enable */
   z-index: 5;           /* above video, below header/menu */
   
-  /* OBVIOUS VISUAL INDICATOR - REMOVE WHEN CONFIRMED WORKING */
-  border: 3px solid lime !important;
-  background: rgba(255, 0, 255, 0.1) !important;
 }
 
 /* FORCE ALL CHILDREN TO CENTER - AGGRESSIVE OVERRIDE */
