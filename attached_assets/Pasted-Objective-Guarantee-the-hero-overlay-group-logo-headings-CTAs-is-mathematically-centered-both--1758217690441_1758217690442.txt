@@ -1,0 +1,117 @@
+Objective
+Guarantee the hero overlay group (logo + headings + CTAs) is mathematically centered both horizontally and vertically on every device, while leaving the rest of the site unchanged.
+
+Do exactly this
+
+Create /css/hero-center.lock.css and import it last (after all other CSS) on pages with the hero.
+
+Do not modify HTML structure; this patch assumes your overlay container uses one of these selectors:
+
+.hero__overlay, .hero .overlay, or .hero-content for the overlay wrapper
+
+.hero__logo or .hero-content .logo for the logo element
+
+No JS required. If you previously added any JS/CSS that positions the overlay with top/left + transform, this file will safely override it.
+
+/css/hero-center.lock.css
+/* ===== Hero Overlay: Hard Center Lock (All Viewports) ===== */
+
+/* Scope only to the hero so nothing else is touched */
+.hero, .hero__media, .hero-video {
+  position: relative; /* ensure overlay positions against hero */
+}
+
+/* 1) Turn the overlay into a full-bleed grid and place the group at exact center */
+.hero__overlay,
+.hero .overlay,
+.hero-content {
+  position: absolute !important;
+  inset: 0 !important;                 /* take entire hero bounds */
+  display: grid !important;
+  place-items: center !important;      /* precise H+V centering */
+  text-align: center !important;
+
+  /* Kill any previous offsets that caused drift */
+  transform: none !important;
+  margin: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  padding: 0 !important;
+
+  /* Don’t block taps to video when needed (buttons will re-enable) */
+  pointer-events: none;
+}
+
+/* 2) Inner content stays centered and interactive */
+.hero__overlay > * ,
+.hero .overlay > * ,
+.hero-content > * {
+  pointer-events: auto;
+  margin: 0 auto !important;           /* no stray margins pushing off-center */
+}
+
+/* 3) Logo normalization: block-level, no stray inline whitespace, auto center */
+.hero__logo,
+.hero-content .logo,
+.hero__overlay img.logo,
+.hero .overlay img.logo {
+  display: block !important;
+  margin: 0 auto !important;
+  transform: none !important;
+}
+
+/* 4) Defensive: remove common centering “hacks” that break on mobile */
+.hero__overlay *,
+.hero .overlay *,
+.hero-content * {
+  /* neutralize legacy translate(-50%, -X%) tricks */
+  transform: none !important;
+}
+
+/* 5) Optional: constrain max width so text wrapping doesn’t “look” off-center
+      (does not move the center point; only improves readability) */
+@media (min-width: 769px) {
+  .hero__overlay > *,
+  .hero .overlay > *,
+  .hero-content > * {
+    max-width: min(92vw, 1100px);
+  }
+}
+@media (max-width: 768px) {
+  .hero__overlay > *,
+  .hero .overlay > *,
+  .hero-content > * {
+    max-width: 92vw;
+  }
+}
+
+/* 6) If the fixed header overlaps visually, do NOT push the overlay down.
+      We’re centering inside the hero by geometry, not “below the header”.
+      (If you previously added padding-top to the overlay, this cancels it.) */
+@media (max-width: 2000px) {
+  .hero__overlay,
+  .hero .overlay,
+  .hero-content {
+    padding-top: 0 !important;
+  }
+}
+
+Why this works (and why your mobile drift disappears)
+
+Absolute grid + place-items: center locks the overlay’s grid cell to the exact center of the hero rectangle — it’s not influenced by text height, fonts, or header overlays.
+
+inset: 0 gives the overlay the full hero bounds, so the math is consistent on phones, tablets, and desktops.
+
+!important neutralization removes legacy top/left/transform hacks and rogue margins that tend to misalign on smaller viewports.
+
+Scope is only the hero overlay — nothing elsewhere is touched.
+
+Acceptance criteria
+
+On any device/emulator (iPhone 16 Pro Max, smaller iPhones, Pixels, iPads, desktop), draw a vertical and horizontal midline through the hero: the logo center and the overlay group centroid sit precisely at the intersection.
+
+Resizing the window, rotating the phone, or changing text scale does not move the overlay off-center.
+
+No other page sections change visually or behaviorally.
