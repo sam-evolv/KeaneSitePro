@@ -57,19 +57,17 @@
   
   /* SERVICES SECTION: Pull it up to sit just below Call Now button */
   #services, .section-services {
-    /* Move services section up to overlap/block black area */
-    margin-top: -8vh !important; /* Negative margin to pull it up into hero area */
+    /* Move services section up to close gap completely */
+    margin-top: -12vh !important; /* More negative margin to close gap */
     position: relative;
     z-index: 10; /* Above hero video but below header */
     
     /* Add top padding to maintain internal spacing */
-    padding-top: max(8vh, 60px) !important;
+    padding-top: max(12vh, 80px) !important;
     
-    /* Ensure rounded top corners for smooth transition */
-    border-radius: 20px 20px 0 0;
-    
-    /* Subtle shadow to separate from video */
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+    /* Remove rounded corners and shadows that create black elements */
+    border-radius: 0 !important;
+    box-shadow: none !important;
   }
   
   /* Safety: ensure services content isn't hidden behind hero */
