@@ -144,3 +144,19 @@
     flex-shrink: 0 !important;
   }
 }
+
+/* Desktop: Increase logo size by 100% (desktop only - above 768px) */
+@media (min-width: 769px) {
+  .brand, .logo, .header-logo {
+    height: 64px !important; /* Double the original 32px */
+    width: auto !important;
+    max-width: 200px !important; /* Double the max-width too */
+  }
+  
+  /* Adjust header height for larger desktop logo */
+  header, .header {
+    height: 80px !important;
+    min-height: 80px !important;
+    padding: 16px !important;
+  }
+}
