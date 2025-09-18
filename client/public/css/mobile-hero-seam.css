@@ -1,0 +1,57 @@
+/* ===== Mobile only ===== */
+@media (max-width: 768px) {
+  html, body { margin:0; padding:0; background:#000; }
+
+  /* Primary: hero fills the actual mobile viewport */
+  .hero, .hero__media, .hero-video {
+    position: relative;
+    width: 100%;
+    height: 100lvh;           /* largest viewport unit (modern iOS/Android) */
+    min-height: 100dvh;       /* dynamic viewport fallback */
+    min-height: 100svh;       /* small viewport fallback */
+    overflow: hidden;
+    background: #000;
+  }
+  @supports not (height: 100lvh) {
+    .hero, .hero__media, .hero-video { height: 100dvh; }
+  }
+
+  /* Video must completely cover (no letterboxing) */
+  .hero video,
+  .hero__media video,
+  .hero-video video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    background:#000;
+  }
+
+  /* Nuke any margins/padding that can create a gap */
+  .hero { margin:0 !important; padding:0 !important; }
+  /* Immediate next section (Services): no top gap */
+  #services, .section-services {
+    margin-top: 0 !important;
+    padding-top: clamp(16px, 4vw, 28px); /* preserve spacing without relying on margins */
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Safety net: micro-overlap Services by 2px to cover any iOS subpixel seam */
+  #services::before, .section-services::before {
+    content: "";
+    position: absolute;
+    top: -2px; left: 0; right: 0; height: 2px;
+    /* Match the Services background color to "bridge" the seam */
+    background: var(--services-bg, #f6f7fa);  /* tweak if your services bg differs */
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* If your Services background isn't #f6f7fa, set it here once: */
+  .section-services { --services-bg: #f6f7fa; } /* adjust to the exact hex you use */
+
+  /* Defensive: prevent any pseudo-element on hero from adding extra space */
+  .hero::after, .hero::before { display:none !important; }
+}

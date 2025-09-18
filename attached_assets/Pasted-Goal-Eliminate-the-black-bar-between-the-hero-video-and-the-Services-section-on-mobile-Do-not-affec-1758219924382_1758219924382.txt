@@ -1,0 +1,132 @@
+Goal
+Eliminate the black bar between the hero video and the Services section on mobile. Do not affect desktop.
+
+Actions
+
+Add /css/mobile-hero-seam.css and import it last.
+
+Add /js/mobile-hero-seam.js and import it last before </body>.
+
+Ensure the meta tag exists:
+
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+/css/mobile-hero-seam.css
+/* ===== Mobile only ===== */
+@media (max-width: 768px) {
+  html, body { margin:0; padding:0; background:#000; }
+
+  /* Primary: hero fills the actual mobile viewport */
+  .hero, .hero__media, .hero-video {
+    position: relative;
+    width: 100%;
+    height: 100lvh;           /* largest viewport unit (modern iOS/Android) */
+    min-height: 100dvh;       /* dynamic viewport fallback */
+    min-height: 100svh;       /* small viewport fallback */
+    overflow: hidden;
+    background: #000;
+  }
+  @supports not (height: 100lvh) {
+    .hero, .hero__media, .hero-video { height: 100dvh; }
+  }
+
+  /* Video must completely cover (no letterboxing) */
+  .hero video,
+  .hero__media video,
+  .hero-video video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    background:#000;
+  }
+
+  /* Nuke any margins/padding that can create a gap */
+  .hero { margin:0 !important; padding:0 !important; }
+  /* Immediate next section (Services): no top gap */
+  #services, .section-services {
+    margin-top: 0 !important;
+    padding-top: clamp(16px, 4vw, 28px); /* preserve spacing without relying on margins */
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Safety net: micro-overlap Services by 2px to cover any iOS subpixel seam */
+  #services::before, .section-services::before {
+    content: "";
+    position: absolute;
+    top: -2px; left: 0; right: 0; height: 2px;
+    /* Match the Services background color to “bridge” the seam */
+    background: var(--services-bg, #f6f7fa);  /* tweak if your services bg differs */
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* If your Services background isn’t #f6f7fa, set it here once: */
+  .section-services { --services-bg: #f6f7fa; } /* adjust to the exact hex you use */
+
+  /* Defensive: prevent any pseudo-element on hero from adding extra space */
+  .hero::after, .hero::before { display:none !important; }
+}
+
+/js/mobile-hero-seam.js
+(() => {
+  // iOS still misreports viewport on address-bar show/hide. Provide a robust fallback.
+  const doc = document;
+  const root = doc.documentElement;
+
+  const setVhVar = () => {
+    // Use innerHeight to get the true visual viewport; translate to a CSS var.
+    const vh = window.innerHeight * 0.01;
+    root.style.setProperty('--vh', `${vh}px`);
+  };
+
+  // Apply var-based height if needed (older browsers)
+  const applyLegacyHeight = () => {
+    const hero = doc.querySelector('.hero, .hero__media, .hero-video');
+    if (!hero) return;
+    // If lvh/dvh unsupported or we detect a gap, force height using --vh
+    const supportsLVH = CSS.supports('height', '100lvh');
+    const supportsDVH = CSS.supports('height', '100dvh');
+    if (!supportsLVH && !supportsDVH) {
+      hero.style.height = 'calc(var(--vh, 1vh) * 100)';
+    }
+  };
+
+  const repairGapIfAny = () => {
+    const hero = doc.querySelector('.hero, .hero__media, .hero-video');
+    const next = hero ? hero.nextElementSibling : null;
+    if (!hero || !next) return;
+    // If there is a visible 1–3 px seam, pull the next section up slightly.
+    const rectHero = hero.getBoundingClientRect();
+    const rectNext = next.getBoundingClientRect();
+    const gap = Math.round(rectNext.top - rectHero.bottom);
+    if (gap > 0 && gap <= 4) {
+      next.style.marginTop = `${-gap}px`;   // close the seam precisely
+    }
+  };
+
+  const onResize = () => {
+    setVhVar();
+    applyLegacyHeight();
+    requestAnimationFrame(repairGapIfAny);
+  };
+
+  ['load', 'resize', 'orientationchange'].forEach(ev =>
+    window.addEventListener(ev, onResize, { passive: true })
+  );
+
+  // initial run
+  onResize();
+})();
+
+How this resolves your screenshot
+
+No black box: hero uses lvh/dvh/svh with a JS fallback to the real visual viewport. That removes the extra pixels that create the bar.
+
+No seam: we zero margins, then add a 2 px overlap shim on the Services section in the exact Services background color. Even with iOS subpixel jitter, the audience never sees a gap.
+
+Safe: all changes are under @media (max-width: 768px). Desktop remains unchanged.
+
+If your Services background isn’t #f6f7fa, update --services-bg once to the exact hex.
