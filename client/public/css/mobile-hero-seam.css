@@ -85,4 +85,54 @@
     position: relative;
     z-index: 11;
   }
+  
+  /* MOBILE HEADER: Static white logo with compact black header */
+  header, .header {
+    /* Compact height for mobile */
+    height: 60px !important;
+    min-height: 60px !important;
+    padding: 8px 16px !important;
+    
+    /* Solid black background - no transparency */
+    background: rgba(0, 0, 0, 0.95) !important;
+    backdrop-filter: blur(8px) !important;
+  }
+  
+  /* Force white logo only on mobile */
+  .logo--primary { 
+    display: none !important; 
+  }
+  
+  .logo--scrolled { 
+    display: block !important; 
+    opacity: 1 !important;
+    position: static !important;
+  }
+  
+  /* Compact logo sizing for mobile */
+  .logo, .header-logo {
+    height: 44px !important;
+    width: auto !important;
+    max-width: 120px !important;
+  }
+  
+  /* Disable all transitions and animations on mobile */
+  .logo-transition, .header-logo, .logo-hover, .logo {
+    transition: none !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  
+  /* Remove hover effects on mobile */
+  .logo-hover:hover, .header-logo:hover {
+    transform: none !important;
+    filter: none !important;
+  }
+  
+  /* Compact hamburger menu */
+  [data-testid="button-mobile-menu"] {
+    padding: 6px 8px !important;
+    height: 44px !important;
+    width: 44px !important;
+  }
 }
