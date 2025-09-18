@@ -1,4 +1,4 @@
-/* ===== MOBILE (unchanged) ===== */
+/* ===== MOBILE (unchanged positioning with pulse animation) ===== */
 @media (max-width: 768px) {
   .hero__overlay,
   .hero .overlay,
@@ -17,6 +17,22 @@
   .hero .overlay > *,
   .hero-content > * {
     margin: 0 auto !important;
+  }
+  
+  /* Add pulse animation to mobile logo too */
+  .hero-logo {
+    animation: breathe-mobile 4s ease-in-out infinite !important;
+  }
+  
+  @keyframes breathe-mobile {
+    0%, 100% {
+      transform: scale(1);
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.35));
+    }
+    50% {
+      transform: scale(1.08);
+      filter: drop-shadow(0 4px 12px rgba(241, 90, 41, 0.3));
+    }
   }
 }
 
