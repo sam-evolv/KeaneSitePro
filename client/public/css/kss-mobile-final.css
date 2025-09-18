@@ -25,16 +25,24 @@
   .nav-close, .menu-close, .close-btn { display: none !important; }
 
   /* HERO: true full-bleed on iOS/Android with no bars */
-  /* Prefer large viewport, fall back to dynamic/small where supported */
-  .hero, .hero__media, .hero-video {
-    position: relative; width: 100%;
-    height: 100lvh;               /* newest browsers */
-    min-height: 100dvh;           /* dynamic viewport as fallback */
-    min-height: 100svh;           /* small viewport as secondary fallback */
-    overflow: hidden; background:#000; margin:0 !important;
+  /* Force exact viewport dimensions with strict height constraints - highest specificity */
+  section.hero, section#home.hero, .hero, .hero__media, .hero-video {
+    position: relative !important; 
+    width: 100% !important;
+    height: 100svh !important;    /* force small/visible viewport height */
+    max-height: 100svh !important; /* absolutely prevent exceeding viewport */
+    min-height: 100svh !important; /* prevent shrinking below viewport */
+    overflow: hidden !important; 
+    background: #000 !important; 
+    margin: 0 !important;
+    box-sizing: border-box !important;
   }
-  @supports not (height: 100lvh) {
-    .hero, .hero__media, .hero-video { height: 100dvh; }
+  @supports (height: 100dvh) {
+    section.hero, section#home.hero, .hero, .hero__media, .hero-video { 
+      height: 100dvh !important;  /* force dynamic viewport when supported */
+      max-height: 100dvh !important; /* absolutely prevent exceeding viewport */
+      min-height: 100dvh !important; /* prevent shrinking below viewport */
+    }
   }
 
   /* Video must fill container */
@@ -47,31 +55,55 @@
   .hero video::-webkit-media-controls,
   .hero video::-webkit-media-controls-enclosure { display:none !important; }
 
-  /* Overlay content centered and never clipped by header/safe-area */
-  .hero__overlay, .hero .overlay, .hero-content, .hero__content {
+  /* Perfect overlay centering with CSS Grid - constrained to viewport */
+  .hero__content {
     position: absolute; 
-    left: 0; right: 0;
-    top: calc(var(--header-h, 56px) + env(safe-area-inset-top, 0px));
-    bottom: 0;
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: center;
+    top: calc(var(--header-h, 64px) + env(safe-area-inset-top, 0px));
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    display: grid; 
+    place-items: center;
     text-align: center;
-    padding: 16px;
     pointer-events: none;
+    /* Force content to fit within remaining viewport space */
+    max-height: calc(100svh - var(--header-h, 64px) - env(safe-area-inset-top, 0px) - 16px);
+    overflow: hidden;
+    box-sizing: border-box;
   }
-  .hero__overlay * { pointer-events:auto; }
+  @supports (height: 100dvh) {
+    .hero__content {
+      max-height: calc(100dvh - var(--header-h, 64px) - env(safe-area-inset-top, 0px) - 16px);
+    }
+  }
+  .hero__content > * { pointer-events: auto; }
   
-  /* Perfect logo centering for mobile */
+  /* Perfect logo centering for mobile - override any brand/logo styles */
   .hero__content .hero-logo {
-    flex-shrink: 0;
-    margin: 0 auto;
+    position: static !important;
+    margin: 0 auto !important;
+    display: block !important;
+    height: 15rem !important; /* 240px - equivalent to h-60 */
+    width: auto !important;
+    object-fit: contain !important;
+    inset: auto !important;
+    transform: none !important;
   }
   
   /* Ensure all hero content has symmetrical spacing */
   .hero__content > * + * {
     margin-top: 1.5rem;
+  }
+  
+  /* Override any conflicting brand/logo positioning for hero logos */
+  .hero .hero-logo,
+  .hero__content .hero-logo {
+    position: static !important;
+    inset: auto !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
   }
 
   /* Remove any gap between hero and services */

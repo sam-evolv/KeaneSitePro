@@ -60,4 +60,5 @@
   // Defensive: if any element after hero has a positive margin-top, remove it to avoid a black strip
   const hero = doc.querySelector('.hero, .hero__media, .hero-video');
   if (hero?.nextElementSibling) hero.nextElementSibling.style.marginTop = '0px';
+
 })();
