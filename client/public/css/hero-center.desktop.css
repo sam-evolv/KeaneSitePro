@@ -1,0 +1,67 @@
+/* =========================
+   DESKTOP-ONLY CENTER LOCK
+   ========================= */
+@media (min-width: 769px) {
+  /* Ensure hero is a positioning context */
+  .hero, .hero__media, .hero-video {
+    position: relative;
+  }
+
+  /* Choose the actual overlay node that holds logo + headings + CTAs.
+     We deliberately use higher specificity + !important to beat earlier rules. */
+  .hero #hero-centroid-lock,
+  .hero .hero__overlay,
+  .hero .overlay,
+  .hero .hero-content {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+
+    /* Translate to literal geometric center.
+       Optional fine-tune via --desktop-center-nudge if needed. */
+    transform: translate(-50%, calc(-50% + var(--desktop-center-nudge, 0px))) !important;
+
+    /* Keep group nicely composed but do NOT affect center point */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+
+    /* Neutralize legacy offsets that push the block off-center */
+    margin: 0 !important;
+    padding: 0 !important;
+    inset: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    max-width: 1100px;
+    width: auto;
+    z-index: 3;
+    pointer-events: none; /* buttons re-enable below */
+  }
+
+  /* Re-enable interactivity for inner elements (buttons/links) */
+  .hero #hero-centroid-lock > *,
+  .hero .hero__overlay > *,
+  .hero .overlay > *,
+  .hero .hero-content > * {
+    pointer-events: auto;
+    margin: 0 auto;
+  }
+
+  /* Defensive: strip any transforms from inner children that can offset centering */
+  .hero #hero-centroid-lock *,
+  .hero .hero__overlay *,
+  .hero .overlay *,
+  .hero .hero-content * {
+    transform: none !important;
+  }
+}
+
+/* =========================
+   MOBILE SAFEGUARD
+   (Leave existing mobile centering rules alone)
+   ========================= */
+@media (max-width: 768px) {
+  /* No changes here on purpose */
+}
