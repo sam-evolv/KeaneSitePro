@@ -35,9 +35,13 @@
     body.style.overflow = open ? 'hidden' : '';
     body.style.touchAction = open ? 'none' : '';
   };
+  // React handles the toggle now, but keep this for any direct clicks that bypass React
   toggle?.addEventListener('click', (e) => {
-    e.preventDefault();
-    setMenu(!html.classList.contains('menu-open'));
+    // Let React handle the toggle - this prevents double-toggling
+    if (!e.defaultPrevented) {
+      e.preventDefault();
+      setMenu(!html.classList.contains('menu-open'));
+    }
   }, { passive:false });
 
 

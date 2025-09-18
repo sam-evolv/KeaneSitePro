@@ -375,7 +375,7 @@ export default function Home() {
               variant="ghost"
               size="icon"
               className="lg:hidden text-white p-2"
-              onClick={() => setIsMenuOpen(true)}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
               data-testid="button-mobile-menu"
             >
               <Menu className="w-6 h-6" />
