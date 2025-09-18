@@ -1,0 +1,124 @@
+Objective
+
+Force the logo in the hero to the exact geometric center on desktop.
+
+Do not alter mobile layout except keep the logo centered there too.
+
+No changes to headings/CTAs/menus/video sizing.
+
+Do exactly this
+
+Delete/disable any previous “hero-center” CSS/JS you added earlier (files named like hero-center.*, mobile-fixes.*, etc.). Do not delete your site CSS, only those add-ons.
+
+Add these two assets and load them last:
+
+/css/hero-logo.center.css
+
+/js/hero-logo.center.js
+
+Ensure your hero container has one of these classes: .hero, .hero__media, or .hero-video.
+
+/css/hero-logo.center.css
+/* Center ONLY the logo, without touching headings/buttons */
+
+/* Make hero a positioning context, safely */
+.hero, .hero__media, .hero-video {
+  position: relative;
+}
+
+/* This is the injected wrapper we will place dead-center */
+#hero-logo-lock {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); /* geometric center */
+  display: block;
+  z-index: 4;           /* above video, below nav */
+  pointer-events: none; /* logo overlay shouldn't block taps */
+}
+
+/* The logo itself lives inside and remains interactive if needed */
+#hero-logo-lock > * {
+  pointer-events: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Kill legacy offsets that were fighting centering */
+.hero .hero__logo,
+.hero .logo,
+.hero__overlay .hero__logo,
+.hero-content .logo {
+  transform: none !important;
+  margin: 0 !important;
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+}
+
+/* ---- Desktop scope: ensure lock wins on large screens ---- */
+@media (min-width: 769px) {
+  #hero-logo-lock {
+    /* if you want a tiny visual bias up/down, tweak once here */
+    --nudge-y: 0px; /* e.g., -8px or +8px */
+    transform: translate(-50%, calc(-50% + var(--nudge-y)));
+  }
+}
+
+/* ---- Mobile: do NOT change layout. The lock remains centered but we
+   don't override anything else. No visual bias on small screens. ---- */
+@media (max-width: 768px) {
+  #hero-logo-lock {
+    transform: translate(-50%, -50%);
+  }
+}
+
+/js/hero-logo.center.js
+(() => {
+  const doc = document;
+
+  // 1) Find the hero
+  const hero = doc.querySelector('.hero, .hero__media, .hero-video');
+  if (!hero) return;
+
+  // 2) Find the existing logo element inside the hero overlay
+  // Adjust selectors if your logo uses a different class/tag
+  const logo =
+    hero.querySelector('.hero__logo') ||
+    hero.querySelector('.logo') ||
+    hero.querySelector('img[alt*="KEANE" i]') ||
+    hero.querySelector('img[alt*="Keane" i]');
+
+  if (!logo) return;
+
+  // 3) If we've already centered it before, exit
+  if (doc.getElementById('hero-logo-lock')) return;
+
+  // 4) Create the lock wrapper and move the logo into it
+  const lock = doc.createElement('div');
+  lock.id = 'hero-logo-lock';
+
+  // Move the logo node into the lock
+  logo.parentNode.insertBefore(lock, logo);
+  lock.appendChild(logo);
+
+  // 5) Defensive: keep it centered across resizes/orientation
+  const reflow = () => { void lock.offsetHeight; };
+  ['load', 'resize', 'orientationchange'].forEach(ev =>
+    window.addEventListener(ev, reflow, { passive: true })
+  );
+})();
+
+Acceptance criteria (non-negotiable)
+
+On desktop, the logo’s center point sits exactly on the hero’s vertical and horizontal centerlines.
+
+On mobile, your current layout stays as-is; the logo is centered but headings/CTAs don’t shift.
+
+No change to menus, buttons, video sizing, or section spacing.
+
+If your logo uses a different selector, change the logo query in the JS to match (e.g., .site-logo).
+
+This is the cleanest way to end the tug-of-war: wrap the logo, pin the wrapper at 50/50, and neutralize prior transforms. It won’t move unless you tell it to.
