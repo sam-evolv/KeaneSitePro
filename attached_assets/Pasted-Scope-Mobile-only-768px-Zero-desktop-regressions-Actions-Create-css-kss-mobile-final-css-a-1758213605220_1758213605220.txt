@@ -1,0 +1,179 @@
+Scope: Mobile only (≤ 768px). Zero desktop regressions.
+
+Actions
+
+Create /css/kss-mobile-final.css and import it last in the HTML.
+
+Create /js/kss-mobile-final.js and import it last before </body>.
+
+Ensure the <meta> is present:
+
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+
+In the hero <video> remove controls; keep autoplay muted playsinline loop.
+
+/css/kss-mobile-final.css
+/* ===== MOBILE ONLY ===== */
+@media (max-width: 768px) {
+  html, body { margin:0; padding:0; background:#000; }
+
+  /* Fixed header with safe-area padding; readable after scroll */
+  .header, .navbar {
+    position: fixed; top: 0; left: 0; right: 0;
+    padding-top: max(0px, env(safe-area-inset-top)); /* prevent cut-off under sensor housing */
+    z-index: 10000;
+    background: transparent;
+    transition: background-color 200ms ease;
+  }
+  .header--scrolled, .navbar--scrolled { background: rgba(0,0,0,0.92); }
+
+  /* High-contrast hamburger: visible over any footage */
+  .menu-toggle, .hamburger {
+    position: relative; z-index: 10002;
+    -webkit-tap-highlight-color: transparent;
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(3px);
+    border-radius: 10px;
+    padding: 8px 10px;
+  }
+  /* Hide any separate X */
+  .nav-close, .menu-close, .close-btn { display: none !important; }
+
+  /* HERO: true full-bleed on iOS/Android with no bars */
+  /* Prefer large viewport, fall back to dynamic/small where supported */
+  .hero, .hero__media, .hero-video {
+    position: relative; width: 100%;
+    height: 100lvh;               /* newest browsers */
+    min-height: 100dvh;           /* dynamic viewport as fallback */
+    min-height: 100svh;           /* small viewport as secondary fallback */
+    overflow: hidden; background:#000; margin:0 !important;
+  }
+  @supports not (height: 100lvh) {
+    .hero, .hero__media, .hero-video { height: 100dvh; }
+  }
+
+  /* Video must fill container */
+  .hero video, .hero__media video, .hero-video video {
+    width: 100%; height: 100%;
+    display: block;
+    object-fit: cover; object-position: center center;
+    background:#000;
+  }
+  .hero video::-webkit-media-controls,
+  .hero video::-webkit-media-controls-enclosure { display:none !important; }
+
+  /* Overlay content centered and never clipped by header/safe-area */
+  .hero__overlay, .hero .overlay, .hero-content {
+    position: absolute; inset: 0;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    /* add a top inset equal to header + safe area so the logo/text isn't cut */
+    padding-top: calc(var(--header-h, 56px) + env(safe-area-inset-top, 0px));
+    padding-left: 16px; padding-right: 16px; padding-bottom: 16px;
+    pointer-events:none;
+  }
+  .hero__overlay * { pointer-events:auto; }
+  .hero__logo, .hero-content .logo { margin:0 auto; display:block; }
+
+  /* Remove any gap between hero and services */
+  #services, .section-services { margin-top: 0 !important; }
+
+  /* Menu panel: opaque + smooth; always readable */
+  .mobile-nav, .nav__drawer, .nav-panel {
+    position: fixed; left:0; right:0;
+    top: calc(env(safe-area-inset-top, 0px) + var(--header-h, 56px));
+    height: calc(100dvh - var(--header-h, 56px));
+    background: rgba(0,0,0,0.96);
+    z-index: 10001;
+    opacity: 0; transform: translateY(-8px);
+    pointer-events: none;
+    transition: opacity 220ms ease, transform 220ms ease;
+  }
+  .menu-open .mobile-nav,
+  .menu-open .nav__drawer,
+  .menu-open .nav-panel {
+    opacity:1; transform: translateY(0); pointer-events:auto;
+  }
+
+  /* Ensure page content sits below header layer */
+  main, .page, .section { position: relative; z-index: 1; }
+}
+
+/js/kss-mobile-final.js
+(() => {
+  const doc = document, html = doc.documentElement, body = doc.body;
+
+  // Measure header height exactly (including safe-area) and expose it as a CSS var
+  const header = doc.querySelector('.header, .navbar');
+  const computeHeaderH = () => {
+    const h = header ? Math.round(header.getBoundingClientRect().height) : 56;
+    html.style.setProperty('--header-h', h + 'px');
+  };
+  window.addEventListener('load', computeHeaderH);
+  window.addEventListener('resize', computeHeaderH);
+  window.addEventListener('orientationchange', computeHeaderH);
+  computeHeaderH();
+
+  // Scroll state for header legibility
+  const onScroll = () => {
+    const scrolled = window.scrollY > 8;
+    if (header) {
+      header.classList.toggle('header--scrolled', scrolled);
+      header.classList.toggle('navbar--scrolled', scrolled);
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Hamburger as the only toggle; remove any dedicated "X"
+  const toggle = doc.querySelector('.menu-toggle, .hamburger');
+  const panel  = doc.querySelector('.mobile-nav, .nav__drawer, .nav-panel');
+  ['.nav-close','.menu-close','.close-btn']
+    .forEach(sel => (doc.querySelector(sel)?.remove()));
+
+  const setMenu = (open) => {
+    html.classList.toggle('menu-open', open);
+    panel?.classList.toggle('is-open', open);
+    body.style.overflow = open ? 'hidden' : '';
+    body.style.touchAction = open ? 'none' : '';
+  };
+  toggle?.addEventListener('click', (e) => {
+    e.preventDefault();
+    setMenu(!html.classList.contains('menu-open'));
+  }, { passive:false });
+
+  // Close menu on link tap
+  doc.addEventListener('click', (e) => {
+    const a = e.target.closest('a');
+    if (a && html.classList.contains('menu-open')) setMenu(false);
+  }, { passive:true });
+
+  // Force hero video to autoplay inline without UI
+  const vids = doc.querySelectorAll('.hero video, .hero__media video, .hero-video video');
+  vids.forEach(v => {
+    v.removeAttribute('controls');
+    v.setAttribute('muted',''); v.setAttribute('playsinline',''); v.setAttribute('loop','');
+    const tryPlay = () => v.play().catch(()=>{});
+    doc.addEventListener('visibilitychange', tryPlay, { passive:true });
+    tryPlay();
+  });
+
+  // Defensive: if any element after hero has a positive margin-top, remove it to avoid a black strip
+  const hero = doc.querySelector('.hero, .hero__media, .hero-video');
+  if (hero?.nextElementSibling) hero.nextElementSibling.style.marginTop = '0px';
+})();
+
+What this fixes (tied to your screenshot)
+
+Logo cut-off + faint hamburger: header gets safe-area padding, and the burger gets a dark translucent pill. No more clipping; always readable.
+
+Black bars top/bottom: hero uses 100lvh/100dvh/100svh and we zero any stray margins. The video is object-fit: cover, so it fills edge-to-edge.
+
+Hero full takeover like desktop: mobile hero fills the entire viewport; the next section sits flush to the bottom of the video.
+
+Menu UX: hamburger toggles open/close with a smooth slide/fade panel; no separate “X”; panel is fully opaque and readable at any scroll offset.
+
+Desktop untouched: everything is inside @media (max-width: 768px).
+
+If your class names differ, map these selectors to the real ones but keep the logic identical.
