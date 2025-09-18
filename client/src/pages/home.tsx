@@ -749,7 +749,7 @@ export default function Home() {
                     </div>
                     <div>
                       <div className="font-semibold text-foreground">Email</div>
-                      <a href="mailto:info@keanesiteservices.com" className="text-primary hover:underline">info@keanesiteservices.com</a>
+                      <a href="mailto:mark@keanesiteservices.ie" className="text-primary hover:underline">mark@keanesiteservices.ie</a>
                     </div>
                   </div>
                   
@@ -962,11 +962,11 @@ export default function Home() {
                 </div>
                 <div>
                   Email: <a 
-                    href="mailto:info@keanesiteservices.com" 
+                    href="mailto:mark@keanesiteservices.ie" 
                     className="text-primary hover:text-primary/80 transition-colors"
                     data-testid="footer-email-link"
                   >
-                    info@keanesiteservices.com
+                    mark@keanesiteservices.ie
                   </a>
                 </div>
                 <div>Service Area: Ireland</div>

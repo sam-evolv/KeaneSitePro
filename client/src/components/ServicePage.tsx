@@ -490,11 +490,11 @@ export default function ServicePage({ title, description, children, breadcrumb, 
                 </div>
                 <div>
                   Email: <a 
-                    href="mailto:info@keanesiteservices.com" 
+                    href="mailto:mark@keanesiteservices.ie" 
                     className="text-primary hover:text-primary/80 transition-colors"
                     data-testid="footer-email-link"
                   >
-                    info@keanesiteservices.com
+                    mark@keanesiteservices.ie
                   </a>
                 </div>
                 <div>Service Area: Ireland</div>

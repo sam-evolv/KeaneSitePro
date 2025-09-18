@@ -13,7 +13,7 @@ export default function SiteClearOuts() {
         "addressCountry": "IE"
       },
       "telephone": "+353876460921",
-      "email": "info@keanesiteservices.com"
+      "email": "mark@keanesiteservices.ie"
     },
     "areaServed": "IE",
     "serviceType": "Site clearance",
