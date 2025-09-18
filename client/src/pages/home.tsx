@@ -321,7 +321,6 @@ export default function Home() {
     <div className="min-h-screen">
       {/* Skip Link Accessibility */}
       <a className="skip-link" href="#main">Skip to content</a>
-      
       {/* Header */}
       <header ref={headerRef} className="site-header">
         <div className="wrap">
@@ -458,14 +457,12 @@ export default function Home() {
             </div>
         </div>
       </header>
-
       {/* Scroll detection sentinel - positioned at top to start transparent */}
       <div 
         ref={sentinelRef} 
         className="h-2 w-full pointer-events-none opacity-0"
         aria-hidden="true"
       />
-
       {/* Hero Section */}
       <section id="home" className="hero">
         {/* Video Media */}
@@ -496,7 +493,7 @@ export default function Home() {
           <img 
             src={logoSrc} 
             alt="" 
-            className="h-60 lg:h-72 mx-auto mb-6 hero-logo transform translate-x-0 md:translate-x-[5px]"
+            className="h-60 lg:h-72 mx-auto mb-6 hero-logo transform translate-x-0 md:translate-x-[5px] ml-[94px] mr-[94px]"
             fetchPriority="high"
             decoding="async"
           />
@@ -528,7 +525,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Main Content */}
       <main id="main" tabIndex={-1}>
         {/* Services Section */}
@@ -912,7 +908,6 @@ export default function Home() {
         </div>
       </section>
       </main>
-
       {/* Footer */}
       <footer className="bg-[hsl(0,0%,10%)] py-12" data-testid="footer">
         <div className="container">
