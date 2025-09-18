@@ -48,7 +48,8 @@
   max-width: 100% !important;
 }
 
-/* Kill legacy offsets that cause drift */
+/* DISABLED: Global overlay rules - now handled by hero-center-split.css */
+/*
 .hero__overlay,
 .hero .overlay,
 .hero__content {
@@ -62,6 +63,7 @@
   margin: 0 !important;
   padding: 0 !important;
 }
+*/
 
 /* Ensure the video truly fills its container (prevents perceived off-center) */
 .hero video,
