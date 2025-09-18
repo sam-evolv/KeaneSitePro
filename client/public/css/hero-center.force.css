@@ -35,36 +35,21 @@
 /* Re-enable interaction for buttons/links inside */
 #hero-centroid-lock * { pointer-events: auto; }
 
-/* NUCLEAR OPTION: FORCE LOGO TO CENTER WITH EXTREME PREJUDICE */
+/* SIMPLE RELIABLE CENTERING - BACK TO BASICS */
 #hero-centroid-lock img,
 #hero-centroid-lock .hero-logo,
 #hero-centroid-lock img.hero-logo {
-  position: relative !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
   display: block !important;
-  margin: 0 !important;
+  margin: 0 auto !important;
+  margin-bottom: 1.5rem !important;
+  position: static !important;
+  left: auto !important;
+  right: auto !important;
+  transform: none !important;
   float: none !important;
   text-align: center !important;
   width: auto !important;
-  max-width: none !important;
-}
-
-/* Mobile-specific NUCLEAR centering */
-@media (max-width: 768px) {
-  #hero-centroid-lock img,
-  #hero-centroid-lock .hero-logo,
-  #hero-centroid-lock img.hero-logo {
-    position: relative !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    margin: 0 !important;
-    margin-bottom: 1.5rem !important;
-    display: block !important;
-    float: none !important;
-    text-align: center !important;
-    align-self: center !important;
-  }
+  max-width: 100% !important;
 }
 
 /* Kill legacy offsets that cause drift */
