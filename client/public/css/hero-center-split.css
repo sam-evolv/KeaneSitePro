@@ -44,4 +44,17 @@
   .hero-content > * {
     margin: 0 auto;
   }
+  
+  /* Fix logo centering on desktop - remove the 15% offset */
+  #hero-centroid-lock img,
+  #hero-centroid-lock .hero-logo,
+  #hero-centroid-lock img.hero-logo,
+  .hero-logo {
+    position: relative !important;
+    left: 0 !important;
+    transform: translateX(0) !important;
+    margin: 0 auto !important;
+    margin-bottom: 1.5rem !important;
+    display: block !important;
+  }
 }
