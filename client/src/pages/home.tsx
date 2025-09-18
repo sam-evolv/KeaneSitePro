@@ -327,7 +327,7 @@ export default function Home() {
           {/* Logo */}
           <a className="brand" href="/" aria-label="Keane Site Services">
             <img className="logo logo--primary" src={logoSrc} alt="Keane Site Services" width="439" height="106" decoding="async" fetchPriority="high" />
-            <img className="logo logo--scrolled mt-[10px] mb-[10px]" src={logoLightSrc} alt="" aria-hidden="true" width="439" height="106" decoding="async" fetchPriority="high" />
+            <img className="logo logo--scrolled mt-[0px] mb-[0px]" src={logoLightSrc} alt="" aria-hidden="true" width="439" height="106" decoding="async" fetchPriority="high" />
           </a>
 
           {/* Desktop Navigation */}
