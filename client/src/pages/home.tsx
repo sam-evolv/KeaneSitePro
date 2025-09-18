@@ -493,7 +493,7 @@ export default function Home() {
           <img 
             src={logoSrc} 
             alt="" 
-            className="h-60 lg:h-72 mx-auto mb-6 hero-logo transform translate-x-0 md:translate-x-[5px]"
+            className="h-60 lg:h-72 mx-auto mb-6 hero-logo transform translate-x-0 lg:-translate-x-[20px]"
             fetchPriority="high"
             decoding="async"
           />
