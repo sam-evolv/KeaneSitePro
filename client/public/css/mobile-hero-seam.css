@@ -155,8 +155,8 @@
   
   /* Adjust header height for larger desktop logo */
   header, .header {
-    height: 140px !important;
-    min-height: 140px !important;
+    height: 126px !important;
+    min-height: 126px !important;
     padding: 20px !important;
   }
 }
