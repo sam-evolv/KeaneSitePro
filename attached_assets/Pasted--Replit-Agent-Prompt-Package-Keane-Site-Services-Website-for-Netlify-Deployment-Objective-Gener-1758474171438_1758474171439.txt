@@ -1,0 +1,44 @@
+# Replit Agent Prompt — Package Keane Site Services Website for Netlify Deployment
+
+Objective:
+Generate a clean, production-ready zip file of the Keane Site Services site that reflects all recent changes (toolbar fixes, services page refinements, Netlify form integration, performance upgrades, DNS-safe configs, and thank-you page). The exported zip must deploy successfully on Netlify without errors.
+
+Tasks:
+1. Collect all project files needed for a static export:
+   - index.html
+   - /services/*.html (all service detail pages)
+   - /public/styles.css
+   - /public/app.js
+   - /assets/* (all images, logos, hero video, icons)
+   - /thank-you.html
+   - netlify.toml (with caching + security headers)
+
+2. Ensure HTML and assets are self-contained:
+   - All `<script>` references use relative paths.
+   - All `<link rel="stylesheet">` paths are relative.
+   - Form markup includes the correct Netlify attributes (`data-netlify="true"`, hidden form-name, honeypot).
+   - No absolute local paths (only relative `/assets/...` or `/public/...`).
+
+3. Verify site loads locally without missing assets:
+   - Logo appears in header + services pages.
+   - Hero video background renders properly on Home.
+   - Toolbar transparency/scroll transition logic remains intact.
+   - Services navigation opens at the **top** of each page (not mid-scroll).
+   - White line under service page header is removed.
+   - Footer links are functional and bring users to correct sections.
+   - "Why Choose Keane Site Services" section corrected.
+
+4. Optimize:
+   - Ensure all non-critical images are `loading="lazy" decoding="async"`.
+   - Include width/height attributes to avoid CLS.
+   - Scripts marked `defer`.
+   - Hero logo and video poster set `fetchpriority="high"`.
+
+5. Package:
+   - Output a zip file named `keane-site-services-netlify.zip` containing the full build.
+   - Place at project root `/mnt/data/keane-site-services-netlify.zip`.
+
+Deliverables:
+- One zip archive with all updated project files ready for drag-and-drop deployment in Netlify.
+- No missing assets, no broken links, no dependency errors.
+- Confirmed reproducible deployment on Netlify.
