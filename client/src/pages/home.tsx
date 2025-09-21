@@ -202,12 +202,8 @@ export default function Home() {
   };
 
   const scrollToSection = (sectionId: string) => {
-    console.log('🚀 scrollToSection called with:', sectionId);
     const section = document.getElementById(sectionId);
-    console.log('🚀 Found section element:', section);
-    
     if (!section) {
-      console.error('🚀 Section not found with ID:', sectionId);
       return;
     }
     
@@ -216,22 +212,10 @@ export default function Home() {
     const headerHeight = header ? header.offsetHeight : 126; // Default to current desktop height
     const targetPosition = section.offsetTop - headerHeight - 20; // Extra 20px buffer
     
-    console.log('🚀 Scroll calculation:', {
-      sectionTop: section.offsetTop,
-      headerHeight,
-      targetPosition,
-      currentScrollY: window.scrollY
-    });
-    
     window.scrollTo({
       top: targetPosition,
       behavior: 'smooth'
     });
-    
-    // Check scroll after a brief delay
-    setTimeout(() => {
-      console.log('🚀 After scroll attempt, scrollY:', window.scrollY);
-    }, 100);
     
     setIsMenuOpen(false);
   };
@@ -362,33 +346,21 @@ export default function Home() {
                 Home
               </button>
               <button 
-                onClick={(e) => {
-                  console.log('🚀 Services button clicked!');
-                  e.preventDefault();
-                  scrollToSection('services');
-                }} 
+                onClick={() => scrollToSection('services')} 
                 className="text-white hover:text-primary transition-colors duration-200 font-medium"
                 data-testid="nav-services"
               >
                 Services
               </button>
               <button 
-                onClick={(e) => {
-                  console.log('🚀 About button clicked!');
-                  e.preventDefault();
-                  scrollToSection('about');
-                }} 
+                onClick={() => scrollToSection('about')} 
                 className="text-white hover:text-primary transition-colors duration-200 font-medium"
                 data-testid="nav-about"
               >
                 About
               </button>
               <button 
-                onClick={(e) => {
-                  console.log('🚀 Contact button clicked!');
-                  e.preventDefault();
-                  scrollToSection('contact');
-                }} 
+                onClick={() => scrollToSection('contact')} 
                 className="text-white hover:text-primary transition-colors duration-200 font-medium"
                 data-testid="nav-contact"
               >
