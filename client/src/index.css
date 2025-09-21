@@ -1244,34 +1244,35 @@ a.link-underline:hover::after {
     align-items: center;
   }
 
-  /* Target ONLY the top-left brand area and its image */
-  .site-header .logo,
+  /* Override the brand element size to fit within header */
   .site-header .brand {
-    display: flex;
-    align-items: center;
-    max-height: var(--nav-h);
-  }
-
-  .site-header .logo img,
-  .site-header .brand img,
-  .site-header .logo svg,
-  .site-header .brand svg {
-    display: block;
-    max-height: calc(var(--nav-h) - 12px); /* 6px padding top/bottom headroom */
-    height: auto;
-    width: auto;
-    object-fit: contain;
-    margin: 0;
-  }
-
-  /* Neutralize any rules that push the logo upward/out of bar at this range */
-  .site-header .logo,
-  .site-header .logo img,
-  .site-header .brand {
+    height: calc(var(--nav-h) - 8px) !important; /* 56px instead of 106px */
+    width: auto !important; /* Let width scale proportionally */
+    max-height: calc(var(--nav-h) - 8px) !important;
+    display: flex !important;
+    align-items: center !important;
     position: relative !important;
     top: 0 !important;
     transform: none !important;
     margin-top: 0 !important;
+  }
+
+  /* Scale down the logo images inside brand to fit the smaller brand container */
+  .site-header .brand .logo {
+    position: relative !important; /* Override absolute positioning */
+    inset: auto !important; /* Remove inset */
+    height: 100% !important; /* Fill the brand container */
+    width: auto !important;
+    max-height: 100% !important;
+  }
+
+  /* Additional safety for direct logo images */
+  .site-header .logo img,
+  .site-header .brand img {
+    max-height: calc(var(--nav-h) - 8px) !important;
+    height: auto !important;
+    width: auto !important;
+    object-fit: contain !important;
   }
 }
 
