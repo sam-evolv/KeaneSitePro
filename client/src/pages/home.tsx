@@ -489,10 +489,6 @@ export default function Home() {
           </video>
         </div>
         
-        {/* Hero Overlay */}
-        <div className="hero__overlay"></div>
-        
-        
         {/* Hero Content */}
         <div className="hero__content fade-in">
           {/* Logo */}
