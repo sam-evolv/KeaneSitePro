@@ -1226,6 +1226,59 @@ a.link-underline:hover::after {
 #callNowModal{ position:fixed; inset:0; display:none; z-index:1300; }
 #callNowModal.open{ display:block; }
 #callNowModal .cn-overlay{ position:absolute; inset:0; background:rgba(0,0,0,.5); backdrop-filter: blur(2px); }
+
+/* ---------- MID WIDTH GUARDRAILS: keep logo inside toolbar ---------- */
+@media (min-width: 768px) and (max-width: 1200px) {
+  /* Stable nav bar height for this range */
+  .site-header {
+    --nav-h: 64px;
+    height: var(--nav-h);
+    min-height: var(--nav-h);
+    overflow: hidden; /* prevents visual overflow without affecting layout */
+  }
+
+  /* Align contents vertically without changing spacing of links */
+  .site-header .wrap,
+  .site-header .container {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Target ONLY the top-left brand area and its image */
+  .site-header .logo,
+  .site-header .brand {
+    display: flex;
+    align-items: center;
+    max-height: var(--nav-h);
+  }
+
+  .site-header .logo img,
+  .site-header .brand img,
+  .site-header .logo svg,
+  .site-header .brand svg {
+    display: block;
+    max-height: calc(var(--nav-h) - 12px); /* 6px padding top/bottom headroom */
+    height: auto;
+    width: auto;
+    object-fit: contain;
+    margin: 0;
+  }
+
+  /* Neutralize any rules that push the logo upward/out of bar at this range */
+  .site-header .logo,
+  .site-header .logo img,
+  .site-header .brand {
+    position: relative !important;
+    top: 0 !important;
+    transform: none !important;
+    margin-top: 0 !important;
+  }
+}
+
+/* Keep a clear contract for larger desktops (no change in look, just safety) */
+@media (min-width: 1201px) {
+  .site-header { overflow: visible; }
+}
 #callNowModal .cn-dialog{
   position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
   background:#111; color:#fff; border:1px solid rgba(255,255,255,.08); border-radius:14px;

@@ -1,0 +1,79 @@
+Objective
+The top-left header/logo rises out of the black toolbar at mid-widths (tablet/half-screen). Fix ONLY the header logo sizing and alignment for that breakpoint. Do not change desktop (>=1201px) or mobile (<=767px) layouts and do not touch nav styles, spacing, or markup beyond adding a stable class if missing.
+
+Steps
+1) Identify the site header element that contains the logo and nav (e.g., <header>, .site-header, .navbar). If it lacks a unique class, add class="site-header" to that element in the HTML.
+
+2) Ensure the header is a positioning/align context:
+   - The header’s inner container (the element that directly wraps the logo and nav, e.g., .header-inner, .navbar .container) should be flex with vertical centering.
+
+3) Add the following CSS at the very end of the main stylesheet so it overrides earlier rules. Scope ONLY to mid-widths (tablet/half-screen). Do not modify existing desktop or mobile rules.
+
+/* ---------- MID WIDTH GUARDRAILS: keep logo inside toolbar ---------- */
+@media (min-width: 768px) and (max-width: 1200px) {
+  /* Stable nav bar height for this range */
+  .site-header {
+    --nav-h: 64px;
+    height: var(--nav-h);
+    min-height: var(--nav-h);
+    overflow: hidden; /* prevents visual overflow without affecting layout */
+  }
+
+  /* Align contents vertically without changing spacing of links */
+  .site-header .header-inner,
+  .site-header .navbar,
+  .site-header .navbar .container,
+  .site-header .container {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Target ONLY the top-left brand area and its image */
+  .site-header .logo,
+  .site-header .brand,
+  .site-header .navbar-brand {
+    display: flex;
+    align-items: center;
+    max-height: var(--nav-h);
+  }
+
+  .site-header .logo img,
+  .site-header .brand img,
+  .site-header .navbar-brand img,
+  .site-header .logo svg,
+  .site-header .brand svg,
+  .site-header .navbar-brand svg {
+    display: block;
+    max-height: calc(var(--nav-h) - 12px); /* 6px padding top/bottom headroom */
+    height: auto;
+    width: auto;
+    object-fit: contain;
+    margin: 0;
+  }
+
+  /* Neutralize any rules that push the logo upward/out of bar at this range */
+  .site-header .logo,
+  .site-header .logo img,
+  .site-header .navbar-brand {
+    position: relative !important;
+    top: 0 !important;
+    transform: none !important;
+    margin-top: 0 !important;
+  }
+}
+
+/* Keep a clear contract for larger desktops (no change in look, just safety) */
+@media (min-width: 1201px) {
+  .site-header { overflow: visible; }
+}
+
+Notes:
+- Do NOT change link padding, fonts, or menu layout.
+- Do NOT change mobile (<=767px) rules.
+- If the HTML uses a different class for the logo anchor (e.g., .navbar-brand), ensure it matches the selectors above rather than adding new styles elsewhere.
+- If the header height is controlled elsewhere at this range, let --nav-h win due to cascade (this block is loaded last).
+}
+
+4) Test in browser at widths: 768, 900, 1024, 1200 px. Expected: the logo stays fully inside the black toolbar and remains vertically centered. Desktop (>1200) and mobile (<=767) remain unchanged.
+
+Commit and deploy.
