@@ -2,7 +2,6 @@ import { Router, Route, Switch } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import ScrollToTop from "@/components/ScrollToTop";
-import { useEffect } from "react";
 
 // Import all pages
 import Home from "@/pages/home";
@@ -25,39 +24,6 @@ const queryClient = new QueryClient({
 console.log('📱 Full App component is mounting...');
 
 function App() {
-  // Handle hash navigation on page load
-  useEffect(() => {
-    const handleHashNavigation = () => {
-      const hash = window.location.hash;
-      if (hash) {
-        const element = document.getElementById(hash.substring(1));
-        if (element) {
-          // Get header height for proper offset
-          const header = document.querySelector('.site-header') as HTMLElement;
-          const headerHeight = header ? header.offsetHeight : 126;
-          const elementPosition = element.offsetTop - headerHeight - 20;
-          
-          setTimeout(() => {
-            window.scrollTo({
-              top: elementPosition,
-              behavior: 'smooth'
-            });
-          }, 100);
-        }
-      }
-    };
-
-    // Handle hash on initial load
-    handleHashNavigation();
-    
-    // Handle hash changes
-    window.addEventListener('hashchange', handleHashNavigation);
-    
-    return () => {
-      window.removeEventListener('hashchange', handleHashNavigation);
-    };
-  }, []);
-
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
