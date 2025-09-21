@@ -78,23 +78,8 @@
     /* don't affect non-overlay logos */
   }
   
-  /* Service page typography improvements - scoped to avoid home page impact */
-  .page--services .svc-title {
-    font-size: clamp(28px, 6vw, 40px);
-    line-height: 1.15;
-    letter-spacing: 0;
-    text-wrap: balance;
-    font-weight: 800;
-  }
-  
+  /* Service page mobile header - hide subheading text for cleaner mobile experience */
   .page--services .svc-sub {
-    font-size: clamp(16px, 3.5vw, 18px);
-    line-height: 1.55;
-    max-width: 32ch;
-    color: rgba(255,255,255,.9);
-  }
-  
-  .page--services .svc-hero {
-    padding-top: calc(var(--header-h) + env(safe-area-inset-top) + 16px);
+    display: none;
   }
 }
