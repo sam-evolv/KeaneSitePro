@@ -412,57 +412,90 @@ export default function Home() {
                 </div>
               </div>
               <nav className="flex flex-col flex-1 px-4 py-8 space-y-6">
-                <a 
-                  href="#home"
-                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left block p-4 no-underline ${
+                <button 
+                  onClick={() => {
+                    const element = document.getElementById('home');
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                    setIsMenuOpen(false);
+                  }}
+                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left p-4 border-none bg-transparent ${
                     isMenuOpen ? 'menu-open' : 'menu-closed'
                   }`}
                   data-testid="nav-mobile-home"
-                  onClick={() => setIsMenuOpen(false)}
                 >
                   Home
-                </a>
-                <a 
-                  href="#services"
-                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left block p-4 no-underline ${
+                </button>
+                <button 
+                  onClick={() => {
+                    const element = document.getElementById('services');
+                    if (element) {
+                      const headerHeight = 126;
+                      const elementPosition = element.offsetTop - headerHeight - 10;
+                      window.scrollTo({ top: elementPosition, behavior: 'smooth' });
+                    }
+                    setIsMenuOpen(false);
+                  }}
+                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left p-4 border-none bg-transparent ${
                     isMenuOpen ? 'menu-open' : 'menu-closed'
                   }`}
                   data-testid="nav-mobile-services"
-                  onClick={() => setIsMenuOpen(false)}
                 >
                   Services
-                </a>
-                <a 
-                  href="#about"
-                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left block p-4 no-underline ${
+                </button>
+                <button 
+                  onClick={() => {
+                    const element = document.getElementById('about');
+                    if (element) {
+                      const headerHeight = 126;
+                      const elementPosition = element.offsetTop - headerHeight - 10;
+                      window.scrollTo({ top: elementPosition, behavior: 'smooth' });
+                    }
+                    setIsMenuOpen(false);
+                  }}
+                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left p-4 border-none bg-transparent ${
                     isMenuOpen ? 'menu-open' : 'menu-closed'
                   }`}
                   data-testid="nav-mobile-about"
-                  onClick={() => setIsMenuOpen(false)}
                 >
                   About
-                </a>
-                <a 
-                  href="#contact"
-                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left block p-4 no-underline ${
+                </button>
+                <button 
+                  onClick={() => {
+                    const element = document.getElementById('contact');
+                    if (element) {
+                      const headerHeight = 126;
+                      const elementPosition = element.offsetTop - headerHeight - 10;
+                      window.scrollTo({ top: elementPosition, behavior: 'smooth' });
+                    }
+                    setIsMenuOpen(false);
+                  }}
+                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left p-4 border-none bg-transparent ${
                     isMenuOpen ? 'menu-open' : 'menu-closed'
                   }`}
                   data-testid="nav-mobile-contact"
-                  onClick={() => setIsMenuOpen(false)}
                 >
                   Contact
-                </a>
+                </button>
                 <div className={`mobile-nav-item pt-8 ${
                   isMenuOpen ? 'menu-open' : 'menu-closed'
                 }`}>
-                  <a 
-                    href="#contact"
-                    className="btn btn--primary btn--pill w-full block text-center no-underline"
-                    onClick={() => setIsMenuOpen(false)}
+                  <Button 
+                    className="btn btn--primary btn--pill w-full"
+                    onClick={() => {
+                      const element = document.getElementById('contact');
+                      if (element) {
+                        const headerHeight = 126;
+                        const elementPosition = element.offsetTop - headerHeight - 10;
+                        window.scrollTo({ top: elementPosition, behavior: 'smooth' });
+                      }
+                      setIsMenuOpen(false);
+                    }}
                     data-testid="button-request-quote-mobile"
                   >
                     Request a Quote
-                  </a>
+                  </Button>
                 </div>
               </nav>
             </div>
