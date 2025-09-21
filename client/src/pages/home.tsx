@@ -95,6 +95,18 @@ export default function Home() {
       };
     }
   }, [isMenuOpen]);
+  
+  // Listen for mobile menu close event from scroll-nav.js
+  useEffect(() => {
+    const handleCloseMobileMenu = () => {
+      setIsMenuOpen(false);
+    };
+    window.addEventListener('closeMobileMenu', handleCloseMobileMenu);
+    
+    return () => {
+      window.removeEventListener('closeMobileMenu', handleCloseMobileMenu);
+    };
+  }, []);
 
   // Premium scroll animations for all sections - reset when scrolling back up
   useEffect(() => {
@@ -338,34 +350,34 @@ export default function Home() {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
-              <button 
-                onClick={() => scrollToSection('home')} 
+              <a 
+                href="#home" 
                 className="text-white hover:text-primary transition-colors duration-200 font-medium"
                 data-testid="nav-home"
               >
                 Home
-              </button>
-              <button 
-                onClick={() => scrollToSection('services')} 
+              </a>
+              <a 
+                href="#services" 
                 className="text-white hover:text-primary transition-colors duration-200 font-medium"
                 data-testid="nav-services"
               >
                 Services
-              </button>
-              <button 
-                onClick={() => scrollToSection('about')} 
+              </a>
+              <a 
+                href="#about" 
                 className="text-white hover:text-primary transition-colors duration-200 font-medium"
                 data-testid="nav-about"
               >
                 About
-              </button>
-              <button 
-                onClick={() => scrollToSection('contact')} 
+              </a>
+              <a 
+                href="#contact" 
                 className="text-white hover:text-primary transition-colors duration-200 font-medium"
                 data-testid="nav-contact"
               >
                 Contact
-              </button>
+              </a>
               <Button 
                 className="btn btn--primary btn--pill" 
                 onClick={() => scrollToSection('contact')}
@@ -412,42 +424,42 @@ export default function Home() {
                 </div>
               </div>
               <nav className="flex flex-col flex-1 px-4 py-8 space-y-6">
-                <button 
-                  onClick={() => scrollToSection('home')} 
-                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left ${
+                <a 
+                  href="#home" 
+                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left block ${
                     isMenuOpen ? 'menu-open' : 'menu-closed'
                   }`}
                   data-testid="nav-mobile-home"
                 >
                   Home
-                </button>
-                <button 
-                  onClick={() => scrollToSection('services')} 
-                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left ${
+                </a>
+                <a 
+                  href="#services" 
+                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left block ${
                     isMenuOpen ? 'menu-open' : 'menu-closed'
                   }`}
                   data-testid="nav-mobile-services"
                 >
                   Services
-                </button>
-                <button 
-                  onClick={() => scrollToSection('about')} 
-                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left ${
+                </a>
+                <a 
+                  href="#about" 
+                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left block ${
                     isMenuOpen ? 'menu-open' : 'menu-closed'
                   }`}
                   data-testid="nav-mobile-about"
                 >
                   About
-                </button>
-                <button 
-                  onClick={() => scrollToSection('contact')} 
-                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left ${
+                </a>
+                <a 
+                  href="#contact" 
+                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left block ${
                     isMenuOpen ? 'menu-open' : 'menu-closed'
                   }`}
                   data-testid="nav-mobile-contact"
                 >
                   Contact
-                </button>
+                </a>
                 <div className={`mobile-nav-item pt-8 ${
                   isMenuOpen ? 'menu-open' : 'menu-closed'
                 }`}>

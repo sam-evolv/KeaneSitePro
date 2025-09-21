@@ -929,6 +929,15 @@ html, body {
   background: #000;              /* while buffering */
 }
 
+/* Baseline smooth scrolling (kept if JS disabled) */
+html { scroll-behavior: smooth; }
+
+/* If the design uses section classes, also give them scroll-margin */
+#home, #about, #services, #contact,
+.section-home, .section-about, .section-services, .section-contact {
+  scroll-margin-top: calc(var(--nav-offset, 72px));
+}
+
 /* Enterprise Form System */
 .form input, .form select, .form textarea {
   width: 100%; 

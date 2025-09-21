@@ -1,0 +1,195 @@
+Objective
+Fix the mobile dropdown/menu so tapping “Home”, “About”, and “Services” reliably scrolls to their sections on the home page. Account for the fixed header height, enable deep links (#about, #services), and close the mobile menu after navigation. Do NOT break desktop.
+
+Scope
+- Only modify the navigation link behavior and section anchors.
+- Apply changes for both mobile and desktop (harmless on desktop), but do not alter desktop layout/styles.
+- Support both same-page navigation and “arrive with hash in URL” (e.g., /#services).
+- Works with static HTML or a light SPA (Vite) without a router.
+
+Tasks
+
+1) Ensure sections have stable IDs.
+   - In the homepage markup, confirm or add these IDs to the top-level sections:
+     - Hero/top: id="home"
+     - About section: id="about"
+     - Services section: id="services"
+   - If different naming is already used, normalize the IDs to exactly those three and update any internal links accordingly.
+
+2) Normalize mobile menu links.
+   - In the mobile dropdown markup (e.g., .mobile-nav, .navbar-collapse, .offcanvas, or similar), ensure the anchor tags are:
+     - Home → href="#home"
+     - About → href="#about"
+     - Services → href="#services"
+   - Remove any “javascript:void(0)” or non-hash hrefs for these items.
+
+3) Add safe smooth-scrolling with header offset.
+   - Create `src/js/scroll-nav.js` (or equivalent path already used for site scripts) with the following:
+
+```js
+// scroll-nav.js
+(() => {
+  const SELECTORS = {
+    header: 'header, .site-header, .navbar, .topbar', // first match used for height
+    mobileMenu: '.navbar-collapse, .mobile-nav, .offcanvas, .menu-drawer',
+    menuToggle: '.navbar-toggler, .menu-toggle, input[type="checkbox"][id*="menu"]',
+    navLinks: 'a[href^="#"]',
+  };
+
+  // Find first existing element for a list of selectors
+  function first(selList) {
+    const candidates = selList.split(',').map(s => s.trim());
+    for (const s of candidates) {
+      const el = document.querySelector(s);
+      if (el) return el;
+    }
+    return null;
+  }
+
+  function getHeaderHeight() {
+    const header = first(SELECTORS.header);
+    if (!header) return 0;
+    const rect = header.getBoundingClientRect();
+    return rect.height || header.offsetHeight || 0;
+  }
+
+  function scrollToHash(hash, behavior = 'smooth') {
+    if (!hash || hash === '#') return;
+    const id = hash.replace('#', '');
+    const target = document.getElementById(id);
+    if (!target) return;
+
+    // Compute offset top accounting for fixed header
+    const headerH = getHeaderHeight();
+    const rect = target.getBoundingClientRect();
+    const absoluteY = window.pageYOffset + rect.top;
+    const offsetY = Math.max(absoluteY - headerH - 8, 0); // small padding
+
+    window.scrollTo({ top: offsetY, behavior });
+  }
+
+  function closeMobileMenu() {
+    const menu = first(SELECTORS.mobileMenu);
+    const toggle = first(SELECTORS.menuToggle);
+
+    // Common frameworks: Bootstrap, custom drawers, checkbox toggles
+    if (menu) {
+      menu.classList.remove('show', 'open', 'active');
+      menu.setAttribute('aria-expanded', 'false');
+      // For offcanvas
+      document.body.classList.remove('offcanvas-open', 'modal-open');
+    }
+    if (toggle) {
+      // Bootstrap toggler
+      toggle.setAttribute('aria-expanded', 'false');
+      // Checkbox pattern
+      if (toggle.type === 'checkbox') toggle.checked = false;
+      // Remove active classes on icon if any
+      toggle.classList.remove('is-active', 'active');
+    }
+  }
+
+  function handleNavClick(e) {
+    const a = e.target.closest('a');
+    if (!a) return;
+    const href = a.getAttribute('href');
+    if (!href || !href.startsWith('#')) return;
+
+    e.preventDefault();
+
+    // If we aren't on the homepage, redirect with hash
+    const isHome = location.pathname === '/' || location.pathname.endsWith('index.html');
+    if (!isHome) {
+      location.href = '/' + href;
+      return;
+    }
+
+    closeMobileMenu();
+    // Slight delay to let menu close and layout settle
+    setTimeout(() => scrollToHash(href), 50);
+  }
+
+  function init() {
+    // Global smooth behavior as a baseline (safe if already present)
+    try {
+      document.documentElement.style.scrollBehavior = 'smooth';
+    } catch(_) {}
+
+    // Click handling for any hash links in navs (desktop + mobile)
+    const navAreas = document.querySelectorAll([
+      '.navbar',
+      '.site-header',
+      '.mobile-nav',
+      '.offcanvas',
+      '.menu-drawer',
+      '.header',
+    ].join(','));
+    navAreas.forEach(area => {
+      area.addEventListener('click', handleNavClick, { passive: false });
+    });
+
+    // On load with existing hash (deep link)
+    if (location.hash && document.getElementById(location.hash.slice(1))) {
+      // Wait for fonts/layout, then correct-offset scroll without animation
+      window.addEventListener('load', () => {
+        setTimeout(() => scrollToHash(location.hash, 'auto'), 50);
+      });
+    }
+
+    // Recalculate on resize/orientation change for dynamic header height
+    let rAF = null;
+    function onResize() {
+      if (rAF) cancelAnimationFrame(rAF);
+      rAF = requestAnimationFrame(() => {
+        if (location.hash) scrollToHash(location.hash, 'auto');
+      });
+    }
+    window.addEventListener('orientationchange', onResize);
+    window.addEventListener('resize', onResize);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+Import this script where your other site scripts load (e.g., in index.html before </body> or via your bundler).
+
+Add CSS safety for anchor offsets (harmless on desktop).
+
+css
+Copy code
+/* Baseline smooth scrolling (kept if JS disabled) */
+html { scroll-behavior: smooth; }
+
+/* If the design uses section classes, also give them scroll-margin */
+#home, #about, #services,
+.section-home, .section-about, .section-services {
+  scroll-margin-top: calc(var(--nav-offset, 72px));
+}
+Ensure the header is fixed only if intended.
+
+If the header is position: fixed;, keep as is. The JS offset logic will adjust for its dynamic height automatically.
+
+Close the mobile menu on navigation.
+
+The closeMobileMenu() in the script handles Bootstrap, offcanvas, and checkbox toggles. If your project uses a different class to indicate an open drawer, add it there too.
+
+Test matrix
+
+iPhone SE/12/15 Pro Max, Pixel 6, Galaxy S20 in DevTools.
+
+Cases:
+a) Open mobile menu → tap About → menu closes → page scrolls to About with correct offset.
+b) Refresh on /#services → lands with Services properly positioned below fixed header.
+c) Desktop unaffected.
+
+Code hygiene
+
+Remove any older inline onclick handlers or conflicting smooth-scroll libraries for these three links.
+
+Keep all new code in scroll-nav.js to minimize blast radius.
+
+yaml
+Copy code
