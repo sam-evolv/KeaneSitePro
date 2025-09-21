@@ -937,7 +937,7 @@ export default function Home() {
               </ul>
             </div>
             
-            {/* Centered Large Logo */}
+            {/* Centred Large Logo */}
             <div className="flex justify-center">
               <a 
                 href="#home"

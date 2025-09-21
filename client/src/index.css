@@ -520,7 +520,7 @@ div[data-side] div[role="listbox"] {
   }
 }
 
-/* Header geometry normalization - CLEAN VERSION */
+/* Header geometry normalisation - CLEAN VERSION */
 :root {
   --header-h: 64px;
 }
@@ -884,7 +884,7 @@ footer button {
 }
 
 /* ========= FULL-BLEED VIDEO FIX ========= */
-/* 1) Normalize page + kill stray borders/margins */
+/* 1) Normalise page + kill stray borders/margins */
 html, body {
   margin: 0;
   padding: 0;

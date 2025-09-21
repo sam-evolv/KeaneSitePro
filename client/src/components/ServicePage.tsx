@@ -25,7 +25,7 @@ interface ServicePageProps {
 }
 
 export default function ServicePage({ title, description, children, breadcrumb, jsonLd }: ServicePageProps) {
-  // Immediately force scroll to top before any state initialization
+  // Immediately force scroll to top before any state initialisation
   if (typeof window !== 'undefined') {
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
@@ -324,7 +324,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
                 Request a Quote
               </h2>
               <p className="text-xl text-muted-foreground">
-                Get in touch for a personalized quote for your {title.toLowerCase()} project.
+                Get in touch for a personalised quote for your {title.toLowerCase()} project.
               </p>
             </div>
             
@@ -451,7 +451,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
               </ul>
             </div>
             
-            {/* Centered Large Logo */}
+            {/* Centred Large Logo */}
             <div className="flex justify-center">
               <Link 
                 href="/"

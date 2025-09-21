@@ -60,7 +60,7 @@ export default function GroundPreparation() {
                     <ul className="text-muted-foreground space-y-1">
                       <li>Cut and fill operations</li>
                       <li>Site leveling and grading</li>
-                      <li>Slope stabilization</li>
+                      <li>Slope stabilisation</li>
                       <li>Excavation works</li>
                     </ul>
                   </div>
@@ -158,7 +158,7 @@ export default function GroundPreparation() {
 
                 <div className="bg-primary p-6 rounded-2xl text-white">
                   <h3 className="text-xl font-bold mb-4">Need a Quote?</h3>
-                  <p className="mb-4">Get a personalized quote for your ground preparation project.</p>
+                  <p className="mb-4">Get a personalised quote for your ground preparation project.</p>
                   <a 
                     href="#contact" 
                     className="btn btn--ghost btn--pill"

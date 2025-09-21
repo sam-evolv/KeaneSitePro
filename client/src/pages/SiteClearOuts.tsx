@@ -136,7 +136,7 @@ export default function SiteClearOuts() {
 
                 <div className="bg-primary p-6 rounded-2xl text-white">
                   <h3 className="text-xl font-bold mb-4">Need a Quote?</h3>
-                  <p className="mb-4">Get a personalized quote for your site clear-out project.</p>
+                  <p className="mb-4">Get a personalised quote for your site clear-out project.</p>
                   <a 
                     href="#contact" 
                     className="btn btn--ghost btn--pill"
