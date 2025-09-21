@@ -1245,6 +1245,7 @@ a.link-underline:hover::after {
   visibility: hidden;
   pointer-events: none;
   backdrop-filter: blur(0px);
+  transform: translateY(-20px);
 }
 
 .mobile-menu-overlay.menu-open {
@@ -1252,6 +1253,7 @@ a.link-underline:hover::after {
   visibility: visible;
   pointer-events: auto;
   backdrop-filter: blur(12px);
+  transform: translateY(0);
 }
 
 .mobile-menu-content {

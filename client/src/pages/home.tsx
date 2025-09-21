@@ -413,7 +413,11 @@ export default function Home() {
               </div>
               <nav className="flex flex-col flex-1 px-4 py-8 space-y-6">
                 <button 
-                  onClick={() => scrollToSection('home')} 
+                  onClick={(e) => {
+                    console.log('🚀 Mobile Home button clicked!');
+                    e.preventDefault();
+                    scrollToSection('home');
+                  }} 
                   className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left ${
                     isMenuOpen ? 'menu-open' : 'menu-closed'
                   }`}
@@ -422,7 +426,11 @@ export default function Home() {
                   Home
                 </button>
                 <button 
-                  onClick={() => scrollToSection('services')} 
+                  onClick={(e) => {
+                    console.log('🚀 Mobile Services button clicked!');
+                    e.preventDefault();
+                    scrollToSection('services');
+                  }} 
                   className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left ${
                     isMenuOpen ? 'menu-open' : 'menu-closed'
                   }`}
@@ -431,7 +439,11 @@ export default function Home() {
                   Services
                 </button>
                 <button 
-                  onClick={() => scrollToSection('about')} 
+                  onClick={(e) => {
+                    console.log('🚀 Mobile About button clicked!');
+                    e.preventDefault();
+                    scrollToSection('about');
+                  }} 
                   className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left ${
                     isMenuOpen ? 'menu-open' : 'menu-closed'
                   }`}
@@ -440,7 +452,11 @@ export default function Home() {
                   About
                 </button>
                 <button 
-                  onClick={() => scrollToSection('contact')} 
+                  onClick={(e) => {
+                    console.log('🚀 Mobile Contact button clicked!');
+                    e.preventDefault();
+                    scrollToSection('contact');
+                  }} 
                   className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left ${
                     isMenuOpen ? 'menu-open' : 'menu-closed'
                   }`}
