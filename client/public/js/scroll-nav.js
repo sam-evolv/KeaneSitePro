@@ -65,12 +65,16 @@
   }
 
   function handleNavClick(e) {
+    console.log('🔍 Navigation click detected', e.target, e.currentTarget);
     const a = e.target.closest('a');
+    console.log('🔍 Found anchor:', a);
     if (!a) return;
     const href = a.getAttribute('href');
+    console.log('🔍 Href:', href);
     if (!href || !href.startsWith('#')) return;
 
     e.preventDefault();
+    console.log('🔍 Prevented default, scrolling to:', href);
 
     // If we aren't on the homepage, redirect with hash
     const isHome = location.pathname === '/' || location.pathname.endsWith('index.html');
@@ -85,24 +89,26 @@
   }
 
   function init() {
+    console.log('🚀 Scroll nav init starting...');
     // Global smooth behavior as a baseline (safe if already present)
     try {
       document.documentElement.style.scrollBehavior = 'smooth';
     } catch(_) {}
 
-    // Click handling for any hash links in navs (desktop + mobile)
-    const navAreas = document.querySelectorAll([
-      '.navbar',
-      '.site-header',
-      '.mobile-nav',
-      '.offcanvas',
-      '.menu-drawer',
-      '.header',
-      '.mobile-menu-overlay',
-    ].join(','));
-    navAreas.forEach(area => {
-      area.addEventListener('click', handleNavClick, { passive: false });
-    });
+    // Use document-level event delegation to handle all navigation clicks
+    // This works even when React components are dynamically rendered
+    document.addEventListener('click', (e) => {
+      // Check if the clicked element is a navigation link
+      const link = e.target.closest('a[href^="#"]');
+      if (!link) return;
+      
+      // Check if it's in a navigation area
+      const isInNav = link.closest('.site-header, .mobile-menu-overlay, header, nav');
+      if (!isInNav) return;
+      
+      console.log('🔍 Navigation link clicked:', link, link.href);
+      handleNavClick(e);
+    }, { passive: false });
 
     // On load with existing hash (deep link)
     if (location.hash && document.getElementById(location.hash.slice(1))) {
@@ -122,6 +128,8 @@
     }
     window.addEventListener('orientationchange', onResize);
     window.addEventListener('resize', onResize);
+    
+    console.log('🚀 Scroll nav init complete - using document delegation');
   }
 
   if (document.readyState === 'loading') {
