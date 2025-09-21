@@ -412,57 +412,57 @@ export default function Home() {
                 </div>
               </div>
               <nav className="flex flex-col flex-1 px-4 py-8 space-y-6">
-                <button 
-                  onTouchStart={() => scrollToSection('home')}
-                  onClick={() => scrollToSection('home')} 
-                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left ${
+                <a 
+                  href="#home"
+                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left block p-4 no-underline ${
                     isMenuOpen ? 'menu-open' : 'menu-closed'
                   }`}
                   data-testid="nav-mobile-home"
+                  onClick={() => setIsMenuOpen(false)}
                 >
                   Home
-                </button>
-                <button 
-                  onTouchStart={() => scrollToSection('services')}
-                  onClick={() => scrollToSection('services')} 
-                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left ${
+                </a>
+                <a 
+                  href="#services"
+                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left block p-4 no-underline ${
                     isMenuOpen ? 'menu-open' : 'menu-closed'
                   }`}
                   data-testid="nav-mobile-services"
+                  onClick={() => setIsMenuOpen(false)}
                 >
                   Services
-                </button>
-                <button 
-                  onTouchStart={() => scrollToSection('about')}
-                  onClick={() => scrollToSection('about')} 
-                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left ${
+                </a>
+                <a 
+                  href="#about"
+                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left block p-4 no-underline ${
                     isMenuOpen ? 'menu-open' : 'menu-closed'
                   }`}
                   data-testid="nav-mobile-about"
+                  onClick={() => setIsMenuOpen(false)}
                 >
                   About
-                </button>
-                <button 
-                  onTouchStart={() => scrollToSection('contact')}
-                  onClick={() => scrollToSection('contact')} 
-                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left ${
+                </a>
+                <a 
+                  href="#contact"
+                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left block p-4 no-underline ${
                     isMenuOpen ? 'menu-open' : 'menu-closed'
                   }`}
                   data-testid="nav-mobile-contact"
+                  onClick={() => setIsMenuOpen(false)}
                 >
                   Contact
-                </button>
+                </a>
                 <div className={`mobile-nav-item pt-8 ${
                   isMenuOpen ? 'menu-open' : 'menu-closed'
                 }`}>
-                  <Button 
-                    className="btn btn--primary btn--pill w-full" 
-                    onTouchStart={() => scrollToSection('contact')}
-                    onClick={() => scrollToSection('contact')}
+                  <a 
+                    href="#contact"
+                    className="btn btn--primary btn--pill w-full block text-center no-underline"
+                    onClick={() => setIsMenuOpen(false)}
                     data-testid="button-request-quote-mobile"
                   >
                     Request a Quote
-                  </Button>
+                  </a>
                 </div>
               </nav>
             </div>
