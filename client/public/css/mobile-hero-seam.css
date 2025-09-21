@@ -148,16 +148,6 @@
     margin: 0 !important;
     flex-shrink: 0 !important;
   }
-  
-  /* Center the hero logo perfectly on mobile screens */
-  .hero__content .hero-logo {
-    position: relative !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    display: block !important;
-  }
 }
 
 /* Desktop: Increase logo size by 100% (desktop only - above 768px) */
