@@ -58,19 +58,19 @@ export default function GroundPreparation() {
                   <div className="bg-gray-50 p-6 rounded-lg">
                     <h4 className="font-semibold text-foreground mb-3">Earthworks</h4>
                     <ul className="text-muted-foreground space-y-1">
-                      <li>• Cut and fill operations</li>
-                      <li>• Site leveling and grading</li>
-                      <li>• Slope stabilization</li>
-                      <li>• Excavation works</li>
+                      <li>Cut and fill operations</li>
+                      <li>Site leveling and grading</li>
+                      <li>Slope stabilization</li>
+                      <li>Excavation works</li>
                     </ul>
                   </div>
                   <div className="bg-gray-50 p-6 rounded-lg">
                     <h4 className="font-semibold text-foreground mb-3">Site Readiness</h4>
                     <ul className="text-muted-foreground space-y-1">
-                      <li>• Access road preparation</li>
-                      <li>• Foundation area preparation</li>
-                      <li>• Utility trenching</li>
-                      <li>• Surface compaction</li>
+                      <li>Access road preparation</li>
+                      <li>Foundation area preparation</li>
+                      <li>Utility trenching</li>
+                      <li>Surface compaction</li>
                     </ul>
                   </div>
                 </div>
