@@ -388,21 +388,16 @@ export default function Home() {
         </div>
         
         {/* Mobile Menu Overlay */}
-        {isMenuOpen && (
         <div 
-          className="lg:hidden fixed inset-0 bg-black bg-opacity-95 backdrop-blur-lg z-[9999]"
-          style={{ 
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            zIndex: 9999,
-            pointerEvents: 'auto'
-          }}
+          className={`mobile-menu-overlay lg:hidden fixed inset-0 bg-charcoal bg-opacity-95 backdrop-blur-lg z-50 ${
+            isMenuOpen ? 'menu-open' : 'menu-closed'
+          }`}
           data-mobile-menu-overlay="true"
+          data-menu-open={isMenuOpen ? "true" : "false"}
         >
-            <div className="mobile-menu-content flex flex-col h-full" style={{ pointerEvents: 'auto' }}>
+            <div className={`mobile-menu-content flex flex-col h-full ${
+              isMenuOpen ? 'menu-open' : 'menu-closed'
+            }`}>
               <div className="flex items-center justify-between p-4 border-b border-white/20">
                 <div className="relative flex items-center justify-center h-24 w-32">
                   <img 
@@ -418,73 +413,52 @@ export default function Home() {
               </div>
               <nav className="flex flex-col flex-1 px-4 py-8 space-y-6">
                 <button 
-                  onClick={() => {
-                    scrollToSection('home');
-                    setIsMenuOpen(false);
-                  }} 
-                  className="text-white text-xl font-semibold hover:text-primary transition-colors text-left p-4 border-none bg-transparent cursor-pointer"
-                  style={{ 
-                    pointerEvents: 'auto', 
-                    touchAction: 'manipulation',
-                    zIndex: 10000
-                  }}
+                  onTouchStart={() => scrollToSection('home')}
+                  onClick={() => scrollToSection('home')} 
+                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left ${
+                    isMenuOpen ? 'menu-open' : 'menu-closed'
+                  }`}
                   data-testid="nav-mobile-home"
                 >
                   Home
                 </button>
                 <button 
-                  onClick={() => {
-                    scrollToSection('services');
-                    setIsMenuOpen(false);
-                  }} 
-                  className="text-white text-xl font-semibold hover:text-primary transition-colors text-left p-4 border-none bg-transparent cursor-pointer"
-                  style={{ 
-                    pointerEvents: 'auto', 
-                    touchAction: 'manipulation',
-                    zIndex: 10000
-                  }}
+                  onTouchStart={() => scrollToSection('services')}
+                  onClick={() => scrollToSection('services')} 
+                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left ${
+                    isMenuOpen ? 'menu-open' : 'menu-closed'
+                  }`}
                   data-testid="nav-mobile-services"
                 >
                   Services
                 </button>
                 <button 
-                  onClick={() => {
-                    scrollToSection('about');
-                    setIsMenuOpen(false);
-                  }} 
-                  className="text-white text-xl font-semibold hover:text-primary transition-colors text-left p-4 border-none bg-transparent cursor-pointer"
-                  style={{ 
-                    pointerEvents: 'auto', 
-                    touchAction: 'manipulation',
-                    zIndex: 10000
-                  }}
+                  onTouchStart={() => scrollToSection('about')}
+                  onClick={() => scrollToSection('about')} 
+                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left ${
+                    isMenuOpen ? 'menu-open' : 'menu-closed'
+                  }`}
                   data-testid="nav-mobile-about"
                 >
                   About
                 </button>
                 <button 
-                  onClick={() => {
-                    scrollToSection('contact');
-                    setIsMenuOpen(false);
-                  }} 
-                  className="text-white text-xl font-semibold hover:text-primary transition-colors text-left p-4 border-none bg-transparent cursor-pointer"
-                  style={{ 
-                    pointerEvents: 'auto', 
-                    touchAction: 'manipulation',
-                    zIndex: 10000
-                  }}
+                  onTouchStart={() => scrollToSection('contact')}
+                  onClick={() => scrollToSection('contact')} 
+                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left ${
+                    isMenuOpen ? 'menu-open' : 'menu-closed'
+                  }`}
                   data-testid="nav-mobile-contact"
                 >
                   Contact
                 </button>
-                <div className="pt-8" style={{ pointerEvents: 'auto' }}>
+                <div className={`mobile-nav-item pt-8 ${
+                  isMenuOpen ? 'menu-open' : 'menu-closed'
+                }`}>
                   <Button 
                     className="btn btn--primary btn--pill w-full" 
-                    onClick={() => {
-                      scrollToSection('contact');
-                      setIsMenuOpen(false);
-                    }}
-                    style={{ pointerEvents: 'auto', touchAction: 'manipulation' }}
+                    onTouchStart={() => scrollToSection('contact')}
+                    onClick={() => scrollToSection('contact')}
                     data-testid="button-request-quote-mobile"
                   >
                     Request a Quote
@@ -493,7 +467,6 @@ export default function Home() {
               </nav>
             </div>
         </div>
-        )}
       </header>
       {/* Scroll detection sentinel - positioned at top to start transparent */}
       <div 
