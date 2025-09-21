@@ -204,8 +204,10 @@ export default function Home() {
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (section) {
-      const headerHeight = 80;
-      const targetPosition = section.offsetTop - headerHeight;
+      // Get actual header height from CSS variable or use computed height
+      const header = document.querySelector('.site-header') as HTMLElement;
+      const headerHeight = header ? header.offsetHeight : 126; // Default to current desktop height
+      const targetPosition = section.offsetTop - headerHeight - 20; // Extra 20px buffer
       window.scrollTo({
         top: targetPosition,
         behavior: 'smooth'
