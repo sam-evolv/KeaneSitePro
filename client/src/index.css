@@ -47,7 +47,7 @@
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   
   /* Header variables */
-  --header-bg: rgba(0, 0, 0, 0.85);
+  --header-bg: hsl(0, 0%, 10%);
   --header-border: rgba(255, 255, 255, 0.08);
 }
 
@@ -544,7 +544,7 @@ div[data-side] div[role="listbox"] {
   }
   
   .scrolled .site-header {
-    background: rgba(0,0,0,.90); 
+    background: hsl(0, 0%, 10%); 
     backdrop-filter: saturate(140%) blur(8px);
     box-shadow: none !important;
     border: none !important;
@@ -747,7 +747,7 @@ section, main {
 
 /* Services-only header: always black background */
 .page--services .site-header {
-  background: rgba(0,0,0,.90) !important;
+  background: hsl(0, 0%, 10%) !important;
   backdrop-filter: saturate(140%) blur(8px);
   border: none !important;
   border-bottom: none !important;

@@ -94,7 +94,7 @@
     padding: 12px 16px !important;
     
     /* Solid black background */
-    background: rgba(0, 0, 0, 0.95) !important;
+    background: hsl(0, 0%, 10%) !important;
     backdrop-filter: blur(8px) !important;
     
     /* Flexbox for proper alignment */

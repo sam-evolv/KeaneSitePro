@@ -10,7 +10,7 @@
     background: transparent;
     transition: background-color 200ms ease;
   }
-  .site-header--scrolled { background: rgba(0,0,0,0.92); }
+  .site-header--scrolled { background: hsl(0, 0%, 10%); }
 
   /* High-contrast hamburger: visible over any footage */
   [data-testid="button-mobile-menu"] {
