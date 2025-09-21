@@ -116,9 +116,9 @@
   
   /* Properly sized logo for mobile header */
   .brand, .logo, .header-logo {
-    height: 56px !important;
+    height: 70px !important;
     width: auto !important;
-    max-width: 175px !important;
+    max-width: 219px !important;
     margin: 0 !important;
   }
   
