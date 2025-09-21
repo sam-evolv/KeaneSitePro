@@ -17,7 +17,7 @@
     width: clamp(140px, 36vw, 200px) !important;
     height: auto !important;
     animation: none !important;      /* disable breathe animation that breaks centering */
-    transform: none !important;      /* remove ALL transforms */
+    transform: translateX(5px) !important;  /* nudge 5px right for visual centering */
     left: auto !important;
     right: auto !important;
     top: auto !important;
