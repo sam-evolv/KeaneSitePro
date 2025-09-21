@@ -89,8 +89,8 @@
   /* MOBILE HEADER: Static white logo with compact black header */
   header, .header {
     /* Proper mobile header size */
-    height: 56px !important;
-    min-height: 56px !important;
+    height: 80px !important;
+    min-height: 80px !important;
     padding: 12px 16px !important;
     
     /* Solid black background */
@@ -116,9 +116,9 @@
   
   /* Properly sized logo for mobile header */
   .brand, .logo, .header-logo {
-    height: 32px !important;
+    height: 56px !important;
     width: auto !important;
-    max-width: 100px !important;
+    max-width: 175px !important;
     margin: 0 !important;
   }
   
@@ -148,15 +148,15 @@
 /* Desktop: Increase logo size by 100% (desktop only - above 768px) */
 @media (min-width: 769px) {
   .brand, .logo, .header-logo {
-    height: 64px !important; /* Double the original 32px */
+    height: 112px !important; /* 75% increase from 64px */
     width: auto !important;
-    max-width: 200px !important; /* Double the max-width too */
+    max-width: 350px !important; /* 75% increase from 200px */
   }
   
   /* Adjust header height for larger desktop logo */
   header, .header {
-    height: 80px !important;
-    min-height: 80px !important;
-    padding: 16px !important;
+    height: 140px !important;
+    min-height: 140px !important;
+    padding: 20px !important;
   }
 }
