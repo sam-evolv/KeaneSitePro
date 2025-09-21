@@ -58,19 +58,19 @@ export default function WasteRemoval() {
                   <div className="bg-gray-50 p-6 rounded-lg">
                     <h4 className="font-semibold text-foreground mb-3">Construction Waste</h4>
                     <ul className="text-muted-foreground space-y-1">
-                      <li>• Concrete and masonry</li>
-                      <li>• Wood and timber</li>
-                      <li>• Metal and steel</li>
-                      <li>• Plasterboard and insulation</li>
+                      <li>Concrete and masonry</li>
+                      <li>Wood and timber</li>
+                      <li>Metal and steel</li>
+                      <li>Plasterboard and insulation</li>
                     </ul>
                   </div>
                   <div className="bg-gray-50 p-6 rounded-lg">
                     <h4 className="font-semibold text-foreground mb-3">Site Waste</h4>
                     <ul className="text-muted-foreground space-y-1">
-                      <li>• Vegetation and green waste</li>
-                      <li>• Soil and aggregates</li>
-                      <li>• Mixed construction debris</li>
-                      <li>• Packaging materials</li>
+                      <li>Vegetation and green waste</li>
+                      <li>Soil and aggregates</li>
+                      <li>Mixed construction debris</li>
+                      <li>Packaging materials</li>
                     </ul>
                   </div>
                 </div>

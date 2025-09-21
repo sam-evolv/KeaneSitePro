@@ -59,19 +59,19 @@ export default function HaulageSupport() {
                   <div className="bg-gray-50 p-6 rounded-lg">
                     <h4 className="font-semibold text-foreground mb-3">Plant & Equipment</h4>
                     <ul className="text-muted-foreground space-y-1">
-                      <li>• Excavator transportation</li>
-                      <li>• Machinery positioning</li>
-                      <li>• Heavy plant movement</li>
-                      <li>• Equipment collection</li>
+                      <li>Excavator transportation</li>
+                      <li>Machinery positioning</li>
+                      <li>Heavy plant movement</li>
+                      <li>Equipment collection</li>
                     </ul>
                   </div>
                   <div className="bg-gray-50 p-6 rounded-lg">
                     <h4 className="font-semibold text-foreground mb-3">Materials & Waste</h4>
                     <ul className="text-muted-foreground space-y-1">
-                      <li>• Aggregate delivery</li>
-                      <li>• Construction material transport</li>
-                      <li>• Waste removal logistics</li>
-                      <li>• Bulk material handling</li>
+                      <li>Aggregate delivery</li>
+                      <li>Construction material transport</li>
+                      <li>Waste removal logistics</li>
+                      <li>Bulk material handling</li>
                     </ul>
                   </div>
                 </div>
