@@ -1,0 +1,79 @@
+Goal: Fix the Keane Site Services mobile hero logo. It must be perfectly centered over the hero video on ALL mobile devices. Do NOT change desktop layout or header logo.
+
+Scope:
+- Only affect the logo that sits over the hero video (the overlay logo), not the header/navbar logo.
+- Apply styles only under max-width: 767px.
+- Remove/override any previous mobile rules that use margin hacks, flex parents, or partial transforms that push the logo off-center.
+
+Steps:
+
+1) Find the overlay logo element inside the hero section (likely an <img> or <svg>). 
+   - Add a unique class to it (and only it): `hero-logo-overlay`.
+   - Ensure the hero container has a stable positioning context: set `position: relative` on the section that directly wraps the video (e.g., `.hero`, `.hero-video`, or equivalent).
+
+2) Remove conflicting mobile CSS:
+   - Search the codebase for rules targeting the hero logo/container that set `left`, `right`, `margin-left`, `translateX`, `display:flex` centering, or `text-align` on parents.
+   - In the mobile breakpoint, neutralize them with `inset: auto; margin: 0 !important; left: auto; right: auto; top: auto; bottom: auto; transform: none;` on the overlay logo/container BEFORE applying the new rules below.
+
+3) Add this CSS at the end of the main stylesheet (or a mobile.css loaded last):
+
+```css
+/* MOBILE ONLY: center the hero overlay logo */
+@media (max-width: 767px) {
+  /* make sure the hero is a positioning context */
+  .hero, .hero-video, .hero__media, .hero-container {
+    position: relative;
+  }
+
+  /* never touch the header/nav logo */
+  header .logo, .navbar .logo, .site-header .logo {
+    /* no changes */
+  }
+
+  /* hard-lock centering for the overlay logo only */
+  .hero .hero-logo-overlay:not(header *){
+    position: absolute !important;
+    z-index: 3;
+    pointer-events: none;
+
+    /* true center relative to the hero container */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) !important;
+
+    /* consistent sizing across devices */
+    width: clamp(120px, 30vw, 180px);
+    height: auto;
+
+    /* strip any inherited offsets */
+    margin: 0 !important;
+    inset: auto;
+  }
+
+  /* ensure text/buttons remain readable below */
+  .hero .content, .hero .overlay-content, .hero-text {
+    position: relative;
+    z-index: 4;
+  }
+
+  /* if the logo is behind the text on mobile, lower it slightly */
+  .hero .hero-logo-overlay.shift-down {
+    top: 45%;
+  }
+}
+Ensure that only the overlay logo uses hero-logo-overlay. The header/nav logo must NOT carry that class.
+
+If the overlay logo currently lives inside a container with centering rules (e.g., display:flex; justify-content:center; plus manual left:50%), remove those container-level centering rules for mobile to prevent double transforms.
+
+Test in DevTools responsive mode for iPhone SE/8/12/14 Pro Max and Galaxy S8/S20.
+
+The overlay logo must be horizontally and vertically centered over the video.
+
+Header/logo and desktop layouts must be unchanged.
+
+If the logo collides with the H1 on very short viewports, add the shift-down class to the overlay logo to use top:45% from the CSS above.
+
+Commit and deploy.
+
+yaml
+Copy code

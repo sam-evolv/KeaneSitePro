@@ -1,23 +1,6 @@
-/* ===== MOBILE (unchanged) ===== */
+/* ===== MOBILE - disabled in favor of mobile-hero-overlay-center.css ===== */
 @media (max-width: 768px) {
-  .hero__overlay,
-  .hero .overlay,
-  .hero-content {
-    position: absolute !important;
-    inset: 0 !important;
-    display: grid !important;
-    place-items: center !important;
-    text-align: center !important;
-    transform: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  .hero__overlay > *,
-  .hero .overlay > *,
-  .hero-content > * {
-    margin: 0 auto !important;
-  }
+  /* Rules moved to mobile-hero-overlay-center.css for better control */
 }
 
 /* ===== DESKTOP FIX ===== */

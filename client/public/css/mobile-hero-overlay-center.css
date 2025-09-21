@@ -1,0 +1,54 @@
+/* MOBILE ONLY: center the hero overlay logo - MUST BE LOADED LAST */
+@media (max-width: 767px) {
+  /* make sure the hero is a positioning context */
+  .hero, .hero-video, .hero__media, .hero-container {
+    position: relative;
+  }
+
+  /* never touch the header/nav logo */
+  header .logo, .navbar .logo, .site-header .logo {
+    /* no changes */
+  }
+
+  /* neutralize any conflicting rules on the overlay logo first */
+  .hero .hero-logo-overlay {
+    inset: auto !important;
+    margin: 0 !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+  }
+
+  /* hard-lock centering for the overlay logo only */
+  .hero .hero-logo-overlay:not(header *) {
+    position: absolute !important;
+    z-index: 3;
+    pointer-events: none;
+
+    /* true center relative to the hero container */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) !important;
+
+    /* consistent sizing across devices */
+    width: clamp(120px, 30vw, 180px);
+    height: auto;
+
+    /* strip any inherited offsets */
+    margin: 0 !important;
+    inset: auto;
+  }
+
+  /* ensure text/buttons remain readable below */
+  .hero .content, .hero .overlay-content, .hero-text, .hero__content {
+    position: relative;
+    z-index: 4;
+  }
+
+  /* if the logo is behind the text on mobile, lower it slightly */
+  .hero .hero-logo-overlay.shift-down {
+    top: 45%;
+  }
+}
