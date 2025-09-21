@@ -390,8 +390,9 @@ export default function Home() {
         {/* Mobile Menu Overlay */}
         <div 
           className={`mobile-menu-overlay lg:hidden fixed inset-0 bg-charcoal bg-opacity-95 backdrop-blur-lg z-50 ${
-            isMenuOpen ? 'menu-open' : 'menu-closed'
+            isMenuOpen ? 'menu-open' : ''
           }`}
+          style={{ pointerEvents: isMenuOpen ? 'auto' : 'none' }}
           data-mobile-menu-overlay="true"
           data-menu-open={isMenuOpen ? "true" : "false"}
         >
