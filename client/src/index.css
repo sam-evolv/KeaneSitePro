@@ -47,7 +47,8 @@
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   
   /* Header variables */
-  --header-bg: hsl(0, 0%, 10%);
+  --kss-black: #1a1a1a;
+  --header-bg: var(--kss-black);
   --header-border: rgba(255, 255, 255, 0.08);
 }
 
@@ -544,8 +545,8 @@ div[data-side] div[role="listbox"] {
   }
   
   .scrolled .site-header {
-    background: hsl(0, 0%, 10%); 
-    backdrop-filter: saturate(140%) blur(8px);
+    background: var(--kss-black); 
+    backdrop-filter: none;
     box-shadow: none !important;
     border: none !important;
     border-bottom: none !important;
@@ -747,8 +748,8 @@ section, main {
 
 /* Services-only header: always black background */
 .page--services .site-header {
-  background: hsl(0, 0%, 10%) !important;
-  backdrop-filter: saturate(140%) blur(8px);
+  background: var(--kss-black) !important;
+  backdrop-filter: none;
   border: none !important;
   border-bottom: none !important;
   border-top: none !important;

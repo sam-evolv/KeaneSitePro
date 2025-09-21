@@ -1,3 +1,8 @@
+/* CSS Variables */
+:root {
+  --kss-black: #1a1a1a;
+}
+
 /* ===== Mobile only ===== */
 @media (max-width: 768px) {
   html, body { margin:0; padding:0; background:#000; }
@@ -94,8 +99,8 @@
     padding: 12px 16px !important;
     
     /* Solid black background */
-    background: hsl(0, 0%, 10%) !important;
-    backdrop-filter: blur(8px) !important;
+    background: var(--kss-black) !important;
+    backdrop-filter: none !important;
     
     /* Flexbox for proper alignment */
     display: flex !important;
