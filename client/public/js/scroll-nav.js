@@ -65,16 +65,12 @@
   }
 
   function handleNavClick(e) {
-    console.log('🔍 Navigation click detected', e.target, e.currentTarget);
     const a = e.target.closest('a');
-    console.log('🔍 Found anchor:', a);
     if (!a) return;
     const href = a.getAttribute('href');
-    console.log('🔍 Href:', href);
     if (!href || !href.startsWith('#')) return;
 
     e.preventDefault();
-    console.log('🔍 Prevented default, scrolling to:', href);
 
     // If we aren't on the homepage, redirect with hash
     const isHome = location.pathname === '/' || location.pathname.endsWith('index.html');
@@ -89,7 +85,6 @@
   }
 
   function init() {
-    console.log('🚀 Scroll nav init starting...');
     // Global smooth behavior as a baseline (safe if already present)
     try {
       document.documentElement.style.scrollBehavior = 'smooth';
@@ -106,7 +101,6 @@
       const isInNav = link.closest('.site-header, .mobile-menu-overlay, header, nav');
       if (!isInNav) return;
       
-      console.log('🔍 Navigation link clicked:', link, link.href);
       handleNavClick(e);
     }, { passive: false });
 
@@ -128,8 +122,6 @@
     }
     window.addEventListener('orientationchange', onResize);
     window.addEventListener('resize', onResize);
-    
-    console.log('🚀 Scroll nav init complete - using document delegation');
   }
 
   if (document.readyState === 'loading') {

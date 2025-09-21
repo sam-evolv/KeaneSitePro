@@ -1,0 +1,139 @@
+/* Mobile Typography Fixes for Service Pages */
+@media (max-width: 768px) {
+  /* Service Hero Section - Mobile Optimized */
+  .svc-hero {
+    padding: 120px 0 60px 0 !important;
+    background: linear-gradient(135deg, hsl(210, 50%, 8%) 0%, hsl(210, 30%, 12%) 100%);
+  }
+
+  /* Service Title - Better Mobile Typography */
+  .svc-title {
+    font-size: 2.25rem !important; /* 36px */
+    line-height: 1.2 !important;
+    font-weight: 800 !important;
+    color: white !important;
+    margin-bottom: 1rem !important;
+    letter-spacing: -0.025em !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    word-break: break-word !important;
+    hyphens: auto !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+  }
+
+  /* Service Subtitle - Improved Readability */
+  .svc-sub {
+    font-size: 1.125rem !important; /* 18px */
+    line-height: 1.6 !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    margin-bottom: 2rem !important;
+    font-weight: 400 !important;
+    max-width: 90% !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+  }
+
+  /* Breadcrumb - Better Mobile Spacing */
+  .svc-breadcrumb {
+    font-size: 0.875rem !important; /* 14px */
+    margin-bottom: 1.5rem !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    line-height: 1.4 !important;
+  }
+
+  .svc-breadcrumb a {
+    color: rgba(255, 255, 255, 0.8) !important;
+    text-decoration: none !important;
+  }
+
+  .svc-breadcrumb .current {
+    color: white !important;
+    font-weight: 500 !important;
+  }
+
+  /* Back to Services Link */
+  .svc-back {
+    display: inline-flex !important;
+    align-items: center !important;
+    color: hsl(20, 85%, 60%) !important; /* Primary orange */
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    margin-bottom: 2rem !important;
+    text-decoration: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+
+  .svc-back:hover {
+    color: hsl(20, 85%, 70%) !important;
+  }
+
+  /* Container Padding for Mobile */
+  .svc-hero .container {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+
+  /* Main Content Typography */
+  .prose h2, .prose h3 {
+    color: hsl(210, 50%, 12%) !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+    margin-top: 2rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .prose h2 {
+    font-size: 1.75rem !important; /* 28px */
+  }
+
+  .prose h3 {
+    font-size: 1.5rem !important; /* 24px */
+  }
+
+  .prose p {
+    font-size: 1rem !important; /* 16px */
+    line-height: 1.7 !important;
+    color: hsl(210, 15%, 25%) !important;
+    margin-bottom: 1.25rem !important;
+  }
+
+  .prose ul li {
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+    color: hsl(210, 15%, 25%) !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  /* Ensure proper text rendering on all mobile devices */
+  .svc-hero *, .prose * {
+    text-rendering: optimizeLegibility !important;
+    -webkit-font-feature-settings: "kern" 1 !important;
+    font-feature-settings: "kern" 1 !important;
+  }
+
+  /* Fix any layout overflow issues */
+  .svc-hero {
+    overflow-x: hidden !important;
+  }
+
+  .svc-headline {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Larger Mobile Devices (up to 480px) */
+@media (max-width: 480px) {
+  .svc-title {
+    font-size: 2rem !important; /* 32px */
+  }
+  
+  .svc-sub {
+    font-size: 1rem !important; /* 16px */
+  }
+  
+  .svc-hero .container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
