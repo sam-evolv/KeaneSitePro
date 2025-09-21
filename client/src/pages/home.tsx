@@ -413,90 +413,47 @@ export default function Home() {
                 </div>
               </div>
               <nav className="flex flex-col flex-1 px-4 py-8 space-y-6">
-                <button 
-                  onClick={() => {
-                    const element = document.getElementById('home');
-                    if (element) {
-                      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                    setIsMenuOpen(false);
-                  }}
-                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left p-4 border-none bg-transparent ${
-                    isMenuOpen ? 'menu-open' : 'menu-closed'
-                  }`}
+                <a 
+                  href="#home"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left p-4 block"
                   data-testid="nav-mobile-home"
                 >
                   Home
-                </button>
-                <button 
-                  onClick={() => {
-                    const element = document.getElementById('services');
-                    if (element) {
-                      const headerHeight = 126;
-                      const elementPosition = element.offsetTop - headerHeight - 10;
-                      window.scrollTo({ top: elementPosition, behavior: 'smooth' });
-                    }
-                    setIsMenuOpen(false);
-                  }}
-                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left p-4 border-none bg-transparent ${
-                    isMenuOpen ? 'menu-open' : 'menu-closed'
-                  }`}
+                </a>
+                <a 
+                  href="#services"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left p-4 block"
                   data-testid="nav-mobile-services"
                 >
                   Services
-                </button>
-                <button 
-                  onClick={() => {
-                    const element = document.getElementById('about');
-                    if (element) {
-                      const headerHeight = 126;
-                      const elementPosition = element.offsetTop - headerHeight - 10;
-                      window.scrollTo({ top: elementPosition, behavior: 'smooth' });
-                    }
-                    setIsMenuOpen(false);
-                  }}
-                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left p-4 border-none bg-transparent ${
-                    isMenuOpen ? 'menu-open' : 'menu-closed'
-                  }`}
+                </a>
+                <a 
+                  href="#about"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left p-4 block"
                   data-testid="nav-mobile-about"
                 >
                   About
-                </button>
-                <button 
-                  onClick={() => {
-                    const element = document.getElementById('contact');
-                    if (element) {
-                      const headerHeight = 126;
-                      const elementPosition = element.offsetTop - headerHeight - 10;
-                      window.scrollTo({ top: elementPosition, behavior: 'smooth' });
-                    }
-                    setIsMenuOpen(false);
-                  }}
-                  className={`mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left p-4 border-none bg-transparent ${
-                    isMenuOpen ? 'menu-open' : 'menu-closed'
-                  }`}
+                </a>
+                <a 
+                  href="#contact"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="mobile-nav-item text-white text-xl font-semibold hover:text-primary transition-colors text-left p-4 block"
                   data-testid="nav-mobile-contact"
                 >
                   Contact
-                </button>
-                <div className={`mobile-nav-item pt-8 ${
-                  isMenuOpen ? 'menu-open' : 'menu-closed'
-                }`}>
-                  <Button 
-                    className="btn btn--primary btn--pill w-full"
-                    onClick={() => {
-                      const element = document.getElementById('contact');
-                      if (element) {
-                        const headerHeight = 126;
-                        const elementPosition = element.offsetTop - headerHeight - 10;
-                        window.scrollTo({ top: elementPosition, behavior: 'smooth' });
-                      }
-                      setIsMenuOpen(false);
-                    }}
+                </a>
+                <div className="mobile-nav-item pt-8">
+                  <a 
+                    href="#contact"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="btn btn--primary btn--pill w-full block text-center"
                     data-testid="button-request-quote-mobile"
                   >
                     Request a Quote
-                  </Button>
+                  </a>
                 </div>
               </nav>
             </div>
