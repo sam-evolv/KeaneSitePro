@@ -681,9 +681,11 @@ div[data-side] div[role="listbox"] {
   display:block; 
   height:106px; 
   width:439px; 
-  max-width: 100%; /* Prevent overflow on narrow screens */
+  max-width: calc(100vw - 300px); /* Leave space for navigation and padding */
+  min-width: 200px; /* Minimum readable size */
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 1; /* Allow shrinking in flexbox */
 }
 
 .brand:hover {
@@ -721,6 +723,7 @@ div[data-side] div[role="listbox"] {
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
+  overflow: hidden; /* Prevent children from overflowing */
 }
 
 /* Legacy logo styles - removed to allow new cross-fade positioning */
