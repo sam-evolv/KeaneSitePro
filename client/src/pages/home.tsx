@@ -873,7 +873,7 @@ export default function Home() {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="site-clearouts">Site Clear-Outs</SelectItem>
-                      <SelectItem value="waste-removal">Waste Removal</SelectItem>
+                      <SelectItem value="delapodation-work">Delapodation Work</SelectItem>
                       <SelectItem value="ground-preparation">Ground Preparation</SelectItem>
                       <SelectItem value="haulage-support">Haulage Support</SelectItem>
                       <SelectItem value="other">Other</SelectItem>

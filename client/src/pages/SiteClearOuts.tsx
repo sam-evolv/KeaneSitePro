@@ -125,8 +125,8 @@ export default function SiteClearOuts() {
                     <a href="/services/ground-preparation" className="block text-primary hover:text-primary/80 transition-colors">
                       → Ground Preparation
                     </a>
-                    <a href="/services/waste-removal" className="block text-primary hover:text-primary/80 transition-colors">
-                      → Waste Removal
+                    <a href="/services/delapodation-work" className="block text-primary hover:text-primary/80 transition-colors">
+                      → Delapodation Work
                     </a>
                     <a href="/services/haulage-support" className="block text-primary hover:text-primary/80 transition-colors">
                       → Haulage Support
