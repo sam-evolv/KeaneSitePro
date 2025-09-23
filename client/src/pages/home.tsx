@@ -294,9 +294,9 @@ export default function Home() {
     },
     {
       icon: Truck,
-      title: "Waste Removal", 
-      description: "Licensed collection and responsible disposal with documentation on request.",
-      route: "/services/waste-removal"
+      title: "Delapodation Work", 
+      description: "Professional delapodation and demolition services with documentation on request.",
+      route: "/services/delapodation-work"
     },
     {
       icon: TrendingUp,

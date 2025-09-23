@@ -392,7 +392,7 @@ export default function ServicePage({ title, description, children, breadcrumb, 
                   >
                     <option value="">Select a service</option>
                     <option value="Site Clear-Outs">Site Clear-Outs</option>
-                    <option value="Waste Removal">Waste Removal</option>
+                    <option value="Delapodation Work">Delapodation Work</option>
                     <option value="Ground Preparation">Ground Preparation</option>
                     <option value="Haulage Support">Haulage Support</option>
                     <option value="Other">Other</option>

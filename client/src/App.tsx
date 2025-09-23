@@ -6,7 +6,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 // Import all pages
 import Home from "@/pages/home";
 import SiteClearOuts from "@/pages/SiteClearOuts";
-import WasteRemoval from "@/pages/WasteRemoval";
+import DelapodationWork from "@/pages/DelapodationWork";
 import GroundPreparation from "@/pages/GroundPreparation";
 import HaulageSupport from "@/pages/HaulageSupport";
 import NotFound from "@/pages/not-found";
@@ -34,7 +34,7 @@ function App() {
           
           {/* Service pages */}
           <Route path="/services/site-clear-outs" component={SiteClearOuts} />
-          <Route path="/services/waste-removal" component={WasteRemoval} />
+          <Route path="/services/delapodation-work" component={DelapodationWork} />
           <Route path="/services/ground-preparation" component={GroundPreparation} />
           <Route path="/services/haulage-support" component={HaulageSupport} />
           
