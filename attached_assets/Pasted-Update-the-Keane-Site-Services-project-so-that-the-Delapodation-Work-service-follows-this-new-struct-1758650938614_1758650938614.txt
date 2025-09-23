@@ -1,0 +1,52 @@
+Update the Keane Site Services project so that the Delapodation Work service follows this new structure and text:
+
+Overview
+Our professional delapodation service specialises in the safe removal and strip-out of non-structural elements from buildings and sites. We prepare properties for renovation, refurbishment, or redevelopment with minimal disruption, ensuring all work is carried out efficiently and responsibly.
+
+What's Included
+- Interior and exterior strip-out works
+- Removal of fixtures, fittings, and partitions
+- Site clearance of non-structural materials
+- Careful handling of reusable or recyclable elements
+- Safe disposal of debris and unwanted materials
+- Full preparation for the next stage of development
+
+Delapodation Scope
+Building Interiors
+- Partitions and stud walls
+- Ceilings and flooring
+- Fixtures and fittings
+- Insulation and non-structural materials
+
+External Works
+- Sheds, garages, and small outbuildings
+- Fences and boundary features
+- Garden structures
+- Hard landscaping elements
+
+Our Process
+1
+Site Assessment
+Inspection of structures and identification of non-structural elements to be removed
+
+2
+Planning & Coordination
+Scheduling, logistics, and safety planning tailored to your project needs
+
+3
+Strip-Out & Clearance
+Systematic removal of designated elements with minimal disruption
+
+4
+Handover & Preparation
+Site cleared, cleaned, and made ready for renovation or redevelopment
+
+Compliance & Safety
+All delapodation works are carried out in accordance with health and safety regulations. We prioritise responsible handling, recycling wherever possible, and ensure your site is left safe, compliant, and ready for its next stage.
+
+Instructions:
+- Replace the old Waste Collection service content block with the above, keeping the same HTML/CSS structure.
+- Do not alter styling, layout, or other service sections.
+- Update headings, subheadings, and list items exactly as written.
+- Ensure mobile and desktop layouts remain intact.
+- Validate build and confirm all navigation and anchors still function.

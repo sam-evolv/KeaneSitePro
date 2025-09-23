@@ -1,0 +1,79 @@
+You are working in the Keane Site Services project. Goal: change the service name "Waste Collection" to "Delapodation Work" everywhere it is user-visible, including headings, buttons, cards, menu anchors, form labels, alt text, FAQs, and schema metadata. Do not alter layout, spacing, colors, component structure, or any other services. This is a text-only change.
+
+Guardrails
+- Do not change any pricing values or other service names.
+- Do not touch CSS except for text content inside existing elements.
+- Do not remove or add components.
+- Only change exact user-facing strings and their slugs where they refer to this service.
+- If the project uses a data source (JSON/TS/JS object) for services, update only the entry for Waste Collection.
+
+Plan
+1) Create a safety branch:
+   - git checkout -b chore/rename-waste-collection-to-delapodation-work
+
+2) Locate all occurrences:
+   - Search codebase for case-insensitive matches:
+     "Waste Collection", "Waste collection", "Waste Collection Service", "Waste Collection Services", "waste-collection", "waste_collection".
+   - Typical locations to scan:
+     /public and /assets content files
+     /index.html or root HTML
+     src/pages/**, src/components/**, src/sections/**
+     src/data/services.* (json|js|ts)
+     navigation/menu files
+     forms and validation schemas
+     SEO meta and Open Graph tags
+     schema.org JSON-LD blocks
+     image alt attributes and aria-labels
+     tests if present
+
+3) Apply targeted replacements:
+   - Visible text: replace with "Delapodation Work"
+   - Headings and cards: "Waste Collection" -> "Delapodation Work"
+   - Buttons/CTAs: "Book Waste Collection" -> "Book Delapodation Work"
+   - Menu anchors: "Waste Collection" -> "Delapodation Work"
+   - Form labels/placeholders: update to "Delapodation Work"
+   - FAQs and service descriptions: change the service name only, leave other text unchanged
+   - Alt text and aria-labels: update name only
+
+4) Slugs and anchors
+   - If a slug or id is "waste-collection", rename to "delapodation-work"
+   - Update internal links that target that slug, for example:
+     href="#waste-collection" -> href="#delapodation-work"
+     /services/waste-collection -> /services/delapodation-work
+   - If Netlify redirects file exists, add a 301:
+     From: /services/waste-collection
+     To:   /services/delapodation-work
+     Status: 301
+     File: netlify.toml or _redirects depending on project. Use the project’s current pattern.
+
+5) Data driven content
+   - If services are defined in a data file, update only this object:
+     name: "Delapodation Work"
+     slug: "delapodation-work"
+     Keep the same id and pricing fields.
+   - Do not reorder arrays.
+
+6) Schema and SEO
+   - If JSON-LD Service or Product schema exists for this item, update "name" to "Delapodation Work".
+   - If there is a dedicated SEO title or meta description for the Waste Collection page, update the name string only. Do not change keywords beyond the name.
+
+7) Images
+   - If an image filename contains the old slug, leave the underlying file as is to avoid breaking paths.
+   - Only update human-readable captions and alt text.
+
+8) Build and validate
+   - Run the dev server and click through:
+     Header menu item for the service navigates correctly
+     Services grid card shows "Delapodation Work"
+     Any "Book" or "Learn more" buttons show the correct label and still work
+     Anchor links scroll to the correct section
+   - Run build to ensure no type or import errors.
+
+9) Commit with a clear message:
+   - git add -A
+   - git commit -m "chore: rename Waste Collection to Delapodation Work across UI, anchors, forms, SEO, and schema. No layout changes."
+
+10) Output a concise change report:
+   - List files changed and a brief note for each
+   - Confirm any redirects created
+   - Confirm all links updated and build success
