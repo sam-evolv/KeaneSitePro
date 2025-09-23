@@ -17,8 +17,8 @@ A high-end, single-page marketing website for Keane Site Services, built with Re
 - **Industrial Orange**: `#F15A29` (HSL: 14, 86%, 56%)
 - **Charcoal**: `#1A1A1A` (HSL: 0, 0%, 10%)
 - **Dark Charcoal**: `#111111` (HSL: 0, 0%, 7%)
-- **Mid Gray**: `#3C3C3C` (HSL: 0, 0%, 24%)
-- **Light Gray**: `#F5F6F7` (HSL: 210, 17%, 97%)
+- **Mid Grey**: `#3C3C3C` (HSL: 0, 0%, 24%)
+- **Light Grey**: `#F5F6F7` (HSL: 210, 17%, 97%)
 
 ## Quick Start
 

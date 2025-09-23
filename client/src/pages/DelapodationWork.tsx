@@ -109,7 +109,7 @@ export default function DelapodationWork() {
 
                 <h3 className="text-2xl font-bold text-foreground mb-4">Compliance & Certification</h3>
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  All delapodation operations are conducted under appropriate licenses with full traceability. 
+                  All delapodation operations are conducted under appropriate licences with full traceability. 
                   We provide comprehensive documentation including method statements, completion certificates, and environmental compliance reports 
                   to ensure your project meets all regulatory requirements.
                 </p>
