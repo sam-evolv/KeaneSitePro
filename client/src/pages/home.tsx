@@ -670,7 +670,7 @@ export default function Home() {
                   Keane Site Services provides professional site clear-outs and related groundworks. With the right equipment and years of expertise, we deliver reliable results on time, every time.
                 </p>
                 <p>
-                  Our commitment to excellence extends beyond just getting the job done. We prioritize safety, environmental compliance, and transparent communication throughout every project phase.
+                  Our commitment to excellence extends beyond just getting the job done. We prioritise safety, environmental compliance, and transparent communication throughout every project phase.
                 </p>
                 <p>
                   From small residential clearances to large commercial developments, our experienced team and modern equipment fleet ensure your site is prepared to the highest professional standards.
