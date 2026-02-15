@@ -568,33 +568,38 @@ export default function Home() {
           
           {/* Services Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {services.map((service, index) => (
-              <div 
-                key={index} 
-                className={`service-card p-8 transition-all duration-700 ease-out transform ${
-                  visibleSections.has('services') 
-                    ? 'opacity-100 scale-100 translate-y-0' 
-                    : 'opacity-0 scale-95 translate-y-8'
-                }`}
-                style={{ transitionDelay: `${index * 150}ms` }}
-                data-testid={`service-card-${index}`}
-              >
-                <div className="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
-                  <service.icon className="w-8 h-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold text-foreground mb-4">{service.title}</h3>
-                <p className="text-muted-foreground mb-6 leading-relaxed">
-                  {service.description}
-                </p>
-                <Link 
-                  href={service.route}
-                  className="text-primary font-semibold hover:text-primary/80 transition-colors inline-block"
-                  data-testid={`service-learn-more-${index}`}
+            {services.map((service, index) => {
+              const isLastOdd = index === services.length - 1 && services.length % 2 === 1;
+              return (
+                <div
+                  key={index}
+                  className={`service-card p-8 transition-all duration-700 ease-out transform ${
+                    isLastOdd ? 'md:col-span-2 text-center' : ''
+                  } ${
+                    visibleSections.has('services')
+                      ? 'opacity-100 scale-100 translate-y-0'
+                      : 'opacity-0 scale-95 translate-y-8'
+                  }`}
+                  style={{ transitionDelay: `${index * 150}ms` }}
+                  data-testid={`service-card-${index}`}
                 >
-                  Learn more →
-                </Link>
-              </div>
-            ))}
+                  <div className={`w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6 ${isLastOdd ? 'mx-auto' : ''}`}>
+                    <service.icon className="w-8 h-8 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-bold text-foreground mb-4">{service.title}</h3>
+                  <p className={`text-muted-foreground mb-6 leading-relaxed ${isLastOdd ? 'max-w-xl mx-auto' : ''}`}>
+                    {service.description}
+                  </p>
+                  <Link
+                    href={service.route}
+                    className="text-primary font-semibold hover:text-primary/80 transition-colors inline-block"
+                    data-testid={`service-learn-more-${index}`}
+                  >
+                    Learn more →
+                  </Link>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
