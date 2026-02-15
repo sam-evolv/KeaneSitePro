@@ -24,7 +24,8 @@ import {
   Building,
   Truck,
   TrendingUp,
-  ArrowUpDown
+  ArrowUpDown,
+  HardHat
 } from "lucide-react";
 import logoAsset from "../assets/logo.png";
 import logoLightAsset from "../assets/logo-light.png";
@@ -309,6 +310,12 @@ export default function Home() {
       title: "Haulage Support",
       description: "Coordinated logistics and plant movement to keep projects on schedule.",
       route: "/services/haulage-support"
+    },
+    {
+      icon: HardHat,
+      title: "Construction Services",
+      description: "Commercial construction for warehouses, industrial units, and commercial developments.",
+      route: "/services/construction"
     }
   ];
 
@@ -876,6 +883,7 @@ export default function Home() {
                       <SelectItem value="delapodation-work">Delapodation Work</SelectItem>
                       <SelectItem value="ground-preparation">Ground Preparation</SelectItem>
                       <SelectItem value="haulage-support">Haulage Support</SelectItem>
+                      <SelectItem value="construction">Construction Services</SelectItem>
                       <SelectItem value="other">Other</SelectItem>
                     </SelectContent>
                   </Select>

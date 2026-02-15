@@ -9,6 +9,7 @@ import SiteClearOuts from "@/pages/SiteClearOuts";
 import DelapodationWork from "@/pages/DelapodationWork";
 import GroundPreparation from "@/pages/GroundPreparation";
 import HaulageSupport from "@/pages/HaulageSupport";
+import Construction from "@/pages/Construction";
 import NotFound from "@/pages/not-found";
 
 // Create React Query client
@@ -37,7 +38,8 @@ function App() {
           <Route path="/services/delapodation-work" component={DelapodationWork} />
           <Route path="/services/ground-preparation" component={GroundPreparation} />
           <Route path="/services/haulage-support" component={HaulageSupport} />
-          
+          <Route path="/services/construction" component={Construction} />
+
           {/* 404 page */}
           <Route component={NotFound} />
         </Switch>

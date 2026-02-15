@@ -155,6 +155,9 @@ export default function HaulageSupport() {
                     <a href="/services/ground-preparation" className="block text-primary hover:text-primary/80 transition-colors">
                       → Ground Preparation
                     </a>
+                    <a href="/services/construction" className="block text-primary hover:text-primary/80 transition-colors">
+                      → Construction Services
+                    </a>
                   </div>
                 </div>
 
