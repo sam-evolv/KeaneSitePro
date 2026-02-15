@@ -326,7 +326,7 @@ div[data-side] div[role="listbox"] {
     height: 100%;
     object-fit: cover;      /* crop video instead of letterboxing */
     object-position: center;
-    background: #000;       /* fallback background */
+    background: transparent; /* no black fallback leaking through */
   }
   
   .hero-overlay {
@@ -908,25 +908,23 @@ html, body {
   padding-top: 7px;              /* maintain layout height */
 }
 
-/* 3) Make the video overscan to hide sub-pixel seams on some GPUs */
+/* 3) Video container overscan – crops baked-in letterbox bars & Veo watermark */
 .hero__media {
   position: absolute;
-  inset: -2px;                   /* overscan by 2px to eliminate lines */
+  inset: -10%;                   /* bleed beyond hero on every side */
   z-index: 0;
 }
 .hero-video {
   position: absolute;
-  top: -2px;                     /* shift video up to eliminate black line */
+  top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
   width: 100%;
-  height: calc(100% + 4px);      /* extend height to compensate for shift */
+  height: 100%;
   display: block;                /* remove baseline gap from inline media */
   object-fit: cover;             /* no letterboxing */
   object-position: center;
-  transform: translateZ(0);      /* compositor hint; avoids 1px seams */
-  background: #000;              /* while buffering */
+  transform: scale(1.20) translateZ(0); /* zoom in ~20% to crop letterbox + watermark */
+  background: transparent;       /* no black fallback leaking through */
 }
 
 /* Baseline smooth scrolling (kept if JS disabled) */
