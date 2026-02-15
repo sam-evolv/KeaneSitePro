@@ -519,12 +519,12 @@ export default function Home() {
             decoding="async"
           />
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white mb-6 tracking-tight leading-tight">
-            Professional Site<br/>
-            <span className="text-primary">Clear-Outs</span> &<br/>
-            Groundworks
+            Site <span className="text-primary">Clear-Outs</span>,<br/>
+            Groundworks &<br/>
+            Construction
           </h1>
           <p className="text-xl sm:text-2xl text-gray-200 mb-10 max-w-3xl mx-auto leading-relaxed">
-            Fast, compliant, and cost-effective site preparation.
+            From site preparation to full-scale builds — delivered on time, every time.
           </p>
           
           {/* CTA Buttons */}
@@ -562,7 +562,7 @@ export default function Home() {
               Our Services
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Professional site preparation services delivered with precision and expertise.
+              Professional site preparation and construction services delivered with precision and expertise.
             </p>
           </div>
           
@@ -679,13 +679,13 @@ export default function Home() {
               </h2>
               <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
                 <p>
-                  Keane Site Services provides professional site clear-outs and related groundworks. With the right equipment and years of expertise, we deliver reliable results on time, every time.
+                  Keane Site Services provides professional site clear-outs, groundworks, and commercial construction. With the right equipment and years of expertise, we deliver reliable results on time, every time.
                 </p>
                 <p>
                   Our commitment to excellence extends beyond just getting the job done. We prioritise safety, environmental compliance, and transparent communication throughout every project phase.
                 </p>
                 <p>
-                  From small residential clearances to large commercial developments, our experienced team and modern equipment fleet ensure your site is prepared to the highest professional standards.
+                  From small residential clearances to large-scale commercial builds, our experienced team and modern equipment fleet ensure your project is completed to the highest professional standards.
                 </p>
               </div>
             </div>
@@ -701,7 +701,7 @@ export default function Home() {
         
         <div className="relative container text-center">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8 tracking-tight">
-            Get Your Site Cleared by the Experts
+            Get Your Project Started with the Experts
           </h2>
           <p className="text-xl text-white/90 mb-10 max-w-2xl mx-auto">
             Ready to start your project? Contact us today for a free consultation and quote.
