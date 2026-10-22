@@ -506,6 +506,23 @@ export default function ServicePage({ title, description, children, breadcrumb, 
             <p className="text-gray-400 text-sm">
               © 2025 Keane Site Services. All rights reserved.
             </p>
+            <a
+              href="https://donworthstudio.ie/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 inline-flex max-w-full items-center justify-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
+              data-testid="link-donworth-studio"
+            >
+              <img
+                src="/donworth-d-emblem.svg"
+                width={27}
+                height={20}
+                alt=""
+                aria-hidden="true"
+                style={{ objectFit: "contain", flexShrink: 0 }}
+              />
+              <span className="min-w-0">Designed &amp; Developed by Donworth Studio</span>
+            </a>
           </div>
         </div>
       </footer>
